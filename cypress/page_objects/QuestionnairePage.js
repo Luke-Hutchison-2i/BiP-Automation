@@ -1,0 +1,93 @@
+export function createCustomQuestionnaire() {
+    cy.get('#customQuestionnaire').check()
+
+    cy.get('[name="selectPQQ"]').click()
+
+    cy.url().should('include', 'editQuestionnaireForm.html')
+
+    createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+
+    createSubSection()
+
+    createQuestion(1, 'Explain why', 'Why can you do it', 'textArea', true)
+
+    // Click onto next section
+    createSection()
+
+    cy.get('[id^="page-name-link-"').eq(1).click()
+
+    cy.wait(1000)
+
+    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+
+    cy.get('#form-return_to_overview').click()
+}
+
+function createSection() {
+    cy.contains('Add Section').click()
+
+    cy.get('#pageName').type('Section 2')
+
+    cy.get('#pageSectionName').type('Sub Section 1')
+
+    cy.get('[onclick="javascript:submitPage()"]').click()
+    
+    cy.wait(500)
+}
+
+function createSubSection() {
+    cy.contains('Add Subsection').click()
+
+    cy.get('#sectionName').type('Subsection')
+
+    cy.get('[onclick="javascript:submitSection()"]').click()
+
+    cy.wait(500)
+
+    cy.reload()
+}
+
+function createQuestion(sub, text, help, type, mand) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.get('#questionText').type(text)
+
+    cy.get('#helpText').type(help)
+
+    cy.get('#answerType').select(type)
+
+    if (mand === true) {
+        cy.get('#isMandatory').check()
+    }
+
+    cy.get('[onclick="javascript:submitQuestion()"]').click()
+
+    cy.wait(500)
+}
+
+function createMultipleQuestion(sub, text, help, mand) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.get('#questionText').type(text)
+
+    cy.get('#helpText').type(help)
+
+    cy.get('#answerType').select('multiSelect')
+
+    if (mand === true) {
+        cy.get('#isMandatory').check()
+    }
+
+    cy.get('#newOptionValue').type('Option 1')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option 2')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option 3')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('[onclick="javascript:submitQuestion()"]').click()
+
+    cy.wait(500)
+}
