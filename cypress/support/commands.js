@@ -23,3 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("login", (email, password) => {
+    cy.get('#username').type(email)
+    cy.get('#password').type(password)
+
+    cy.contains('Login').click()
+})
+
+Cypress.Commands.add("logout", () => {
+    cy.get('#header-logout').click({force: true})
+
+    cy.wait(6000)
+
+    cy.url().should('eq', 'https://test.delta-esourcing.com/')
+})

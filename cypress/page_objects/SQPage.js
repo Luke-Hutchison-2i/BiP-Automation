@@ -29,13 +29,13 @@ export function initialSQSetUp() {
     const min = Cypress.moment().format('m')
 
     var openMin = (Math.ceil(min/5)*5) + 5
-    var openHour = hour
+    var openHour = parseInt(hour)
 
     if (openMin >= 60) {
-        openMin = 0
+        openMin -= 60
         openHour += 1
         if (openHour > 24) {
-            openHour = 0
+            openHour -= 24
         }
     }
 

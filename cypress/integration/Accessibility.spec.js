@@ -30,16 +30,13 @@ function terminalLog(violations) {
     cy.task('table', violationData)
   }
 
-describe('Login', function() {
+describe('Accessibility', function() {
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
 
-        cy.get('#username').type('userguideaccount2@bipsolutions.com')
-        cy.get('#password').type('Tenders2020')
-
-        cy.contains('Login').click()
+        cy.login('userguideaccount2@bipsolutions.com', 'Tenders2020')
     })
 
     it ('Dashboard Page', () => {
@@ -50,5 +47,9 @@ describe('Login', function() {
         })
 
         cy.checkA11y(null, null, terminalLog)
+    })
+
+    afterEach(function () {
+        cy.logout()
     })
 })

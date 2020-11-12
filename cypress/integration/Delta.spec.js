@@ -8,16 +8,13 @@ import * as SQPage from "../page_objects/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 
-describe('Login', function() {
+describe('Tender Manager', function() {
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
 
-        cy.get('#username').type('userguideaccount2@bipsolutions.com')
-        cy.get('#password').type('Tenders2020')
-
-        cy.contains('Login').click()
+        cy.login('userguideaccount2@bipsolutions.com', 'Tenders2020')
     })
 
 
@@ -49,7 +46,7 @@ describe('Login', function() {
     })
 
     // In Progress
-    it ('Edit an existing notice', () => {
+    it.skip ('Edit an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
@@ -91,7 +88,7 @@ describe('Login', function() {
         cy.get('#documents-edit_questionnaire span').should('have.class', 'tick')
     })
 
-    it.only ('Set up evaluation plan', () => {
+    it ('Set up evaluation plan', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -110,10 +107,6 @@ describe('Login', function() {
     })
 
     afterEach(function () {
-        cy.get('#nav_logout').click()
-
-        cy.wait(2000)
-
-        cy.url().should('eq', 'https://test.delta-esourcing.com/')
+        cy.logout()
     })
 })
