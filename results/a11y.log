@@ -3,6 +3,7 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
+    "help": "Elements must have sufficient color contrast",
     "nodes": [
       {
         "any": [
@@ -42,6 +43,7 @@
     "id": "duplicate-id",
     "impact": "minor",
     "description": "Ensures every id attribute value is unique",
+    "help": "id attribute value must be unique",
     "nodes": [
       {
         "any": [
@@ -99,6 +101,7 @@
     "id": "heading-order",
     "impact": "moderate",
     "description": "Ensures the order of headings is semantically correct",
+    "help": "Heading levels should only increase by one",
     "nodes": [
       {
         "any": [
@@ -124,6 +127,7 @@
     "id": "landmark-one-main",
     "impact": "moderate",
     "description": "Ensures the document has a main landmark",
+    "help": "Document must have one main landmark",
     "nodes": [
       {
         "any": [],
@@ -149,6 +153,7 @@
     "id": "region",
     "impact": "moderate",
     "description": "Ensures all page content is contained by landmarks",
+    "help": "All page content must be contained by landmarks",
     "nodes": [
       {
         "any": [

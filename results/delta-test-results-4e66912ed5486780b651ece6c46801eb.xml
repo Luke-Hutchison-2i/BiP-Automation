@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0" tests="1" failures="1">
+  <testsuite name="Root Suite" timestamp="2020-11-12T14:37:02" tests="0" file="cypress\integration\Accessibility.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Accessibility" timestamp="2020-11-12T14:37:02" tests="1" failures="1" time="0">
+    <testcase name="Accessibility Dashboard Page" time="0" classname="Dashboard Page">
+      <failure message="5 accessibility violations were detected: expected 5 to equal 0" type="AssertionError"><![CDATA[AssertionError: 5 accessibility violations were detected: expected 5 to equal 0
+    at Context.eval (https://test.delta-esourcing.com/__cypress/tests?p=cypress\support\index.js:318:20)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

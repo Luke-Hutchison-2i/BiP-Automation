@@ -20,7 +20,7 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 //fs = require('fs')
-require('cypress-axe')
+require('cypress-axe');
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from

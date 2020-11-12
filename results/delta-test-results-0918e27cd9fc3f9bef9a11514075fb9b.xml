@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="103.541" tests="5" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2020-11-12T14:37:28" tests="0" file="cypress\integration\Delta.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Tender Manager" timestamp="2020-11-12T14:37:28" tests="5" failures="0" time="103.541">
+    <testcase name="Tender Manager Create Tender Exercise" time="18.43" classname="Create Tender Exercise">
+    </testcase>
+    <testcase name="Tender Manager Set up SQ" time="21.342" classname="Set up SQ">
+    </testcase>
+    <testcase name="Tender Manager Set up custom questionnaire" time="27.14" classname="Set up custom questionnaire">
+    </testcase>
+    <testcase name="Tender Manager Set up evaluation plan" time="36.629" classname="Set up evaluation plan">
+    </testcase>
+  </testsuite>
+</testsuites>
