@@ -33,6 +33,8 @@ function createSection() {
     cy.get('[onclick="javascript:submitPage()"]').click()
     
     cy.wait(500)
+
+    cy.reload()
 }
 
 function createSubSection() {

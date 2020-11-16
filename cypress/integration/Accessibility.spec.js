@@ -6,8 +6,9 @@ import * as SQPage from "../page_objects/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 
+var testName = 'None'
 
-function terminalLog(violations) {
+function terminalLog(violations, name) {
     cy.task(
       'log',
       `${violations.length} accessibility violation${
@@ -25,10 +26,20 @@ function terminalLog(violations) {
       })
     )
 
-    cy.writeFile('./results/a11y.log', violationData)
+    cy.writeFile('./results/' + testName + '_a11y.log', violationData)
    
     cy.task('table', violationData)
-  }
+}
+
+function accessibilityTest() {
+    cy.injectAxe()
+
+    cy.configureAxe({
+        reporter: 'v2'
+    })
+
+    cy.checkA11y(null, null, terminalLog)
+}
 
 describe('Accessibility', function() {
     beforeEach(function () {
@@ -40,13 +51,17 @@ describe('Accessibility', function() {
     })
 
     it ('Dashboard Page', () => {
-        cy.injectAxe()
+        testName = "Dashboard"
 
-        cy.configureAxe({
-            reporter: 'v2'
-        })
+        accessibilityTest()
+    })
 
-        cy.checkA11y(null, null, terminalLog)
+    it ('Tender Manager Page', () => {
+        testName = "Tender_Manager"
+
+        DashboardPage.gotoTenderManager()
+
+        accessibilityTest()
     })
 
     afterEach(function () {
