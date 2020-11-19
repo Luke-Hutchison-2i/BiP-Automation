@@ -7,6 +7,7 @@ import * as NoticePage from "../page_objects/NoticePage";
 import * as SQPage from "../page_objects/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
+import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 
 describe('Tender Manager', function() {
     beforeEach(function () {
@@ -46,7 +47,7 @@ describe('Tender Manager', function() {
     })
 
     // In Progress
-    it.skip ('Edit an existing notice', () => {
+    it ('Edit an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
@@ -104,6 +105,26 @@ describe('Tender Manager', function() {
         cy.url().should('include', 'viewListStatus.html')
 
         cy.get('#documents-edit_evaluation_plan span').should('have.class', 'tick')
+    })
+
+    it ('Add suppliers to SQ', () => {
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender()
+
+        TenderExercisePage.gotoExistingSQ()
+
+        SQPage.gotoAddSuppliers()
+
+        AddSuppliersPage.addByEmail()
+
+        SQPage.gotoAddSuppliers()
+
+        AddSuppliersPage.addExisitingSuppliers()
+
+        SQPage.gotoAddSuppliers()
+
+        AddSuppliersPage.removeTopSupplier()
     })
 
     afterEach(function () {
