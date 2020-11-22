@@ -14,6 +14,10 @@ export function gotoAddSuppliers() {
     cy.get('#suppliers-add_suppliers').click()
 }
 
+export function gotoMessageCentre() {
+    cy.get('#suppliers-message_centre').click()
+}
+
 export function initialSQSetUp() {
     cy.get('#list-setup').find('[name="name"]').clear().type('SQ Name')
 

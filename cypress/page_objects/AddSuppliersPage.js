@@ -17,7 +17,7 @@ export function addExisitingSuppliers() {
 export function addByEmail() {
     cy.get('#buttons-add_emails').click()
 
-    cy.get('[name="emailAddress"]').type('demosupplieracccount@bipsolutions.com')
+    cy.get('[name="emailAddress"]').type('demosupplieracccount@bipsolutions.com,mckechniesupplies@bipsolutions.com')
 
     cy.get('[name="next"]').click() // Invite button
 

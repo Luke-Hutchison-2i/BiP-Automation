@@ -8,14 +8,15 @@ import * as SQPage from "../page_objects/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
+import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 
-describe('Tender Manager', function() {
+describe('Tender Manager E2E', function() {
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
 
-        cy.login('userguideaccount2@bipsolutions.com', 'Tenders2020')
+        cy.login('userguideaccount3@bipsolutions.com', 'Tenders2020')
     })
 
 
@@ -121,13 +122,66 @@ describe('Tender Manager', function() {
         SQPage.gotoAddSuppliers()
 
         AddSuppliersPage.addExisitingSuppliers()
+    })
 
-        SQPage.gotoAddSuppliers()
+    it ('Message suppliers from Message Centre', () => {
+        DashboardPage.gotoTenderManager()
 
-        AddSuppliersPage.removeTopSupplier()
+        TenderManagerPage.gotoExistingTender()
+
+        TenderExercisePage.gotoExistingSQ()
+
+        SQPage.gotoMessageCentre()
+
+        MessageCentrePage.pickSupplier(0)
+
+        MessageCentrePage.sendDirectMessage()
+
+        cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
+
+        MessageCentrePage.sendNewTopic()
+
+        cy.contains('Message have been successfully sent to All Suppliers').should('exist')
+
+        MessageCentrePage.pickSupplier(0)
+
+        MessageCentrePage.disableMessages()
+
+        cy.contains('Enable Messages').should('exist')
+
+        cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })
 
     afterEach(function () {
         cy.logout()
     })
 })
+
+// describe('Message Centre', function () {
+//     beforeEach(function () {
+//         cy.visit('https://test.delta-esourcing.com/')
+
+//         cy.contains('Login / Register').click()
+
+//         cy.login('userguideaccount2@bipsolutions.com', 'Tenders2020')
+
+//         DashboardPage.gotoTenderManager()
+
+//         TenderManagerPage.gotoExistingTender()
+
+//         TenderExercisePage.gotoExistingSQ()
+
+//         SQPage.gotoMessageCentre()
+//     })
+
+//     it ('Disable Message with no supplier selected', () => {
+//         MessageCentrePage.disableMessages()
+
+//         cy.contains('Please select at least one item before submitting an action')
+//     })
+
+
+//     afterEach(function () {
+//         cy.logout()
+//     })
+// })
