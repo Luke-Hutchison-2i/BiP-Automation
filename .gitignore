@@ -1,3 +1,3 @@
 results
-videos
-screenshots
+cypress/videos
+cypress/screenshots
