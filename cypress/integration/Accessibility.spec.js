@@ -64,6 +64,50 @@ describe('Accessibility', function() {
         accessibilityTest()
     })
 
+    it ('Create Tender Page', () => {
+        testName = "Create_Tender"
+
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoCreateTenderExercise()
+
+        accessibilityTest()
+    })
+
+    it ('Tender Exercise Page', () => {
+        testName = "Tender_Exercise"
+
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender()
+
+        accessibilityTest()
+    })
+
+    it ('Create SQ Page', () => {
+        testName = "Questionnaire"
+
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender()
+
+        TenderExercisePage.gotoCreateSQ()
+
+        accessibilityTest()
+    })
+
+    it ('SQ Page', () => {
+        testName = "Questionnaire"
+
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender()
+
+        TenderExercisePage.gotoExistingSQ()
+
+        accessibilityTest()
+    })
+
     afterEach(function () {
         cy.logout()
     })

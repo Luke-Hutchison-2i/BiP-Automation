@@ -28,7 +28,7 @@ export function gotoEvaluateResponses() {
     })
 }
 
-export function initialSQSetUp(name) {
+export function initialBoxSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
     const date = Cypress.moment().format('DD/MM/YYYY')
@@ -42,7 +42,7 @@ export function initialSQSetUp(name) {
     const hour = parseInt(Cypress.moment().format('H'))
     const min = parseInt(Cypress.moment().format('m'))
 
-    var openMin = Math.ceil((min+1)/5)*5
+    var openMin = (Math.ceil((min+1)/5)*5)
     var openHour = hour
 
     if (openMin >= 60) {
