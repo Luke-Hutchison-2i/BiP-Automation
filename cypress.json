@@ -2,6 +2,8 @@
     "chromeWebSecurity": false,
     "reporter": "junit",
     "reporterOptions": {
-        "mochaFile": "results/delta-test-results-[hash].xml"
+        "mochaFile": "results/delta-test-results-[hash].xml",
+        "toConsole": true,
+        "attachments": true
     }
 }

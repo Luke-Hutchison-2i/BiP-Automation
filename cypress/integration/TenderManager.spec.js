@@ -29,24 +29,9 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Create Tender Exercise', () => {
         DashboardPage.gotoTenderManager()
 
-        cy.wait(1000)
-
         TenderManagerPage.gotoCreateTenderExercise()
 
-        // Create Tender Exercise
-
-        cy.get('[name=tenderName]').type(tenderName)
-        cy.get('[name=tenderDescription]').type('Tender Description')
-
-        cy.get('#noticeType').select('ContractNotice')
-
-        cy.get('#pqq_radio_true').check()
-
-        cy.get('[name="tenderBoxType"]').select('ITT')
-
-        cy.get('[name="save"]').click()
-
-        cy.wait(2000)
+        TenderManagerPage.createTenderExercise(tenderName)
 
         // Should be on the Tender Exercise Page
 
@@ -229,13 +214,9 @@ describe ('Tender Manager - Stage 2', function () {
         SQPage.gotoEvaluateResponses()
 
         EvalResponsesPage.evalSideBySide()
-
-        EvalResponsesPage.shortListSupplier(0)
-
-        ShortlistedSupppliersPage.exportSupplierToTenderBox()
     })
 
-    it.skip ('Shortlist supplier', () => {
+    it ('Shortlist supplier', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
