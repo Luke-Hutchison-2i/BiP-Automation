@@ -1,10 +1,12 @@
-export function createCustomQuestionnaire() {
+export function chooseCustonQuestionnaire() {
     cy.get('#customQuestionnaire').check()
 
     cy.get('[name="selectPQQ"]').click()
 
     cy.url().should('include', 'editQuestionnaireForm.html')
+}
 
+export function createCustomQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
     createSubSection()

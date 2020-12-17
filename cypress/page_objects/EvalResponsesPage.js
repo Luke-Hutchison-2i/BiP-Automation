@@ -42,7 +42,7 @@ export function evalConsensus(index) {
 export function evalSideBySide() {
     cy.get('#tabs-overview').click()
 
-    cy.get('#sideBySideEvaluation').click()
+    cy.get('#buttons-sxs_eval').click()
 
     cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
 

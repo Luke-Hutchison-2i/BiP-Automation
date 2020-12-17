@@ -1,17 +1,17 @@
 /// <reference types="cypress" />
 
 import * as DashboardPage from "../page_objects/DashboardPage";
-import * as TenderManagerPage from "../page_objects/TenderManagerPage";
-import * as TenderExercisePage from "../page_objects/TenderExercisePage";
+import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
+import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
 import * as NoticePage from "../page_objects/NoticePage";
-import * as SQPage from "../page_objects/SQPage";
+import * as SQPage from "../page_objects/tender_manager/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
-import * as ShortlistedSupppliersPage from "../page_objects/ShortlistedSupppliersPage";
-import * as TenderBoxPage from "../page_objects/TenderBoxPage";
+import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
+import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
 
 const tenderName = "testTenderName"
 const sqName = "testSQName"
@@ -23,7 +23,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         cy.contains('Login / Register').click()
 
-        cy.login('userguideaccount3@bipsolutions.com', 'Tenders2020')
+        cy.login('buyer')
     })
 
     it ('Create Tender Exercise', () => {
@@ -39,7 +39,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     // In Progress
-    it ('Edit an existing notice', () => {
+    it.skip ('Edit an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
@@ -72,13 +72,18 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoCreateQuestionnaire()
+        SQPage.gotoCreateNewQuestionnaire()
+
+        QuestionnairePage.chooseCustonQuestionnaire()
 
         QuestionnairePage.createCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
+        cy.get('#documents-edit_questionnaire').should('exist')
+
         cy.get('#documents-edit_questionnaire span').should('have.class', 'tick')
+        
     })
 
     it ('Set up evaluation plan', () => {
@@ -89,8 +94,6 @@ describe ('Tender Manager - Stage 1', function() {
         TenderExercisePage.gotoExistingSQ()
 
         SQPage.gotoCreateEvalPlan()
-
-        cy.wait(2000)
 
         EvalPlanPage.createEvalPlan()
 
@@ -153,7 +156,25 @@ describe ('Tender Manager - Stage 1', function() {
 
 describe ('Supplier for SQ', function () {
     before(function () {
-        cy.wait(150000)
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
+
+        var curTime = (hour * 60) + min;
+
+        const sqOpenMin = SQPage.openMin;
+        const sqOpenHour = SQPage.openHour;
+
+        var openTime = (sqOpenHour * 60) + sqOpenMin;
+
+        const waitTime = (openTime - curTime) * 60 * 1000
+
+        cy.log(openTime)
+        cy.log(curTime)
+        cy.log(waitTime)
+
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
     })
 
     it ('Supplier submits response', () => {
@@ -161,7 +182,7 @@ describe ('Supplier for SQ', function () {
 
         cy.contains('Login / Register').click()
 
-        cy.login('demosupplieracccount@bipsolutions.com', 'Tenders2020')
+        cy.login('supplier')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -191,7 +212,25 @@ describe ('Supplier for SQ', function () {
     })
 
     after(function () {
-        cy.wait(300000)
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
+
+        var curTime = (hour * 60) + min;
+
+        const sqCloseMin = SQPage.closeMin;
+        const sqCloseHour = SQPage.closeHour;
+
+        var closeTime = (sqCloseHour * 60) + sqCloseMin;
+
+        const waitTime = (closeTime - curTime) * 60 * 1000
+
+        cy.log(closeTime)
+        cy.log(curTime)
+        cy.log(waitTime)
+
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
     })
 })
 
@@ -201,7 +240,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         cy.contains('Login / Register').click()
 
-        cy.login('userguideaccount3@bipsolutions.com', 'Tenders2020')
+        cy.login('buyer')
     })
 
     it ('Evaluate SQ responses', () => {
@@ -227,7 +266,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         EvalResponsesPage.shortListSupplier(0)
 
-        ShortlistedSupppliersPage.exportSupplierToTenderBox()
+        ShortlistedSuppliersPage.exportSupplierToTenderBox()
     })
 
     it ('Set up Tender Box', () => {
@@ -247,7 +286,9 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderExercisePage.gotoExistingTenderBox()
 
-        TenderBoxPage.gotoCreateQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
+
+        QuestionnairePage.chooseCustonQuestionnaire()
 
         QuestionnairePage.createCustomQuestionnaire()
 
@@ -328,7 +369,25 @@ describe ('Tender Manager - Stage 2', function () {
 
 describe ('Supplier for TenderBox', function () {
     before(function () {
-        cy.wait(150000)
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
+
+        var curTime = (hour * 60) + min;
+
+        const sqOpenMin = TenderBoxPage.openMin;
+        const sqOpenHour = TenderBoxPage.openHour;
+
+        var openTime = (sqOpenHour * 60) + sqOpenMin;
+
+        const waitTime = (openTime - curTime) * 60 * 1000
+
+        cy.log(openTime)
+        cy.log(curTime)
+        cy.log(waitTime)
+
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
     })
 
     it ('Supplier submits response', () => {
@@ -336,7 +395,7 @@ describe ('Supplier for TenderBox', function () {
 
         cy.contains('Login / Register').click()
 
-        cy.login('demosupplieracccount@bipsolutions.com', 'Tenders2020')
+        cy.login('supplier', 'Tenders2020')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -366,7 +425,25 @@ describe ('Supplier for TenderBox', function () {
     })
 
     after(function () {
-        cy.wait(300000)
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
+
+        var curTime = (hour * 60) + min;
+
+        const sqCloseMin = TenderBoxPage.closeMin;
+        const sqCloseHour = TenderBoxPage.closeHour;
+
+        var closeTime = (sqCloseHour * 60) + sqCloseMin;
+
+        const waitTime = (closeTime - curTime) * 60 * 1000
+
+        cy.log(closeTime)
+        cy.log(curTime)
+        cy.log(waitTime)
+
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
     })
 })
 
@@ -376,10 +453,10 @@ describe ('Tender Manager - Stage 3', function () {
 
         cy.contains('Login / Register').click()
 
-        cy.login('userguideaccount3@bipsolutions.com', 'Tenders2020')
+        cy.login('buyer')
     })
 
-    it ('Evaluate SQ responses', () => {
+    it ('Evaluate TenderBox responses', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -402,7 +479,7 @@ describe ('Tender Manager - Stage 3', function () {
 
         EvalResponsesPage.awardContract()
 
-        cy.contains('TenderBox: ' + 'testBoxName' + ' has been awarded to: BiP Solutions').should('exist')
+        cy.contains('TenderBox: ' + boxName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
     afterEach(function () {

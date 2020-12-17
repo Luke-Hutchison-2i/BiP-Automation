@@ -24,9 +24,17 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("login", (email, password) => {
+Cypress.Commands.add("login", (type) => {
+    var email
+
+    if (type === "buyer") {
+        email = "userguideaccount3@bipsolutions.com"
+    } else if (type === "supplier") {
+        email = "demosupplieracccount@bipsolutions.com"
+    }
+
     cy.get('#username').type(email)
-    cy.get('#password').type(password)
+    cy.get('#password').type("Tenders2020")
 
     cy.contains('Login').click()
 })

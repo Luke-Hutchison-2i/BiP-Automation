@@ -12,7 +12,7 @@ export function initialQuestionnaireSetUp(name) {
     const hour = parseInt(Cypress.moment().format('H'))
     const min = parseInt(Cypress.moment().format('m'))
 
-    var openMin = Math.ceil((min+1)/5)*5
+    var openMin = Math.ceil((min+2)/5)*5
     var openHour = hour
 
     if (openMin >= 60) {
@@ -26,14 +26,14 @@ export function initialQuestionnaireSetUp(name) {
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 
-    var closingMin = (Math.ceil((min+1)/5)*5) + 5
-    var closingHour = hour
+    var closeMin = (Math.ceil((min+2)/5)*5) + 5
+    var closeHour = hour
 
-    if (closingMin >= 60) {
-        closingMin -= 60
-        closingHour += 1
-        if (closingHour >= 24) {
-            closingHour -= 24
+    if (closeMin >= 60) {
+        closeMin -= 60
+        closeHour += 1
+        if (closeHour >= 24) {
+            closeHour -= 24
         }
     }
 
@@ -42,5 +42,22 @@ export function initialQuestionnaireSetUp(name) {
 
     cy.wait(2000)
 
+    exports.openMin = openMin;
+    exports.openHour = openHour;
+    exports.closeMin = closeMin;
+    exports.closeHour = closeHour;
+
     cy.get('#save_dates').click()
+}
+
+export function gotoCreateQuestionnaire() {
+    cy.get('#documents-select_questionnaire_type').click()
+}
+
+export function gotoCreateEvalPlan() {
+    cy.get('#documents-edit_evaluation_plan').click()
+}
+
+export function gotoAddSuppliers() {
+    cy.get('#suppliers-add_suppliers').click()
 }

@@ -1,5 +1,17 @@
-export function gotoCreateQuestionnaire() {
-    cy.get('#documents-select_questionnaire_type').click()
+export function gotoCreateNewQuestionnaire() {
+    cy.get('#documents-select_questionnaire_type').should('exist').click()
+
+    // cy.get('body').then($body => {
+    //     if ($body.find('#documents-select_questionnaire_type').length) {
+    //         cy.get('#documents-select_questionnaire_type').click()
+    //     } else {
+    //         cy.get('#documents-edit_questionnaire').click()
+    //     }
+    // })
+}
+
+export function gotoEditQuestionnaire() {
+    cy.get('#documents-edit_questionnaire').should('exist').click()
 }
 
 export function gotoCreateEvalPlan() {
@@ -20,6 +32,8 @@ export function gotoMessageCentre() {
 
 export function gotoEvaluateResponses() {
     cy.get('#responses-view_responses').click()
+
+    cy.wait(1000)
 
     cy.get('body').then($body => {
         if ($body.find('#confirm-popup #ok-confirm').length) {
@@ -42,7 +56,7 @@ export function initialSQSetUp(name) {
     const hour = parseInt(Cypress.moment().format('H'))
     const min = parseInt(Cypress.moment().format('m'))
 
-    var openMin = Math.ceil((min+1)/5)*5
+    var openMin = Math.ceil((min+2)/5)*5
     var openHour = hour
 
     if (openMin >= 60) {
@@ -56,21 +70,26 @@ export function initialSQSetUp(name) {
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 
-    var closingMin = (Math.ceil((min+1)/5)*5) + 5
-    var closingHour = hour
+    var closeMin = (Math.ceil((min+2)/5)*5) + 5
+    var closeHour = hour
 
-    if (closingMin >= 60) {
-        closingMin -= 60
-        closingHour += 1
-        if (closingHour >= 24) {
-            closingHour -= 24
+    if (closeMin >= 60) {
+        closeMin -= 60
+        closeHour += 1
+        if (closeHour >= 24) {
+            closeHour -= 24
         }
     }
 
-    cy.get('#metadata\\.closingHour').select(closingHour.toString())
-    cy.get('#metadata\\.closingMin').select(closingMin.toString())
+    cy.get('#metadata\\.closingHour').select(closeHour.toString())
+    cy.get('#metadata\\.closingMin').select(closeMin.toString())
 
     cy.wait(2000)
+
+    exports.openMin = openMin;
+    exports.openHour = openHour;
+    exports.closeMin = closeMin;
+    exports.closeHour = closeHour;
 
     cy.get('#save_dates').click()
 }

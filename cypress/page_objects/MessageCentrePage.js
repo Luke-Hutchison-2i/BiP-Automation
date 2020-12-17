@@ -9,11 +9,11 @@ export function sendDirectMessage() {
 
     cy.url().should('include', 'emailSuppliers')
 
-    cy.get('#subject').type('Test Subject')
+    cy.get('#input-message_subject').type('Test Subject')
 
     cy.get('#invitationText').type('Test Body')
 
-    cy.get('[name="send"]').click()
+    cy.get('#buttons-send_message').click()
 
     //cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
 }
@@ -25,11 +25,11 @@ export function sendNewTopic() {
 
     //cy.contains('Please make sure that there will be no suppliers details on this message. All suppliers will be able to see this message.').should('exist')
 
-    cy.get('#subject').type('Topic Subject')
+    cy.get('#input-message_subject').type('Topic Subject')
 
     cy.get('#invitationText').type('Topic Body')
 
-    cy.get('[name="send"]').click()
+    cy.get('#buttons-send_message').click()
 
     //cy.contains('Message have been successfully sent to All Suppliers').should('exist')
 }
