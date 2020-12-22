@@ -37,8 +37,8 @@ export function initialQuestionnaireSetUp(name) {
         }
     }
 
-    cy.get('#metadata\\.closingHour').select(closingHour.toString())
-    cy.get('#metadata\\.closingMin').select(closingMin.toString())
+    cy.get('#metadata\\.closingHour').select(closeHour.toString())
+    cy.get('#metadata\\.closingMin').select(closeMin.toString())
 
     cy.wait(2000)
 

@@ -278,7 +278,9 @@ function fillPage6() {
 
     cy.get("#complementaryInformation\\.bodyAppealProcedures\\.responseDataAccessor\\.refVals\\[\\'ADDRESS\\'\\]\\.addressResponse\\.country").select('UK')
 
-    cy.get('#-1\\.TELEPHONE').clear().type('+44 123456789')
+    cy.get('[name="complementaryInformation\\.bodyAppealProcedures\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
+    cy.get('[name="complementaryInformation\\.bodyMediationProcedures\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
+    cy.get('[name="complementaryInformation\\.serviceLodgingAppeals\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
 
     cy.get('#-1\\.EMAIL').clear().type('liam.meagher@bipsolutions.com')
 
