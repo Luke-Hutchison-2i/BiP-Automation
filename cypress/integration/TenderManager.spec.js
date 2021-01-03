@@ -26,7 +26,7 @@ describe ('Tender Manager - Stage 1', function() {
         cy.login('buyer')
     })
 
-    it.only ('Create Tender Exercise', () => {
+    it ('Create Tender Exercise', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoCreateTenderExercise()
@@ -43,7 +43,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     // In Progress
-    it.only ('Edit an existing notice', () => {
+    it ('Edit an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
