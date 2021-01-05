@@ -28,7 +28,7 @@ Cypress.Commands.add("login", (type) => {
     var email
 
     if (type === "buyer") {
-        email = "userguideaccount2@bipsolutions.com"
+        email = "userguideaccount3@bipsolutions.com"
     } else if (type === "supplier") {
         email = "demosupplieracccount@bipsolutions.com"
     }
