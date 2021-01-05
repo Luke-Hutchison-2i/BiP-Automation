@@ -38,8 +38,6 @@ describe ('Tender Manager - Stage 1', function() {
         cy.url().should('include', 'delta/buyers/tenders/viewTenderStatus')
 
         cy.contains('Tender Exercise ' + tenderName + ' has been created')
-
-        cy.logout()
     })
 
     // In Progress
@@ -154,7 +152,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     afterEach(function () {
-        //cy.logout()
+        cy.logout()
     })
 })
 

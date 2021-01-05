@@ -28,6 +28,7 @@ export function evalConsensus(index) {
     cy.get('[name^="scores"][name$="comment"]').eq(1).type('Great answer')
 
     cy.get('#navigation-page_2').click()
+    cy.wait(500)
 
     cy.get('[name^="scores"][name$="score"]').eq(0).select('-100')
     cy.get('[name^="scores"][name$="comment"]').eq(0).type('Bad answer')
@@ -42,7 +43,8 @@ export function evalConsensus(index) {
 export function evalSideBySide() {
     cy.get('#tabs-overview').click()
 
-    cy.get('#buttons-sxs_eval').click()
+    //cy.get('#buttons-sxs_eval').click()
+    cy.get('#sideBySideEvaluation').click()
 
     cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
 

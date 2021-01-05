@@ -1,4 +1,40 @@
-export function initialQuestionnaireSetUp(name) {
+export function gotoCreateNewQuestionnaire() {
+    cy.get('#documents-select_questionnaire_type').click()
+}
+
+export function gotoEditQuestionnaire() {
+    cy.get('#documents-edit_questionnaire').should('exist').click()
+}
+
+export function gotoCreateEvalPlan() {
+    cy.get('#documents-edit_evaluation_plan').click()
+}
+
+export function gotoUploadDocs() {
+    cy.get('#documents-upload_documents').click()
+}
+
+export function gotoAddSuppliers() {
+    cy.get('#suppliers-add_suppliers').click()
+}
+
+export function gotoMessageCentre() {
+    cy.get('#suppliers-message_centre').click()
+}
+
+export function gotoEvaluateResponses() {
+    cy.get('#responses-view_responses').click()
+
+    cy.wait(1000)
+
+    cy.get('body').then($body => {
+        if ($body.find('#confirm-popup #ok-confirm').length) {
+            cy.get('#ok-confirm').click()
+        }
+    })
+}
+
+export function initialBoxSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
     const date = Cypress.moment().format('DD/MM/YYYY')
@@ -12,7 +48,7 @@ export function initialQuestionnaireSetUp(name) {
     const hour = parseInt(Cypress.moment().format('H'))
     const min = parseInt(Cypress.moment().format('m'))
 
-    var openMin = Math.ceil((min+2)/5)*5
+    var openMin = (Math.ceil((min+2)/5)*5)
     var openHour = hour
 
     if (openMin >= 60) {
@@ -48,28 +84,4 @@ export function initialQuestionnaireSetUp(name) {
     exports.closeHour = closeHour;
 
     cy.get('#save_dates').click()
-}
-
-export function gotoCreateQuestionnaire() {
-    cy.get('#documents-select_questionnaire_type').click()
-}
-
-export function gotoCreateEvalPlan() {
-    cy.get('#documents-edit_evaluation_plan').click()
-}
-
-export function gotoAddSuppliers() {
-    cy.get('#suppliers-add_suppliers').click()
-}
-
-export function gotoEvaluateResponses() {
-    cy.get('#responses-view_responses').click()
-
-    cy.wait(1000)
-
-    cy.get('body').then($body => {
-        if ($body.find('#confirm-popup #ok-confirm').length) {
-            cy.get('#ok-confirm').click()
-        }
-    })
 }
