@@ -3,6 +3,8 @@ export function addExisitingSuppliers() {
 
     cy.get('select[name="filterByExercise"]').select('Org')
 
+    cy.get('#filterByTitle').type('FORTEST')
+
     cy.get('[name="submit"]').click()
 
     cy.get('#table-confirm').eq(0).click()
@@ -42,6 +44,4 @@ export function removeTopSupplier() {
     cy.get('[name="action"]').click().then(() => {
         cy.get('#suppliersListing').find('input[type="checkbox"]').should('have.length', length - 1)
     })
-
-
 }

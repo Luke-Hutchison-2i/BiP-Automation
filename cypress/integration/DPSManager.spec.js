@@ -9,6 +9,7 @@ import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
+import * as DPSSelectListPage from "../page_objects/DPSSelectListPage";
 import * as DPSMiniCompPage from "../page_objects/dps_manager/DPSMiniCompPage";
 
 const dpsName = "testDPSName"
@@ -48,9 +49,11 @@ describe ('DPS Manager - Stage 1', function() {
         DPSQuestionnairePage.initialQuestionnaireSetUp(questionnaireName)
 
         cy.url().should('include', 'delta/buyers/select/viewListStatus.html')
+
+        cy.contains("SQ with name '" + questionnaireName + "' has now been updated.")
     })
 
-    it ('Create custom questionnaire', () => {
+    it ('Create custom questionnaire for DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
         DPSManagerPage.gotoExistingDPS()
@@ -203,10 +206,12 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSQuestionnairePage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalSideBySide()
+        EvalResponsesPage.dpsEvalSideBySide()
+
+        EvalResponsesPage.dpsEvalConsensus(0)
     })
 
-    it ('Shortlist supplier', () => {
+    it ('Accept supplier', () => {
         DashboardPage.gotoDPSManager()
 
         DPSManagerPage.gotoExistingDPS()
@@ -215,19 +220,81 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSQuestionnairePage.gotoEvaluateResponses()
 
-        EvalResponsesPage.shortListSupplier(0)
+        EvalResponsesPage.dpsApproveSupplier(0)
 
-        ShortlistedSuppliersPage.exportSupplierToTenderBox()
+        cy.contains('1 out of 1 Suppliers have been approved and added to testQuestionnaireName. Please note - Only pending users can be Approved, Declined and Removed users cannot be approved and added to a DPS Supplier List.').should('exist')
     })
 
-    it ('Set up Mine Comp', () => {
+    it ('Publish Select List', () => {
+        DashboardPage.gotoDPSManager()
+
+        DPSManagerPage.gotoExistingDPS()
+
+        DPSExercisePage.gotoExistingQuestionnaire()
+
+        DPSQuestionnairePage.gotoViewSelectList()
+
+        DPSSelectListPage.publishSelectList()
+
+        cy.contains('This Select List has been published and is now viewable throughout your Organisation').should('exist')       
+    })
+
+    it ('Set up Mini Comp', () => {
+        DashboardPage.gotoDPSManager()
+
+        DPSManagerPage.gotoExistingDPS()
+
+        DPSExercisePage.gotoCreateMiniComp()
+
+        DPSMiniCompPage.initialBoxSetUp(compName)
+
+        cy.contains("Tenderbox with name '" + compName + "' has now been created.")
+    })
+
+    it ('Create custom questionnaire for Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
         DPSManagerPage.gotoExistingDPS()
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.initialBoxSetUp(compName)
+        DPSMiniCompPage.gotoCreateNewQuestionnaire()
+
+        QuestionnairePage.chooseCustonQuestionnaire()
+
+        QuestionnairePage.createCustomQuestionnaire()
+
+        cy.url().should('include', 'viewListStatus.html')
+
+        cy.get('#documents-edit_questionnaire span').should('have.class', 'tick')
+    })
+
+    it ('Create Eval Plan for Mini Comp', () => {
+        DashboardPage.gotoDPSManager()
+
+        DPSManagerPage.gotoExistingDPS()
+
+        DPSExercisePage.gotoExistingMiniComp()
+
+        DPSMiniCompPage.gotoCreateEvalPlan()
+
+        EvalPlanPage.createEvalPlan()
+
+        cy.url().should('include', 'viewListStatus.html')
+
+        cy.get('#documents-edit_evaluation_plan span').should('have.class', 'tick')
+    })
+
+    it ('Add suppliers to Mini Comp', () => {
+        DashboardPage.gotoDPSManager()
+
+        DPSManagerPage.gotoExistingDPS()
+
+        DPSExercisePage.gotoExistingMiniComp()
+
+        DPSMiniCompPage.gotoAddSuppliers()
+
+        AddSuppliersPage.addByEmail()
     })
 
     afterEach(function () {

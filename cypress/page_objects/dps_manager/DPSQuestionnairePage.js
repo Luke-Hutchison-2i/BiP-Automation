@@ -73,3 +73,7 @@ export function gotoEvaluateResponses() {
         }
     })
 }
+
+export function gotoViewSelectList() {
+    cy.get('#responses-view_supplier_list').click()
+}
