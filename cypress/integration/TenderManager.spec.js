@@ -41,7 +41,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     // In Progress
-    it ('Edit an existing notice', () => {
+    it ('Set up an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
@@ -55,7 +55,7 @@ describe ('Tender Manager - Stage 1', function() {
         NoticePage.createContractNotice()
     })
 
-    it ('Set up SQ', () => {
+    it ('Create SQ', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -67,7 +67,7 @@ describe ('Tender Manager - Stage 1', function() {
         cy.url().should('include', 'delta/buyers/select/viewListStatus.html')
     })
 
-    it ('Set up custom questionnaire', () => {
+    it ('Set up custom questionnaire for SQ', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -88,7 +88,7 @@ describe ('Tender Manager - Stage 1', function() {
         
     })
 
-    it ('Set up evaluation plan', () => {
+    it ('Set up evaluation plan for SQ', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -179,7 +179,7 @@ describe ('Supplier for SQ', function () {
         }
     })
 
-    it ('Supplier submits response', () => {
+    it ('Supplier submits response for SQ', () => {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
@@ -245,7 +245,7 @@ describe ('Tender Manager - Stage 2', function () {
         cy.login('buyer')
     })
 
-    it ('Evaluate SQ responses', () => {
+    it ('Evaluate responses for SQ', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -257,7 +257,7 @@ describe ('Tender Manager - Stage 2', function () {
         EvalResponsesPage.evalSideBySide()
     })
 
-    it ('Shortlist supplier', () => {
+    it ('Shortlist supplier for SQ', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -271,7 +271,7 @@ describe ('Tender Manager - Stage 2', function () {
         ShortlistedSuppliersPage.exportSupplierToTenderBox()
     })
 
-    it ('Set up Tender Box', () => {
+    it ('Create Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -281,7 +281,7 @@ describe ('Tender Manager - Stage 2', function () {
         TenderBoxPage.initialBoxSetUp(boxName)
     })
 
-    it ('Set up custom questionnaire', () => {
+    it ('Set up custom questionnaire for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -292,14 +292,15 @@ describe ('Tender Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createCustomQuestionnaire()
+        //QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createPriceCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
         cy.get('#documents-edit_questionnaire span').should('have.class', 'tick')
     })
 
-    it ('Set up evaluation plan', () => {
+    it ('Set up evaluation plan for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -310,7 +311,8 @@ describe ('Tender Manager - Stage 2', function () {
 
         cy.wait(2000)
 
-        EvalPlanPage.createEvalPlan()
+        //EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createPriceEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -331,37 +333,6 @@ describe ('Tender Manager - Stage 2', function () {
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addExisitingSuppliers()
-    })
-
-    it ('Message suppliers', () => {
-        DashboardPage.gotoTenderManager()
-
-        TenderManagerPage.gotoExistingTender()
-
-        TenderExercisePage.gotoExistingTenderBox()
-
-        TenderBoxPage.gotoMessageCentre()
-
-        cy.url().should('include', 'supplierListMessageCentre')
-        cy.url().should('include', 'listType=TenderBox')
-
-        MessageCentrePage.pickSupplier(0)
-
-        MessageCentrePage.sendDirectMessage()
-
-        cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
-
-        MessageCentrePage.sendNewTopic()
-
-        cy.contains('Message have been successfully sent to All Suppliers').should('exist')
-
-        MessageCentrePage.pickSupplier(0)
-
-        MessageCentrePage.disableMessages()
-
-        cy.contains('Enable Messages').should('exist')
-
-        cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })
 
     afterEach(function () {
@@ -392,7 +363,7 @@ describe ('Supplier for TenderBox', function () {
         }
     })
 
-    it ('Supplier submits response', () => {
+    it ('Supplier submits response for Tender Box', () => {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
@@ -407,15 +378,15 @@ describe ('Supplier for TenderBox', function () {
 
         cy.contains('Continue to Stage Two').click()
 
-        cy.get('#yes0').check()
+        cy.get('#bid_0').type('25000')
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
 
         cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        //cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+
+        //cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
         cy.get('[name="confirmSubmit"').click()
 
@@ -458,7 +429,7 @@ describe ('Tender Manager - Stage 3', function () {
         cy.login('buyer')
     })
 
-    it ('Evaluate TenderBox responses', () => {
+    it ('Evaluate responses for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -467,7 +438,13 @@ describe ('Tender Manager - Stage 3', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalConsensus(0)
+        EvalResponsesPage.evalPriceQuestionnaire(0)
+
+        cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).should('have.text', 'Completed')
+
+        EvalResponsesPage.evalPriceConsensus(0)
+
+        cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).should('have.text', 'Completed')
     })
 
     it ('Award contract to supplier', () => {

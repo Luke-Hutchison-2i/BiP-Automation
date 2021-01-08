@@ -42,7 +42,7 @@ Cypress.Commands.add("login", (type) => {
 Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
 
-    cy.wait(6000)
+    cy.wait(5000)
 
     cy.url().should('eq', 'https://test.delta-esourcing.com/')
 })

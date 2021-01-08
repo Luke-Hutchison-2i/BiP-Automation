@@ -45,3 +45,17 @@ export function removeTopSupplier() {
         cy.get('#suppliersListing').find('input[type="checkbox"]').should('have.length', length - 1)
     })
 }
+
+
+
+export function dpsAddExistingSuppliers() {
+    cy.get('#buttons-import_supplier').click()
+
+    cy.get('#table-confirm').eq(0).click()
+
+    cy.get('input[type="checkbox"]').check()
+
+    cy.get('[name="inviteSelectedSuppliers"]').click()
+
+    cy.get('[name="invite"]').click()
+}

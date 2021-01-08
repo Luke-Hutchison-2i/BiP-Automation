@@ -25,6 +25,16 @@ export function createCustomQuestionnaire() {
     cy.get('#form-return_to_overview').click()
 }
 
+export function createPriceCustomQuestionnaire() {
+    createPriceQuestion(0, 'Name', 'Enter full price')
+
+    cy.wait(500)
+
+    createQuestion(0, 'What currency?', 'Not much help', 'currency', true)
+
+    cy.get('#form-return_to_overview').click()
+}
+
 function createSection() {
     cy.contains('Add Section').click()
 
@@ -54,11 +64,11 @@ function createSubSection() {
 function createQuestion(sub, text, help, type, mand) {
     cy.get('#form-section_' + sub + '-add').click()
 
+    cy.get('#answerType').select(type)
+
     cy.get('#questionText').type(text)
 
     cy.get('#helpText').type(help)
-
-    cy.get('#answerType').select(type)
 
     if (mand === true) {
         cy.get('#isMandatory').check()
@@ -90,6 +100,20 @@ function createMultipleQuestion(sub, text, help, mand) {
 
     cy.get('#newOptionValue').type('Option 3')
     cy.get('#form-add_new_option').click()
+
+    cy.get('[onclick="javascript:submitQuestion()"]').click()
+
+    cy.wait(500)
+}
+
+function createPriceQuestion(sub, text, help) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.get('#answerType').select('lot')
+
+    cy.get('#questionText').should('have.value', 'Total Bid Amount')
+
+    cy.get('#helpText').type(help)
 
     cy.get('[onclick="javascript:submitQuestion()"]').click()
 

@@ -112,6 +112,30 @@ export function dpsEvalConsensus(index) {
     cy.contains('Return to Responses').click()
 }
 
+export function evalPriceQuestionnaire(index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
+
+    cy.get('[name="scores\\[1\\]\\.evaluatorScores\\[0\\]\\.score"]').select('7')
+
+    cy.get('[name="save"]').click()
+
+    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
+
+    cy.contains('Return to Responses').click()
+}
+
+export function evalPriceConsensus(index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+
+    cy.get('[name="scores\\[1\\]\\.evaluatorScores\\[0\\]\\.score"]').select('8')
+
+    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
+
+    cy.get('[name="save"]').click()
+
+    cy.contains('Return to Responses').click()
+}
+
 export function shortListSupplier(index) {
     cy.get('#tabs-overview').click()
 
