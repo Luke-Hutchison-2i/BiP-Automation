@@ -440,11 +440,11 @@ describe ('Tender Manager - Stage 3', function () {
 
         EvalResponsesPage.evalPriceQuestionnaire(0)
 
-        cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).should('have.text', 'Completed')
+        cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(0).should('contain.text', 'Completed')
 
         EvalResponsesPage.evalPriceConsensus(0)
 
-        cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).should('have.text', 'Completed')
+        cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Completed')
     })
 
     it ('Award contract to supplier', () => {

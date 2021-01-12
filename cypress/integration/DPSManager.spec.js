@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+// / <reference types="cypress" />
 
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as DPSManagerPage from "../page_objects/dps_manager/DPSManagerPage";
@@ -343,13 +343,9 @@ describe ('Supplier for Mini Comp', function () {
 
         cy.contains('Continue to Stage Two').click()
 
-        cy.get('#yes0').check()
+        cy.get('#bid_0').type('25000')
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
 
         cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
@@ -403,7 +399,7 @@ describe ('DPS Manager - Stage 3', function () {
 
         DPSMiniCompPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalConsensus(0)
+        EvalResponsesPage.evalDPSPriceConsensus(0)
     })
 
     it ('Award contract to supplier', () => {

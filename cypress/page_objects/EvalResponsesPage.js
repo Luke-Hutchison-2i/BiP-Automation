@@ -64,7 +64,7 @@ export function evalSideBySide() {
 
     cy.get('#button_update').click()
 
-    cy.get('[id^="completed_"]').check()
+    cy.get('[id^="completed_"]').eq(0).check()
 
     cy.contains('Save & Return').click()
 }
@@ -127,9 +127,21 @@ export function evalPriceQuestionnaire(index) {
 export function evalPriceConsensus(index) {
     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
 
-    cy.get('[name="scores\\[1\\]\\.evaluatorScores\\[0\\]\\.score"]').select('8')
+    cy.get('[name="scores\\[1\\]\\.score"]').select('8')
 
-    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
+    cy.get('#completedEvaluation').check()
+
+    cy.get('[name="save"]').click()
+
+    cy.contains('Return to Responses').click()
+}
+
+export function evalDPSPriceConsensus(index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+
+    cy.get('[name="scores\\[1\\]\\.score"]').select('8')
+
+    cy.get('#completedEvaluation').check()
 
     cy.get('[name="save"]').click()
 
@@ -155,9 +167,9 @@ export function dpsApproveSupplier(index) {
 export function awardContract() {
     cy.get('#tabs-overview').click()
 
-    cy.get('#pqqResp tbody').find('input[type="checkbox"]').eq(0).check()   
+    cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(0).check()   
 
-    cy.get('[name="tenderboxAward"]').click()
+    cy.get('#buttons-award_contract').click()
 
     cy.get('[name="confirm"]').click()
 }
