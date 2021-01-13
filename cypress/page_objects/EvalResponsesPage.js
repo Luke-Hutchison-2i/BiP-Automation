@@ -64,6 +64,8 @@ export function evalSideBySide() {
 
     cy.get('#button_update').click()
 
+    cy.wait(1000)
+
     cy.get('[id^="completed_"]').eq(0).check()
 
     cy.contains('Save & Return').click()

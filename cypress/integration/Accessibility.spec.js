@@ -46,7 +46,7 @@ function accessibilityTest() {
         reporter: 'v2'
     })
 
-    cy.checkA11y(null, null, terminalLog)
+    cy.checkA11y(null, null, terminalLog, true)
 }
 
 describe('Accessibility - TenderManager 1', function() {
@@ -191,7 +191,7 @@ describe('Accessibility - TenderManager 1', function() {
     })
 })
 
-describe ('Accessibility - Tender Manager 2', function () {
+describe ('Supplier for SQ', function () {
     before(function () {
         const min = parseInt(Cypress.moment().format('m'));
         const hour = parseInt(Cypress.moment().format('H'));
@@ -212,12 +212,14 @@ describe ('Accessibility - Tender Manager 2', function () {
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
+    })
 
+    it ('Supplier submits response for SQ', () => {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
 
-        cy.login('supplier', 'Tenders2020')
+        cy.login('supplier')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -240,29 +242,107 @@ describe ('Accessibility - Tender Manager 2', function () {
         cy.get('[name="confirmSubmit"').click()
 
         cy.contains('Response Successfully Submitted').should('exist')
+    })
 
+    afterEach(function () {
         cy.logout()
+    })
 
-        const min2 = parseInt(Cypress.moment().format('m'));
-        const hour2 = parseInt(Cypress.moment().format('H'));
+    after(function () {
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
 
-        var curTime = (hour2 * 60) + min2;
+        var curTime = (hour * 60) + min;
 
         const sqCloseMin = SQPage.closeMin;
         const sqCloseHour = SQPage.closeHour;
 
         var closeTime = (sqCloseHour * 60) + sqCloseMin;
 
-        const waitTime2 = (closeTime - curTime) * 60 * 1000
+        const waitTime = (closeTime - curTime) * 60 * 1000
 
         cy.log(closeTime)
         cy.log(curTime)
-        cy.log(waitTime2)
+        cy.log(waitTime)
 
-        if (waitTime2 > 0) {
-            cy.wait(waitTime2)
+        if (waitTime > 0) {
+            cy.wait(waitTime)
         }
     })
+})
+
+describe ('Accessibility - Tender Manager 2', function () {
+    // before(function () {
+    //     const min = parseInt(Cypress.moment().format('m'));
+    //     const hour = parseInt(Cypress.moment().format('H'));
+
+    //     var curTime = (hour * 60) + min;
+
+    //     const sqOpenMin = SQPage.openMin;
+    //     const sqOpenHour = SQPage.openHour;
+
+    //     var openTime = (sqOpenHour * 60) + sqOpenMin;
+
+    //     const waitTime = (openTime - curTime) * 60 * 1000
+
+    //     cy.log(openTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime)
+
+    //     if (waitTime > 0) {
+    //         cy.wait(waitTime)
+    //     }
+
+    //     cy.visit('https://test.delta-esourcing.com/')
+
+    //     cy.contains('Login / Register').click()
+
+    //     cy.login('supplier', 'Tenders2020')
+
+    //     cy.get('#modules-responses_and_invites').click()
+
+    //     cy.contains(sqName).parent().find('[name="oneClickRespond"]').click()
+
+    //     cy.get('#respondButton').click() // Accept invitation
+
+    //     cy.contains('Continue to Stage Two').click()
+
+    //     cy.get('#yes0').check()
+
+    //     cy.get('#mytext').type('I can do this because I can.')
+
+    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+    //     cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+
+    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+    //     cy.get('[name="confirmSubmit"').click()
+
+    //     cy.contains('Response Successfully Submitted').should('exist')
+
+    //     cy.logout()
+
+    //     const min2 = parseInt(Cypress.moment().format('m'));
+    //     const hour2 = parseInt(Cypress.moment().format('H'));
+
+    //     var curTime = (hour2 * 60) + min2;
+
+    //     const sqCloseMin = SQPage.closeMin;
+    //     const sqCloseHour = SQPage.closeHour;
+
+    //     var closeTime = (sqCloseHour * 60) + sqCloseMin;
+
+    //     const waitTime2 = (closeTime - curTime) * 60 * 1000
+
+    //     cy.log(closeTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime2)
+
+    //     if (waitTime2 > 0) {
+    //         cy.wait(waitTime2)
+    //     }
+    // })
 
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
@@ -283,7 +363,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         SQPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalSideBySide()
+        EvalResponsesPage.evalConsensus(0)
 
         accessibilityTest()
     })
@@ -304,19 +384,7 @@ describe ('Accessibility - Tender Manager 2', function () {
         accessibilityTest()
     })
 
-    afterEach(function () {
-        cy.logout()
-    })
-})
-
-describe ('Accessability - Tender Manager 3', function () {
-    before(function () {
-        cy.visit('https://test.delta-esourcing.com/')
-
-        cy.contains('Login / Register').click()
-
-        cy.login('buyer')
-
+    it ('Complete buyer steps for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoExistingTender()
@@ -329,18 +397,24 @@ describe ('Accessability - Tender Manager 3', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createPriceCustomQuestionnaire()
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createPriceEvalPlan()
 
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
+    })
 
+    afterEach(function () {
         cy.logout()
+    })
+})
 
+describe ('Supplier for TenderBox', function () {
+    before(function () {
         const min = parseInt(Cypress.moment().format('m'));
         const hour = parseInt(Cypress.moment().format('H'));
 
@@ -360,7 +434,9 @@ describe ('Accessability - Tender Manager 3', function () {
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
+    })
 
+    it ('Supplier submits response for Tender Box', () => {
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
@@ -375,42 +451,150 @@ describe ('Accessability - Tender Manager 3', function () {
 
         cy.contains('Continue to Stage Two').click()
 
-        cy.get('#yes0').check()
+        cy.get('#bid_0').type('25000')
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
 
         cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        //cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+
+        //cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
         cy.get('[name="confirmSubmit"').click()
 
         cy.contains('Response Successfully Submitted').should('exist')
+    })
 
+    afterEach(function () {
         cy.logout()
+    })
 
-        const min2 = parseInt(Cypress.moment().format('m'));
-        const hour2 = parseInt(Cypress.moment().format('H'));
+    after(function () {
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
 
-        var curTime = (hour2 * 60) + min2;
+        var curTime = (hour * 60) + min;
 
         const sqCloseMin = TenderBoxPage.closeMin;
         const sqCloseHour = TenderBoxPage.closeHour;
 
         var closeTime = (sqCloseHour * 60) + sqCloseMin;
 
-        const waitTime2 = (closeTime - curTime) * 60 * 1000
+        const waitTime = (closeTime - curTime) * 60 * 1000
 
         cy.log(closeTime)
         cy.log(curTime)
-        cy.log(waitTime2)
+        cy.log(waitTime)
 
-        if (waitTime2 > 0) {
-            cy.wait(waitTime2)
+        if (waitTime > 0) {
+            cy.wait(waitTime)
         }
     })
+})
+
+describe ('Accessability - Tender Manager 3', function () {
+    // before(function () {
+    //     cy.visit('https://test.delta-esourcing.com/')
+
+    //     cy.contains('Login / Register').click()
+
+    //     cy.login('buyer')
+
+    //     DashboardPage.gotoTenderManager()
+
+    //     TenderManagerPage.gotoExistingTender()
+
+    //     TenderExercisePage.gotoExistingTenderBox()
+
+    //     TenderBoxPage.initialBoxSetUp(boxName)
+
+    //     TenderBoxPage.gotoCreateNewQuestionnaire()
+
+    //     QuestionnairePage.chooseCustonQuestionnaire()
+
+    //     QuestionnairePage.createCustomQuestionnaire()
+
+    //     TenderBoxPage.gotoCreateEvalPlan()
+
+    //     EvalPlanPage.createEvalPlan()
+
+    //     TenderBoxPage.gotoAddSuppliers()
+
+    //     AddSuppliersPage.addByEmail()
+
+    //     cy.logout()
+
+    //     const min = parseInt(Cypress.moment().format('m'));
+    //     const hour = parseInt(Cypress.moment().format('H'));
+
+    //     var curTime = (hour * 60) + min;
+
+    //     const sqOpenMin = TenderBoxPage.openMin;
+    //     const sqOpenHour = TenderBoxPage.openHour;
+
+    //     var openTime = (sqOpenHour * 60) + sqOpenMin;
+
+    //     const waitTime = (openTime - curTime) * 60 * 1000
+
+    //     cy.log(openTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime)
+
+    //     if (waitTime > 0) {
+    //         cy.wait(waitTime)
+    //     }
+
+    //     cy.visit('https://test.delta-esourcing.com/')
+
+    //     cy.contains('Login / Register').click()
+
+    //     cy.login('supplier', 'Tenders2020')
+
+    //     cy.get('#modules-responses_and_invites').click()
+
+    //     cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
+
+    //     cy.get('#respondButton').click() // Accept invitation
+
+    //     cy.contains('Continue to Stage Two').click()
+
+    //     cy.get('#yes0').check()
+
+    //     cy.get('#mytext').type('I can do this because I can.')
+
+    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+    //     cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+
+    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+    //     cy.get('[name="confirmSubmit"').click()
+
+    //     cy.contains('Response Successfully Submitted').should('exist')
+
+    //     cy.logout()
+
+    //     const min2 = parseInt(Cypress.moment().format('m'));
+    //     const hour2 = parseInt(Cypress.moment().format('H'));
+
+    //     var curTime = (hour2 * 60) + min2;
+
+    //     const sqCloseMin = TenderBoxPage.closeMin;
+    //     const sqCloseHour = TenderBoxPage.closeHour;
+
+    //     var closeTime = (sqCloseHour * 60) + sqCloseMin;
+
+    //     const waitTime2 = (closeTime - curTime) * 60 * 1000
+
+    //     cy.log(closeTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime2)
+
+    //     if (waitTime2 > 0) {
+    //         cy.wait(waitTime2)
+    //     }
+    // })
 
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
@@ -429,14 +613,14 @@ describe ('Accessability - Tender Manager 3', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalConsensus(0)
+        EvalResponsesPage.evalPriceConsensus(0)
 
         // Goto the award page
         cy.get('#tabs-overview').click()
 
-        cy.get('#pqqResp tbody').find('input[type="checkbox"]').eq(0).check()   
+        cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(0).check()   
 
-        cy.get('[name="tenderboxAward"]').click()
+        cy.get('#buttons-award_contract').click()
 
         accessibilityTest()
     })
