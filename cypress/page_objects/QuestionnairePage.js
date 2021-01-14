@@ -52,7 +52,7 @@ function createSection() {
 function createSubSection() {
     cy.contains('Add Subsection').click()
 
-    cy.get('#sectionName').type('Subsection')
+    cy.get('#modal-section_name').type('Subsection')
 
     cy.get('[onclick="javascript:submitSection()"]').click()
 
