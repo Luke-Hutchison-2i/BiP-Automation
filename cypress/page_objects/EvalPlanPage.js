@@ -74,19 +74,19 @@ export function createEvalPlan() {
     cy.get('[name="returnEdit"]').click()
 
 
-    cy.get('#return_to_overview').click()
+    cy.get('#button-return_to_overview').click()
 }
 
 export function createPriceEvalPlan() {
-    cy.get('#priceWeight').clear().type('50')
+    cy.get('#table-price_weight').clear().type('50')
 
-    cy.get('#edit_min_max_scores').find('[name="editMinMaxScores"]').click()
+    cy.get('#button-save_evaluation_settings').click()
 
-    cy.get('#techWeight').should('have.value', '50.00')
+    cy.get('#table-tech_weight').should('have.value', '50.00')
 
     cy.get('[name^="evalSection_"][name$="weight"]').eq(2).clear().type('100')
 
     cy.get('#positionIndicator').click()
 
-    cy.get('#return_to_overview').click()
+    cy.get('#button-return_to_overview').click()
 }
