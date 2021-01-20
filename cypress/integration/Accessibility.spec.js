@@ -272,6 +272,8 @@ describe ('Supplier for SQ', function () {
 })
 
 describe ('Accessibility - Tender Manager 2', function () {
+    
+    //#region Comments
     // before(function () {
     //     const min = parseInt(Cypress.moment().format('m'));
     //     const hour = parseInt(Cypress.moment().format('H'));
@@ -343,6 +345,8 @@ describe ('Accessibility - Tender Manager 2', function () {
     //         cy.wait(waitTime2)
     //     }
     // })
+    //#endregion
+    
 
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
@@ -494,6 +498,7 @@ describe ('Supplier for TenderBox', function () {
 })
 
 describe ('Accessability - Tender Manager 3', function () {
+    //#region Comments
     // before(function () {
     //     cy.visit('https://test.delta-esourcing.com/')
 
@@ -595,6 +600,7 @@ describe ('Accessability - Tender Manager 3', function () {
     //         cy.wait(waitTime2)
     //     }
     // })
+    //#endregion
 
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
