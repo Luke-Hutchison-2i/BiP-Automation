@@ -1,14 +1,21 @@
-export function completeStage1 () {
+export function completeStage1 (name) {
     // Title
     // Description
     // Currency
     // Doc Upload
+    cy.get('[name="dataContext\\.name"]').type(name)
+    cy.get('[name="dataContext\\.description"]').type('This is a description').should('have.value', 'This is a description')
+
+    cy.get('[name="dataContext\\.currencyType"]').select('gbp').should('have.value', 'gbp')
 
 }
 
 export function completeStage2 () {
     // Add suppliers
+    cy.get('#form-list-select_all_0').click()
 
+    // Check all ticked
+    cy.get('#list0').find('[type="checkbox"]').should('be.checked')
 }
 
 export function completeStage3 () {
@@ -35,11 +42,12 @@ export function completeStage7 () {
 }
 
 export function saveAndContinue () {
-
+    cy.get('[name="saveContinue"]').click()
 }
 
 export function gotoStage (stageNum) {
-    for (let i = 1; index < stageNum; index++) {
+    for (let i = 1; i < stageNum; i++) {
         // click next page button
+        cy.get('[name="next"]').click()
     }
 }

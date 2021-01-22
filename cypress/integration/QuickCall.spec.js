@@ -2,6 +2,8 @@ import * as DashboardPage from "../page_objects/DashboardPage";
 import * as QuickCallManagerPage from "../page_objects/quick_call/QuickCallManagerPage";
 import * as QuickCallStagesPage from "../page_objects/quick_call/QuickCallStagesPage";
 
+const callName = "testQuickCallName"
+
 describe('Quick Call - Stages 1-4', function() {
     beforeEach(function () {
         cy.visit('https://test.delta-esourcing.com/')
@@ -16,7 +18,7 @@ describe('Quick Call - Stages 1-4', function() {
     it ('Complete Stage 1', () => {
         QuickCallManagerPage.gotoCreateQuickCall()
 
-        QuickCallStagesPage.completeStage1()
+        QuickCallStagesPage.completeStage1(callName)
 
         QuickCallStagesPage.saveAndContinue()
     })
@@ -31,7 +33,7 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallStagesPage.saveAndContinue()
     })
 
-    it ('Complete Stage 3', () => {
+    it.only ('Complete Stage 3', () => {
         QuickCallManagerPage.gotoExistingQuickCall()
 
         QuickCallStagesPage.gotoStage(3)
@@ -51,6 +53,10 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallStagesPage.saveAndContinue()
     })
 
+    afterEach(function () {
+        cy.logout()
+    })
+
 })
 
 describe('Quick Call - Supplier', function() {
@@ -64,6 +70,10 @@ describe('Quick Call - Supplier', function() {
 
     it ('Supplier response', () => {
         
+    })
+
+    afterEach(function () {
+        cy.logout()
     })
 
 })
@@ -105,6 +115,10 @@ describe('Quick Call - Stages 5-7', function() {
         QuickCallStagesPage.completeStage7()
 
         QuickCallStagesPage.saveAndContinue()
+    })
+
+    afterEach(function () {
+        cy.logout()
     })
 
 })
