@@ -100,6 +100,28 @@ describe('Quick Call - Supplier', function() {
         cy.logout()
     })
 
+    after(function() {
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
+
+        var curTime = (hour * 60) + min;
+
+        const callCloseMin = QuickCallStagesPage.closeMin;
+        const callCloseHour = QuickCallStagesPage.closeHour;
+
+        var closeTime = (callCloseHour * 60) + callCloseMin;
+
+        const waitTime = (closeTime - curTime) * 60 * 1000
+
+        cy.log(closeTime)
+        cy.log(curTime)
+        cy.log(waitTime)
+
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
+    })
+
 })
 
 describe('Quick Call - Stages 5-7', function() {
@@ -109,37 +131,43 @@ describe('Quick Call - Stages 5-7', function() {
         cy.contains('Login / Register').click()
 
         cy.login('buyer')
+
+        DashboardPage.gotoQuickCall()
     })
 
-    it ('Complete Stage 5', () => {
+    it ('Complete Stages 5, 6, and 7', () => {
         QuickCallManagerPage.gotoExistingQuickCall()
 
-        QuickCallStagesPage.gotoStage(5)
+        cy.url().should('include', 'Page=page5ViewResponses')
 
         QuickCallStagesPage.completeStage5()
 
-        QuickCallStagesPage.saveAndContinue()
-    })
-
-    it ('Complete Stage 6', () => {
-        QuickCallManagerPage.gotoExistingQuickCall()
-
-        QuickCallStagesPage.gotoStage(6)
-
         QuickCallStagesPage.completeStage6()
-
-        QuickCallStagesPage.saveAndContinue()
-    })
-
-    it ('Complete Stage 7', () => {
-        QuickCallManagerPage.gotoExistingQuickCall()
-
-        QuickCallStagesPage.gotoStage(7)
 
         QuickCallStagesPage.completeStage7()
 
-        QuickCallStagesPage.saveAndContinue()
+        cy.contains('Quick Call: testQuickCallName has been awarded to BiP Solutions').should('exist')
     })
+
+    // it.skip ('Complete Stage 6', () => {
+    //     QuickCallManagerPage.gotoExistingQuickCall()
+
+    //     QuickCallStagesPage.gotoStage(6)
+
+    //     QuickCallStagesPage.completeStage6()
+
+    //     QuickCallStagesPage.saveAndContinue()
+    // })
+
+    // it.skip ('Complete Stage 7', () => {
+    //     QuickCallManagerPage.gotoExistingQuickCall()
+
+    //     QuickCallStagesPage.gotoStage(7)
+
+    //     QuickCallStagesPage.completeStage7()
+
+    //     QuickCallStagesPage.saveAndContinue()
+    // })
 
     afterEach(function () {
         cy.logout()

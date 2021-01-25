@@ -52,18 +52,27 @@ export function completeStage4 () {
 
     cy.get('#dataContext\\.closingHour').select(closeHour.toString(), {force: true})
     cy.get('#dataContext\\.closingMin').select(closeMin.toString(), {force: true})
+
+    exports.closeMin = closeMin;
+    exports.closeHour = closeHour;
 }
 
 export function completeStage5 () {
+    cy.get('#pqqResp').find('[name^="ischecked_"]').eq(0).check()
 
+    cy.get('[name="quickQuoteAward"]').click()
 }
 
 export function completeStage6 () {
+    cy.get('[name="awardAmountActual"]').type('10001').should('have.value', '10001')
 
+    cy.get('[name="comment"]').type('You have won the contract.').should('have.value', 'You have won the contract.')
+
+    cy.get('[name="confirm"]').click()
 }
 
 export function completeStage7 () {
-
+    cy.get('[name="confirm"]').click()
 }
 
 export function saveAndContinue () {
