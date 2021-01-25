@@ -33,7 +33,7 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallStagesPage.saveAndContinue()
     })
 
-    it.only ('Complete Stage 3', () => {
+    it ('Complete Stage 3', () => {
         QuickCallManagerPage.gotoExistingQuickCall()
 
         QuickCallStagesPage.gotoStage(3)
@@ -41,6 +41,9 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallStagesPage.completeStage3()
 
         QuickCallStagesPage.saveAndContinue()
+
+        cy.contains('Invite emails will be sent to the following suppliers/users; demosupplieracccount@bipsolutions.com').should('exist')
+   
     })
 
     it ('Complete Stage 4', () => {
@@ -51,6 +54,8 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallStagesPage.completeStage4()
 
         QuickCallStagesPage.saveAndContinue()
+
+        cy.contains('You have now created your Quick Call, which has been sent to your suppliers. You can send an email to all suppliers; however, you are not required to do anything further at this time.').should('exist')
     })
 
     afterEach(function () {
@@ -69,7 +74,26 @@ describe('Quick Call - Supplier', function() {
     })
 
     it ('Supplier response', () => {
-        
+        cy.get('#modules-responses_and_invites').click()
+
+        cy.contains(callName).parent().find('[name="oneClickRespond"]').click()
+
+        cy.get('#respondButton').click() // Accept invitation
+
+        // Step 1
+        cy.contains('Continue to Stage Two').click()
+
+        // Step 2
+        cy.get('[name="responses\\[0\\]\\.currency"]').type('10000')
+
+        cy.get('[name="submitResponse"]').eq(1).click()   
+        //cy.get('#confirmSubmit').eq(1).click()
+        //cy.contains('Save and Proceed to Stage 3').click()
+
+        // Step 3
+        cy.get('[name="confirmSubmit"]').click()
+
+        cy.contains('Response Successfully Submitted').should('exist')
     })
 
     afterEach(function () {
