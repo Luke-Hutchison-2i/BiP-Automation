@@ -70,6 +70,24 @@ export function evalSideBySide() {
     cy.contains('Save & Return').click()
 }
 
+export function dpsEvalResponse(index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
+
+    cy.get('[name^="scores"][name$="score"]').eq(0).select('100')
+
+    cy.get('#navigation-page_2').click()
+
+    cy.get('[name^="scores"][name$="score"]').eq(0).select('-100')
+
+    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
+
+    cy.get('[name="save"]').click()
+
+    cy.contains('Return to Responses').click()
+
+    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).should('contain', 'Completed')
+}
+
 export function dpsEvalSideBySide() {
     cy.get('#tabs-overview').click()
 

@@ -34,3 +34,17 @@ module.exports = (on, config) => {
   })
 }
 
+
+// module.exports = (on, config) => {
+//     console.log(config) // see what all is in here!
+  
+//     // modify config values
+//     config.baseUrl = Cypress.env('URL')
+  
+//     // modify env var value
+//     //config.env.ENVIRONMENT = 'staging'
+  
+//     // return config
+//     return config
+//   }
+

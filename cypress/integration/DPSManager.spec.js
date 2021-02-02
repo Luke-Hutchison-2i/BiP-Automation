@@ -119,7 +119,7 @@ describe ('Supplier for DPS Questionnaire', function () {
 
         var openTime = (questionnaireOpenHour * 60) + questionnaireOpenMin;
 
-        const waitTime = (openTime - curTime) * 60 * 1000
+        const waitTime = ((openTime - curTime) * 60 * 1000) + 30000
 
         cy.log(openTime)
         cy.log(curTime)
@@ -164,27 +164,27 @@ describe ('Supplier for DPS Questionnaire', function () {
         cy.logout()
     })
 
-    after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
+    // after(function () {
+    //     const min = parseInt(Cypress.moment().format('m'));
+    //     const hour = parseInt(Cypress.moment().format('H'));
 
-        var curTime = (hour * 60) + min;
+    //     var curTime = (hour * 60) + min;
 
-        const questionnaireCloseMin = DPSQuestionnairePage.closeMin;
-        const questionnaireCloseHour = DPSQuestionnairePage.closeHour;
+    //     const questionnaireCloseMin = DPSQuestionnairePage.closeMin;
+    //     const questionnaireCloseHour = DPSQuestionnairePage.closeHour;
 
-        var closeTime = (questionnaireCloseHour * 60) + questionnaireCloseMin;
+    //     var closeTime = (questionnaireCloseHour * 60) + questionnaireCloseMin;
 
-        const waitTime = (closeTime - curTime) * 60 * 1000
+    //     const waitTime = (closeTime - curTime) * 60 * 1000
 
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+    //     cy.log(closeTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime)
 
-        if (waitTime > 0) {
-            cy.wait(waitTime)
-        }
-    })
+    //     if (waitTime > 0) {
+    //         cy.wait(waitTime)
+    //     }
+    // })
 })
 
 describe ('DPS Manager - Stage 2', function () {
@@ -205,8 +205,10 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSQuestionnairePage.gotoEvaluateResponses()
 
-        //EvalResponsesPage.dpsEvalSideBySide()
+        // EvalResponsesPage.dpsEvalResponse(0)
+        // EvalResponsesPage.dpsEvalSideBySide()
 
+        // EvalResponsesPage.dpsEvalResponse(0)
         EvalResponsesPage.dpsEvalConsensus(0)
     })
 
@@ -261,7 +263,8 @@ describe ('DPS Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createPriceCustomQuestionnaire()
+        //QuestionnairePage.createPriceCustomQuestionnaire()
+        QuestionnairePage.createCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -277,7 +280,8 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSMiniCompPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createPriceEvalPlan()
+        //EvalPlanPage.createPriceEvalPlan()
+        EvalPlanPage.createEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -317,7 +321,7 @@ describe ('Supplier for Mini Comp', function () {
 
         var openTime = (mcOpenHour * 60) + mcOpenMin;
 
-        const waitTime = (openTime - curTime) * 60 * 1000
+        const waitTime = ((openTime - curTime) * 60 * 1000) + 30000
 
         cy.log(openTime)
         cy.log(curTime)
@@ -329,11 +333,35 @@ describe ('Supplier for Mini Comp', function () {
     })
 
     it ('Supplier submits response for Mini Comp', () => {
+        // cy.visit('https://test.delta-esourcing.com/')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('supplier', 'Tenders2020')
+
+        // cy.get('#modules-responses_and_invites').click()
+
+        // cy.contains(mcName).parent().find('[name="oneClickRespond"]').click()
+
+        // cy.get('#respondButton').click() // Accept invitation
+
+        // cy.contains('Continue to Stage Two').click()
+
+        // cy.get('#bid_0').type('25000')
+
+        // cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
+
+        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        // cy.get('[name="confirmSubmit"').click()
+
+        // cy.contains('Response Successfully Submitted').should('exist')
+
         cy.visit('https://test.delta-esourcing.com/')
 
         cy.contains('Login / Register').click()
 
-        cy.login('supplier', 'Tenders2020')
+        cy.login('supplier')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -343,9 +371,13 @@ describe ('Supplier for Mini Comp', function () {
 
         cy.contains('Continue to Stage Two').click()
 
-        cy.get('#bid_0').type('25000')
+        cy.get('#yes0').check()
 
-        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
+        cy.get('#mytext').type('I can do this because I can.')
+
+        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
 
         cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
@@ -358,27 +390,27 @@ describe ('Supplier for Mini Comp', function () {
         cy.logout()
     })
 
-    after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
+    // after(function () {
+    //     const min = parseInt(Cypress.moment().format('m'));
+    //     const hour = parseInt(Cypress.moment().format('H'));
 
-        var curTime = (hour * 60) + min;
+    //     var curTime = (hour * 60) + min;
 
-        const mcCloseMin = DPSMiniCompPage.closeMin;
-        const mcCloseHour = DPSMiniCompPage.closeHour;
+    //     const mcCloseMin = DPSMiniCompPage.closeMin;
+    //     const mcCloseHour = DPSMiniCompPage.closeHour;
 
-        var closeTime = (mcCloseHour * 60) + mcCloseMin;
+    //     var closeTime = (mcCloseHour * 60) + mcCloseMin;
 
-        const waitTime = (closeTime - curTime) * 60 * 1000
+    //     const waitTime = (closeTime - curTime) * 60 * 1000
 
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+    //     cy.log(closeTime)
+    //     cy.log(curTime)
+    //     cy.log(waitTime)
 
-        if (waitTime > 0) {
-            cy.wait(waitTime)
-        }
-    })
+    //     if (waitTime > 0) {
+    //         cy.wait(waitTime)
+    //     }
+    // })
 })
 
 describe ('DPS Manager - Stage 3', function () {
@@ -400,6 +432,7 @@ describe ('DPS Manager - Stage 3', function () {
         DPSMiniCompPage.gotoEvaluateResponses()
 
         EvalResponsesPage.evalDPSPriceConsensus(0)
+        //EvalResponsesPage.evalSideBySide(0)
     })
 
     it ('Award contract to supplier', () => {

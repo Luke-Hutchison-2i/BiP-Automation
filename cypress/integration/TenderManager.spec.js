@@ -254,7 +254,8 @@ describe ('Tender Manager - Stage 2', function () {
 
         SQPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalSideBySide()
+        //EvalResponsesPage.evalSideBySide()
+        EvalResponsesPage.evalConsensus(0)
     })
 
     it ('Shortlist supplier for SQ', () => {

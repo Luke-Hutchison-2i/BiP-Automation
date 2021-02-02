@@ -23,12 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import 'cypress-file-upload';
 
 Cypress.Commands.add("login", (type) => {
     var email
 
     if (type === "buyer") {
-        email = "userguideaccount3@bipsolutions.com"
+        email = "userguideaccounta@bipsolutions.com"
     } else if (type === "supplier") {
         email = "demosupplieracccount@bipsolutions.com"
     }
@@ -42,7 +43,7 @@ Cypress.Commands.add("login", (type) => {
 Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
 
-    cy.wait(5000)
+    cy.wait(6000)
 
-    cy.url().should('eq', 'https://test.delta-esourcing.com/')
+    //cy.url().should('eq', 'https://test.delta-esourcing.com/')
 })

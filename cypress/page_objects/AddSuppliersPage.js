@@ -3,7 +3,7 @@ export function addExisitingSuppliers() {
 
     cy.get('select[name="filterByExercise"]').select('Org')
 
-    cy.get('#filterByTitle').type('FORTEST')
+    cy.get('#filterByTitle').type('IT Supplier') // FORTEST
 
     cy.get('[name="submit"]').click()
 
