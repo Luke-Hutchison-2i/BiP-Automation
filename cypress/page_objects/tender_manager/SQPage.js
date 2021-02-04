@@ -10,6 +10,10 @@ export function gotoCreateNewQuestionnaire() {
     // })
 }
 
+export function gotoExistingQuestionnaire () {
+    cy.get('#documents-edit_questionnaire').click()
+}
+
 export function gotoEditQuestionnaire() {
     cy.get('#documents-edit_questionnaire').should('exist').click()
 }

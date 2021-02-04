@@ -17,7 +17,7 @@ const mcName = "testCompName"
 
 describe ('DPS Manager - Stage 1', function() {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -131,7 +131,7 @@ describe ('Supplier for DPS Questionnaire', function () {
     })
 
     it ('Supplier submits response for DPS Questionnaire', () => {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -189,7 +189,7 @@ describe ('Supplier for DPS Questionnaire', function () {
 
 describe ('DPS Manager - Stage 2', function () {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -333,7 +333,7 @@ describe ('Supplier for Mini Comp', function () {
     })
 
     it ('Supplier submits response for Mini Comp', () => {
-        // cy.visit('https://test.delta-esourcing.com/')
+        // cy.visit('')
 
         // cy.contains('Login / Register').click()
 
@@ -357,7 +357,7 @@ describe ('Supplier for Mini Comp', function () {
 
         // cy.contains('Response Successfully Submitted').should('exist')
 
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -390,32 +390,32 @@ describe ('Supplier for Mini Comp', function () {
         cy.logout()
     })
 
-    // after(function () {
-    //     const min = parseInt(Cypress.moment().format('m'));
-    //     const hour = parseInt(Cypress.moment().format('H'));
+    after(function () {
+        const min = parseInt(Cypress.moment().format('m'));
+        const hour = parseInt(Cypress.moment().format('H'));
 
-    //     var curTime = (hour * 60) + min;
+        var curTime = (hour * 60) + min;
 
-    //     const mcCloseMin = DPSMiniCompPage.closeMin;
-    //     const mcCloseHour = DPSMiniCompPage.closeHour;
+        const mcCloseMin = DPSMiniCompPage.closeMin;
+        const mcCloseHour = DPSMiniCompPage.closeHour;
 
-    //     var closeTime = (mcCloseHour * 60) + mcCloseMin;
+        var closeTime = (mcCloseHour * 60) + mcCloseMin;
 
-    //     const waitTime = (closeTime - curTime) * 60 * 1000
+        const waitTime = (closeTime - curTime) * 60 * 1000
 
-    //     cy.log(closeTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime)
+        cy.log(closeTime)
+        cy.log(curTime)
+        cy.log(waitTime)
 
-    //     if (waitTime > 0) {
-    //         cy.wait(waitTime)
-    //     }
-    // })
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
+    })
 })
 
 describe ('DPS Manager - Stage 3', function () {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 

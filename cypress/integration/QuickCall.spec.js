@@ -6,7 +6,7 @@ const callName = "testQuickCallName"
 
 describe('Quick Call - Stages 1-4', function() {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
         //cy.visit()
         cy.contains('Login / Register').click()
 
@@ -66,7 +66,7 @@ describe('Quick Call - Stages 1-4', function() {
 
 describe('Quick Call - Supplier', function() {
     before(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
         //cy.visit()
         cy.contains('Login / Register').click()
 
@@ -126,7 +126,7 @@ describe('Quick Call - Supplier', function() {
 
 describe('Quick Call - Stages 5-7', function() {
     before(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
         //cy.visit()
         cy.contains('Login / Register').click()
 

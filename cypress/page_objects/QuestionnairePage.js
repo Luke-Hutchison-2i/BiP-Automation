@@ -119,3 +119,33 @@ function createPriceQuestion(sub, text, help) {
 
     cy.wait(500)
 }
+
+
+// Multi-lot on Dev server has some different tags
+export function createLotCustomQuestionnaire() {
+    createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+
+    createLot('lot', 'sec', 'sub')
+
+    cy.get('[id^="page-name-link-"').eq(1).click() // View Lot
+
+    cy.wait(1000)
+
+    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+
+    cy.get('#form-return_to_overview').click()
+}
+
+function createLot(lotName, secName, subName) {
+    cy.get('#add-lot').click()
+
+    cy.get('#multiLotName').type(lotName)
+    cy.get('#lotPageName').type(secName)
+    cy.get('#lotPageSectionName').type(subName)
+
+    cy.get('#modal-save_multilot_section').click()
+
+    cy.wait(500)
+
+    //cy.reload()
+}

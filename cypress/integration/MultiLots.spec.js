@@ -30,7 +30,7 @@ describe('Quick Call - Stages 1-4', function() {
         cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta')
         //cy.contains('Login / Register').click()
 
-        cy.login('buyer')
+        //cy.login('buyer')
 
         DashboardPage.gotoTenderManager()
 
@@ -44,11 +44,11 @@ describe('Quick Call - Stages 1-4', function() {
     })
 
     it ('Create questionnaire with a lot', () => {
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createLotCustomQuestionnaire()
     })
 
     afterEach(function () {
-        SQPage.gotoCreateNewQuestionnaire()
+        SQPage.gotoExistingQuestionnaire()
 
         //QuestionnairePage.deleteQuestionnaire()
 

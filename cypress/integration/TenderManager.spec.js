@@ -19,7 +19,7 @@ const boxName = "testBoxName"
 
 describe ('Tender Manager - Stage 1', function() {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -180,7 +180,7 @@ describe ('Supplier for SQ', function () {
     })
 
     it ('Supplier submits response for SQ', () => {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -238,7 +238,7 @@ describe ('Supplier for SQ', function () {
 
 describe ('Tender Manager - Stage 2', function () {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -365,7 +365,7 @@ describe ('Supplier for TenderBox', function () {
     })
 
     it ('Supplier submits response for Tender Box', () => {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -423,7 +423,7 @@ describe ('Supplier for TenderBox', function () {
 
 describe ('Tender Manager - Stage 3', function () {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
         cy.contains('Login / Register').click()
 
@@ -469,7 +469,7 @@ describe ('Tender Manager - Stage 3', function () {
 
 // describe('Message Centre', function () {
 //     beforeEach(function () {
-//         cy.visit('https://test.delta-esourcing.com/')
+//         cy.visit('')
 
 //         cy.contains('Login / Register').click()
 
