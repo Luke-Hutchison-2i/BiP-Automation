@@ -1,5 +1,6 @@
 {
     "chromeWebSecurity": false,
+    "modifyObstructiveCode": false,
     "reporter": "junit",
     "reporterOptions": {
         "mochaFile": "results/delta-test-results-[hash].xml",

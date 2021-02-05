@@ -120,6 +120,14 @@ function createPriceQuestion(sub, text, help) {
     cy.wait(500)
 }
 
+export function deleteQuestionnaire () {
+    //cy.get('[id="actions_i"]').click()
+
+    cy.get('#delete-questionnaire').click({force:true})
+
+    cy.wait(1000)
+}
+
 
 // Multi-lot on Dev server has some different tags
 export function createLotCustomQuestionnaire() {
@@ -147,5 +155,5 @@ function createLot(lotName, secName, subName) {
 
     cy.wait(500)
 
-    //cy.reload()
+    cy.reload()
 }

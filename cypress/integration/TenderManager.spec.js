@@ -18,6 +18,7 @@ const sqName = "testSQName"
 const boxName = "testBoxName"
 
 describe ('Tender Manager - Stage 1', function() {
+    var doNotice = true;
     beforeEach(function () {
         cy.visit('')
 
@@ -40,8 +41,9 @@ describe ('Tender Manager - Stage 1', function() {
         cy.contains('Tender Exercise ' + tenderName + ' has been created')
     })
 
-    // In Progress
-    it ('Set up an existing notice', () => {
+    if (doNotice == true) {
+        // In Progress
+        it ('Set up an existing notice', () => {
         DashboardPage.gotoTenderManager()
 
         cy.wait(1000)
@@ -53,7 +55,8 @@ describe ('Tender Manager - Stage 1', function() {
         TenderExercisePage.gotoExistingNotice()
 
         NoticePage.createContractNotice()
-    })
+        })
+    }
 
     it ('Create SQ', () => {
         DashboardPage.gotoTenderManager()
