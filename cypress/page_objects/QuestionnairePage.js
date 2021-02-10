@@ -61,7 +61,7 @@ function createSubSection() {
     cy.reload()
 }
 
-function createQuestion(sub, text, help, type, mand) {
+export function createQuestion(sub, text, help, type, mand) {
     cy.get('#form-section_' + sub + '-add').click()
 
     cy.get('#answerType').select(type)
@@ -106,7 +106,7 @@ function createMultipleQuestion(sub, text, help, mand) {
     cy.wait(500)
 }
 
-function createPriceQuestion(sub, text, help) {
+export function createPriceQuestion(sub, text, help) {
     cy.get('#form-section_' + sub + '-add').click()
 
     cy.get('#answerType').select('lot')
@@ -133,18 +133,38 @@ export function deleteQuestionnaire () {
 export function createLotCustomQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
-    createLot('lot', 'sec', 'sub')
+    createLot('Lot1', 'Sec1', 'Sub1')
 
-    cy.get('[id^="page-name-link-"').eq(1).click() // View Lot
+    viewSection(1) // View Lot
 
     cy.wait(1000)
 
     createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
 
-    cy.get('#form-return_to_overview').click()
+    cy.wait(1000)
 }
 
-function createLot(lotName, secName, subName) {
+export function createLot2CustomQuestionnaire() {
+    createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+
+    createLot('Lot1', 'Sec1', 'Sub1')
+
+    viewSection(1) // View Lot
+
+    cy.wait(1000)
+
+    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+
+    createLot('Lot2', 'Sec2', 'Sub2')
+
+    viewSection(2) // View Lot
+
+    cy.wait(1000)
+
+    createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+}
+
+export function createLot(lotName, secName, subName) {
     cy.get('#add-lot').click()
 
     cy.get('#multiLotName').type(lotName)
@@ -156,4 +176,78 @@ function createLot(lotName, secName, subName) {
     cy.wait(500)
 
     cy.reload()
+}
+
+export function viewSection(index) {
+    cy.get('[id^="page-name-link-"').eq(index).click()
+}
+
+
+export function returnToOverview() {
+    cy.get('#form-return_to_overview').click()
+}
+
+
+export function importQuestion (sub) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.get('#expanderHead').click()
+
+    cy.wait(500)
+
+    cy.get('#deltaQuestionnaire').check().should('be.checked')
+
+    cy.get('#expanderContent').find('[name="select"]').click()
+
+    cy.wait(1000)
+
+    cy.get('[name^="pagecheck_"]').eq(0).parent().find('[name^="sectioncheck_"]').eq(0).parent().find('[name^="questioncheck_"]').eq(0).check({force:true})
+
+    cy.get('#addSelected').click()
+
+    cy.wait(500)
+}
+
+export function importSubSectionLot () {
+    cy.contains('Add Lot Subsection').click()
+
+    cy.contains('Import Subsection').should('exist')
+
+    cy.get('#expanderHead-section').click()
+
+    cy.wait(500)
+
+    cy.get('#deltaQuestionnaire-section').check().should('be.checked')
+
+    cy.get('#expanderContent-section').find('[name="select"]').click()
+
+    cy.wait(500)
+
+    cy.get('[name^="pagecheck_"]').eq(0).parent().find('[name^="sectioncheck_"]').eq(0).check()
+    
+    cy.get('#addSelected').click()
+
+    cy.wait(500)
+}
+
+export function importSectionLot () {
+    cy.contains('Add Lot Section').click()
+
+    cy.contains('Import Section').should('exist')
+
+    cy.get('#expanderHead-page').click()
+
+    cy.wait(500)
+
+    cy.get('#deltaQuestionnaire-page').check().should('be.checked')
+
+    cy.get('#expanderContent-page').find('[name="select"]').click()
+
+    cy.wait(500)
+
+    cy.get('[name^="pagecheck_"]').eq(0).check()
+    
+    cy.get('#addSelected').click()
+
+    cy.wait(500)
 }

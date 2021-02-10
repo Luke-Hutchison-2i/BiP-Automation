@@ -263,8 +263,8 @@ describe ('DPS Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        //QuestionnairePage.createPriceCustomQuestionnaire()
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createPriceCustomQuestionnaire()
+        //QuestionnairePage.createCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -280,8 +280,8 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSMiniCompPage.gotoCreateEvalPlan()
 
-        //EvalPlanPage.createPriceEvalPlan()
-        EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createPriceEvalPlan()
+        //EvalPlanPage.createEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -333,35 +333,11 @@ describe ('Supplier for Mini Comp', function () {
     })
 
     it ('Supplier submits response for Mini Comp', () => {
-        // cy.visit('')
-
-        // cy.contains('Login / Register').click()
-
-        // cy.login('supplier', 'Tenders2020')
-
-        // cy.get('#modules-responses_and_invites').click()
-
-        // cy.contains(mcName).parent().find('[name="oneClickRespond"]').click()
-
-        // cy.get('#respondButton').click() // Accept invitation
-
-        // cy.contains('Continue to Stage Two').click()
-
-        // cy.get('#bid_0').type('25000')
-
-        // cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
-
-        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        // cy.get('[name="confirmSubmit"').click()
-
-        // cy.contains('Response Successfully Submitted').should('exist')
-
         cy.visit('')
 
         cy.contains('Login / Register').click()
 
-        cy.login('supplier')
+        cy.login('supplier', 'Tenders2020')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -371,19 +347,43 @@ describe ('Supplier for Mini Comp', function () {
 
         cy.contains('Continue to Stage Two').click()
 
-        cy.get('#yes0').check()
+        cy.get('#bid_0').type('25000')
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
 
         cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
         cy.get('[name="confirmSubmit"').click()
 
         cy.contains('Response Successfully Submitted').should('exist')
+
+        // cy.visit('')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('supplier')
+
+        // cy.get('#modules-responses_and_invites').click()
+
+        // cy.contains(mcName).parent().find('[name="oneClickRespond"]').click()
+
+        // cy.get('#respondButton').click() // Accept invitation
+
+        // cy.contains('Continue to Stage Two').click()
+
+        // cy.get('#yes0').check()
+
+        // cy.get('#mytext').type('I can do this because I can.')
+
+        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        // cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
+
+        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
+
+        // cy.get('[name="confirmSubmit"').click()
+
+        // cy.contains('Response Successfully Submitted').should('exist')
     })
 
     afterEach(function () {

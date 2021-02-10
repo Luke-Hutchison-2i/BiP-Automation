@@ -1,7 +1,7 @@
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
-import * as SQPage from "../page_objects/tender_manager/SQPage";
+import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 
 const tenderName = "testTenderName"
@@ -19,11 +19,11 @@ describe('Multi-lots', function() {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.gotoExistingTenderBox()
 
-        SQPage.initialSQSetUp(boxName)
+        TenderBoxPage.initialBoxSetUp(boxName)
 
-        cy.logout()
+        //cy.logout()
     })
     beforeEach(function () {
         // cy.visit('')
@@ -36,45 +36,115 @@ describe('Multi-lots', function() {
 
         TenderManagerPage.gotoExistingTender()
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.gotoExistingTenderBox()
 
-        SQPage.gotoCreateNewQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
 
         QuestionnairePage.chooseCustonQuestionnaire()
     })
 
     it ('Create questionnaire with 1 lot', () => {
         QuestionnairePage.createLotCustomQuestionnaire()
+
+        cy.contains('Lot 1: Lot1').should('exist')
+
+        QuestionnairePage.returnToOverview()
+
+        cy.get('#documents-edit_questionnaire span').should('have.class', 'tick') // Questionnaire should be valid
     })
 
-    it.only ('Create questionnaire with 2 lot', () => {
-        createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+    it ('Create questionnaire with 2 lots and price questions', () => {
+        QuestionnairePage.createLotCustomQuestionnaire()
 
-        createLot('lot', 'sec', 'sub')
+        QuestionnairePage.createPriceQuestion(0, "Price", "Enter lot price")
 
-        cy.get('[id^="page-name-link-"').eq(1).click() // View Lot
+        QuestionnairePage.createLot('Lot2', 'Sec2', 'Sub2')
 
-        cy.wait(1000)
+        QuestionnairePage.viewSection(2)
 
-        createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+        QuestionnairePage.createPriceQuestion(0, "Price", "Enter lot price")
 
-        createLot('lot2', 'sec2', 'sub2')
+        QuestionnairePage.returnToOverview()
 
-        // cy.get('[id^="page-name-link-"').eq(2).click() // View Lot
+        cy.get('#documents-edit_questionnaire span').should('have.class', 'tick') // Questionnaire should be valid
+    })
 
-        // cy.wait(1000)
+    it ('Can delete a lot', () => {
+        QuestionnairePage.createLotCustomQuestionnaire()
 
-        // createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+        cy.contains('Lot 1: Lot1').should('exist')
 
-        cy.get('#form-return_to_overview').click()
+        cy.get('#page_table').find('#editForm3').eq(1).click()
+
+        cy.contains('Lot 1: Lot1').should('not.exist')
+
+        QuestionnairePage.returnToOverview()
+
+        cy.get('#documents-edit_questionnaire span').should('have.class', 'tick') // Questionnaire should be valid
+    })
+
+    it ('Import question into a Lot', () => {
+        QuestionnairePage.createLot('Lot1', 'Sec1', 'Sub1')
+        QuestionnairePage.viewSection(1)
+
+        QuestionnairePage.importQuestion(0)
+        QuestionnairePage.viewSection(1)
+
+        cy.get('#table_anchor_1').find('tbody tr').should('have.length', 1)
+
+        QuestionnairePage.returnToOverview()
+    })
+
+    it ('Import sub-section into a Lot', () => {
+        QuestionnairePage.createLot('Lot1', 'Sec1', 'Sub1')
+        QuestionnairePage.viewSection(1)
+
+        cy.get('#section_table tbody').eq(0).children().should('have.length', 1)
+
+        QuestionnairePage.importSubSectionLot()
+        QuestionnairePage.viewSection(1)
+
+        cy.get('#section_table tbody').eq(0).children().should('have.length', 2)
+
+        QuestionnairePage.returnToOverview()
+    })
+
+    it.only ('Import section into a Lot', () => {
+        QuestionnairePage.createLot('Lot1', 'Sec1', 'Sub1')
+        QuestionnairePage.viewSection(1)
+
+        cy.get('#section_table_wrapper').should('have.length', 1)
+
+        QuestionnairePage.importSectionLot()
+        QuestionnairePage.viewSection(1)
+
+        cy.get('#section_table_wrapper').should('have.length', 2)
+
+        QuestionnairePage.returnToOverview()
+    })
+
+    it ('Import Lot into a questionnaire', () => {
+        
+    })
+
+    it ('Make Lot questionnaire a template', () => {
+        
+    })
+
+    it ('Use template for Lot questionnaire', () => {
+        
     })
 
     afterEach(function () {
-        SQPage.gotoExistingQuestionnaire()
+        // TenderBoxPage.gotoExistingQuestionnaire()
 
-        QuestionnairePage.deleteQuestionnaire()
+        // QuestionnairePage.deleteQuestionnaire()
 
         cy.logout()
     })
+
+    // after(function () {
+    //     cy.logout()
+    // })
 
 })

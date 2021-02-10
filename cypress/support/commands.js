@@ -29,7 +29,7 @@ Cypress.Commands.add("login", (type) => {
     var email
 
     if (type === "buyer") {
-        email = "userguideaccount3@bipsolutions.com"
+        email = "userguideaccount2@bipsolutions.com"
     } else if (type === "supplier") {
         email = "demosupplieracccount@bipsolutions.com"
     }
@@ -43,7 +43,7 @@ Cypress.Commands.add("login", (type) => {
 Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
 
-    cy.wait(6000)
+    cy.wait(7000)
 
     //cy.url().should('eq', 'https://test.delta-esourcing.com/')
 })

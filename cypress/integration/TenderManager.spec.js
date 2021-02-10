@@ -18,7 +18,21 @@ const sqName = "testSQName"
 const boxName = "testBoxName"
 
 describe ('Tender Manager - Stage 1', function() {
-    var doNotice = true;
+    var onTest = true;
+
+    before (function () {
+        let url = Cypress.config().baseUrl;
+
+        if (url.includes('live')) {
+            onTest = false;
+            console.log('On live, dont run certain tests');
+        } else {
+            onTest = true;
+            console.log('Not on live, run every test');
+        }
+        
+    })
+
     beforeEach(function () {
         cy.visit('')
 
@@ -41,7 +55,7 @@ describe ('Tender Manager - Stage 1', function() {
         cy.contains('Tender Exercise ' + tenderName + ' has been created')
     })
 
-    if (doNotice == true) {
+    if (onTest == true) {
         // In Progress
         it ('Set up an existing notice', () => {
         DashboardPage.gotoTenderManager()

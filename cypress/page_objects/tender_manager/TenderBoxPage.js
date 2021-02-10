@@ -2,7 +2,7 @@ export function gotoCreateNewQuestionnaire() {
     cy.get('#documents-select_questionnaire_type').click()
 }
 
-export function gotoEditQuestionnaire() {
+export function gotoExistingQuestionnaire() {
     cy.get('#documents-edit_questionnaire').should('exist').click()
 }
 
