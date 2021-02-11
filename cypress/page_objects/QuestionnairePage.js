@@ -60,6 +60,17 @@ function createSubSection() {
 
     cy.reload()
 }
+function createLotSubSection() {
+    cy.contains('Add Lot Subsection').click()
+
+    cy.get('#sectionName').type('LotSub')
+
+    cy.get('#modal-save_subsection').click()
+
+    cy.wait(500)
+
+    cy.reload()
+}
 
 export function createQuestion(sub, text, help, type, mand) {
     cy.get('#form-section_' + sub + '-add').click()
@@ -109,6 +120,8 @@ function createMultipleQuestion(sub, text, help, mand) {
 export function createPriceQuestion(sub, text, help) {
     cy.get('#form-section_' + sub + '-add').click()
 
+    cy.wait(500)
+
     cy.get('#answerType').select('lot')
 
     cy.get('#questionText').should('have.value', 'Total Bid Amount')
@@ -155,6 +168,8 @@ export function createLot2CustomQuestionnaire() {
 
     createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
 
+    createPriceQuestion(0, "Lot Price", "Enter price")
+
     createLot('Lot2', 'Sec2', 'Sub2')
 
     viewSection(2) // View Lot
@@ -162,6 +177,10 @@ export function createLot2CustomQuestionnaire() {
     cy.wait(1000)
 
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+
+    createLotSubSection()
+
+    createPriceQuestion(1, "Lot Price", "Enter price")
 }
 
 export function createLot(lotName, secName, subName) {

@@ -90,3 +90,7 @@ export function createPriceEvalPlan() {
 
     cy.get('#button-return_to_overview').click()
 }
+
+export function deleteEvalPlan() {
+    cy.contains('Remove Evaluation Plan').click()
+}
