@@ -25,17 +25,32 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import 'cypress-file-upload';
 
-Cypress.Commands.add("login", (type) => {
+Cypress.Commands.add("login", function(type) {
     var email
+    var password
 
-    if (type === "buyer") {
-        email = "userguideaccounta@bipsolutions.com"
-    } else if (type === "supplier") {
-        email = "demosupplieracccount@bipsolutions.com"
-    }
+    cy.fixture('logins.json').then((logins) => {
+        if (type === "buyer") {
+            email = logins.buyer.email
 
-    cy.get('#username').type(email)
-    cy.get('#password').type("Tenders2020")
+            if (Cypress.env('live') == true) {
+                password = logins.buyer.livePassword
+            } else {
+                password = logins.buyer.password
+            }
+        } else if (type === "supplier") {
+            email = logins.supplier.email
+
+            if (Cypress.env('live') == true) {
+                password = logins.supplier.livePassword
+            } else {
+                password = logins.supplier.password
+            }
+        }
+
+        cy.get('#username').type(email)
+        cy.get('#password').type(password)
+    })
 
     cy.contains('Login').click()
 })
@@ -43,7 +58,7 @@ Cypress.Commands.add("login", (type) => {
 Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
 
-    cy.wait(7000)
+    cy.wait(6000)
 
     //cy.url().should('eq', 'https://test.delta-esourcing.com/')
 })

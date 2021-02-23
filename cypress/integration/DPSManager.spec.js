@@ -1,4 +1,4 @@
-// / <reference types="cypress" />
+/// <reference types="cypress" />
 
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as DPSManagerPage from "../page_objects/dps_manager/DPSManagerPage";
@@ -10,10 +10,13 @@ import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as DPSSelectListPage from "../page_objects/DPSSelectListPage";
 import * as DPSMiniCompPage from "../page_objects/dps_manager/DPSMiniCompPage";
+import * as Functions from "../support/functions"
 
 const dpsName = "testDPSName"
 const questionnaireName = "testQuestionnaireName"
 const mcName = "testCompName"
+
+Functions.GetServer()
 
 describe ('DPS Manager - Stage 1', function() {
     beforeEach(function () {
@@ -108,6 +111,8 @@ describe ('DPS Manager - Stage 1', function() {
 })
 
 describe ('Supplier for DPS Questionnaire', function () {
+    Functions.GetServer()
+
     before(function () {
         const min = parseInt(Cypress.moment().format('m'));
         const hour = parseInt(Cypress.moment().format('H'));
@@ -188,6 +193,8 @@ describe ('Supplier for DPS Questionnaire', function () {
 })
 
 describe ('DPS Manager - Stage 2', function () {
+    Functions.GetServer()
+
     beforeEach(function () {
         cy.visit('')
 
@@ -310,6 +317,8 @@ describe ('DPS Manager - Stage 2', function () {
 })
 
 describe ('Supplier for Mini Comp', function () {
+    Functions.GetServer()
+
     before(function () {
         const min = parseInt(Cypress.moment().format('m'));
         const hour = parseInt(Cypress.moment().format('H'));
@@ -414,6 +423,8 @@ describe ('Supplier for Mini Comp', function () {
 })
 
 describe ('DPS Manager - Stage 3', function () {
+    Functions.GetServer()
+
     beforeEach(function () {
         cy.visit('')
 

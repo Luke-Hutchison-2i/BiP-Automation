@@ -7,16 +7,8 @@ export function completeStage1 (name) {
     cy.get('[name="dataContext\\.description"]').type('This is a description').should('have.value', 'This is a description')
 
     cy.get('[name="dataContext\\.currencyType"]').select('gbp').should('have.value', 'gbp')
-
-    //cy.get('#docUpload').attachFile('Test.txt')
-    //cy.get('#dragandrophandler').attachFile('Test.txt', { subjectType: 'drag-n-drop', force: true  })
-    cy.get('#docUpload').attachFile('Test.txt', { subjectType: 'drag-n-drop', force: true  })
-    cy.get('#docUpload').attachFile('Test.txt', {force: true  })
-    cy.get('#docUpload').attachFile('Test.txt')
-    cy.get('input[type="file"]').attachFile('Test.txt', { subjectType: 'drag-n-drop', force: true  })
-    cy.get('input[type="file"]').attachFile(['Test.txt', 'QuickCallTestFile.docx'])
-    cy.get('input[type="file"]').attachFile(['Test.txt', 'QuickCallTestFile.docx'], { subjectType: 'drag-n-drop', force: true  })
-    cy.get('input[type="file"]').click()
+    
+    cy.get('#docUpload').attachFile('DocUploadFile.docx')
 
     cy.get('[name="upload"]').click()
 

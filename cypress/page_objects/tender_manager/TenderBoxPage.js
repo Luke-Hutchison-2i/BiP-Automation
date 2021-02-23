@@ -37,6 +37,8 @@ export function gotoEvaluateResponses() {
 export function initialBoxSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
+    cy.get('#dropdown-select_tenderbox_type').select('ITT')
+
     const date = Cypress.moment().format('DD/MM/YYYY')
 
     cy.get('#startDateDayWeb').type(date)

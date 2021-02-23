@@ -9,6 +9,7 @@ import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as Functions from "../support/functions"
 
 var testName = 'None'
 
@@ -49,10 +50,12 @@ function accessibilityTest() {
     cy.checkA11y(null, null, terminalLog, true)
 }
 
+Functions.GetServer()
+
 describe('Accessibility - TenderManager 1', function() {
     beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
-        //cy.visit()
+        cy.visit('')
+        
         cy.contains('Login / Register').click()
 
         cy.login('buyer')

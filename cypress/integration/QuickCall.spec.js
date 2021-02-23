@@ -1,13 +1,17 @@
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as QuickCallManagerPage from "../page_objects/quick_call/QuickCallManagerPage";
 import * as QuickCallStagesPage from "../page_objects/quick_call/QuickCallStagesPage";
+import * as Functions from "../support/functions"
+
 
 const callName = "testQuickCallName"
+
+Functions.GetServer()
 
 describe('Quick Call - Stages 1-4', function() {
     beforeEach(function () {
         cy.visit('')
-        //cy.visit()
+
         cy.contains('Login / Register').click()
 
         cy.login('buyer')
@@ -19,6 +23,9 @@ describe('Quick Call - Stages 1-4', function() {
         QuickCallManagerPage.gotoCreateQuickCall()
 
         QuickCallStagesPage.completeStage1(callName)
+
+        cy.contains('Upload was successful').should('exist')
+        cy.contains('DocUploadFile.docx').should('exist')
 
         QuickCallStagesPage.saveAndContinue()
     })

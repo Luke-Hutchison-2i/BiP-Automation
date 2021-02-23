@@ -19,7 +19,7 @@ export function evalResponse(index) {
 }
 
 export function evalConsensus(index) {
-    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+    startConsensusEval(index)
 
     cy.get('[name^="scores"][name$="score"]').eq(0).select('100')
     cy.get('[name^="scores"][name$="comment"]').eq(0).type('Very good answer')
@@ -41,9 +41,9 @@ export function evalConsensus(index) {
 }
 
 export function evalSideBySide() {
-    cy.get('#tabs-overview').click()
+    gotoOverviewPage()
 
-    cy.get('#buttons-sxs_eval').click()
+    startSideBySideEval()
 
     cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
 
@@ -65,9 +65,7 @@ export function evalSideBySide() {
 
     cy.wait(1000)
 
-    cy.get('[id^="completed_"]').eq(0).check()
-
-    cy.contains('Save & Return').click()
+    finishSideBySideEval()
 }
 
 export function dpsEvalResponse(index) {
@@ -191,4 +189,43 @@ export function awardContract() {
     cy.get('#buttons-award_contract').click()
 
     cy.get('[name="confirm"]').click()
+}
+
+export function gotoOverviewPage() {
+    cy.get('#tabs-overview').click()
+}
+
+
+export function startSideBySideEval() {
+    cy.get('#buttons-sxs_eval').click()
+}
+
+export function finishSideBySideEval() {
+    cy.get('[id^="completed_"]').eq(0).check()
+
+    cy.contains('Save & Return').click()
+
+    cy.wait(500)
+}
+
+export function startConsensusEval (index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+}
+
+export function finishConsensusEval () {
+    cy.get('#completedEvaluation').check()
+
+    cy.get('[name="save"]').click()
+
+    cy.contains('Return to Responses').click()
+}
+
+
+
+export function smokeSideBySide() {
+
+}
+
+export function smokeConsensus () {
+    
 }

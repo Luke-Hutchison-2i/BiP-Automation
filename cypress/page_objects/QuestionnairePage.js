@@ -1,11 +1,4 @@
-export function chooseCustonQuestionnaire() {
-    cy.get('#customQuestionnaire').check()
-
-    cy.get('[name="selectPQQ"]').click()
-
-    cy.url().should('include', 'editQuestionnaireForm.html')
-}
-
+// Set up complete questionnaire
 export function createCustomQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
@@ -16,13 +9,11 @@ export function createCustomQuestionnaire() {
     // Click onto next section
     createSection()
 
-    cy.get('[id^="page-name-link-"').eq(1).click()
-
-    cy.wait(1000)
+    viewSection(1)
 
     createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
 
-    cy.get('#form-return_to_overview').click()
+    returnToOverview()
 }
 
 export function createPriceCustomQuestionnaire() {
@@ -32,10 +23,35 @@ export function createPriceCustomQuestionnaire() {
 
     createQuestion(0, 'What currency?', 'Not much help', 'currency', true)
 
-    cy.get('#form-return_to_overview').click()
+    returnToOverview()
 }
 
-function createSection() {
+
+export function chooseCustonQuestionnaire() {
+    cy.get('#customQuestionnaire').check()
+
+    cy.get('[name="selectPQQ"]').click()
+
+    cy.url().should('include', 'editQuestionnaireForm.html')
+}
+
+export function importExistingQuestionnaire () {
+    cy.get('#importQuestionnaire').check()
+
+    //cy.get('#importDropDown').select(/.\*smoke.\*/gm)
+    cy.get('#importDropDown').contains('smoke').then(el => {
+        cy.get('#importDropDown').select(el.val())
+    })
+
+    cy.get('[name="selectPQQ"]').click()
+
+    cy.get('#selectAll2').check()
+
+    cy.get('#buttons-create_questionnaire').click()
+}
+
+
+export function createSection() {
     cy.contains('Add Section').click()
 
     cy.get('#pageName').type('Section 2')
@@ -49,7 +65,7 @@ function createSection() {
     cy.reload()
 }
 
-function createSubSection() {
+export function createSubSection() {
     cy.contains('Add Subsection').click()
 
     cy.get('#modal-section_name').type('Subsection')
@@ -60,7 +76,8 @@ function createSubSection() {
 
     cy.reload()
 }
-function createLotSubSection() {
+
+export function createLotSubSection() {
     cy.contains('Add Lot Subsection').click()
 
     cy.get('#sectionName').type('LotSub')
@@ -71,6 +88,7 @@ function createLotSubSection() {
 
     cy.reload()
 }
+
 
 export function createQuestion(sub, text, help, type, mand) {
     cy.get('#form-section_' + sub + '-add').click()
@@ -87,10 +105,10 @@ export function createQuestion(sub, text, help, type, mand) {
 
     cy.get('[onclick="javascript:submitQuestion()"]').click()
 
-    cy.wait(500)
+    cy.wait(100)
 }
 
-function createMultipleQuestion(sub, text, help, mand) {
+export function createMultipleQuestion(sub, text, help, mand) {
     cy.get('#form-section_' + sub + '-add').click()
 
     cy.get('#questionText').type(text)
@@ -114,7 +132,7 @@ function createMultipleQuestion(sub, text, help, mand) {
 
     cy.get('[onclick="javascript:submitQuestion()"]').click()
 
-    cy.wait(500)
+    cy.wait(1000)
 }
 
 export function createPriceQuestion(sub, text, help) {
@@ -133,12 +151,33 @@ export function createPriceQuestion(sub, text, help) {
     cy.wait(500)
 }
 
+export function setPriceDocumentUpload() {
+    cy.get('#fileupload').attachFile('DocUploadFile.docx')
+
+    cy.get('#form-upload_files').click()
+    cy.wait(1000)
+
+    cy.get('#modal-save_question').click()
+
+    cy.wait(500)
+}
+
+
 export function deleteQuestionnaire () {
     //cy.get('[id="actions_i"]').click()
 
     cy.get('#delete-questionnaire').click({force:true})
 
     cy.wait(1000)
+}
+
+export function viewSection(index) {
+    cy.get('[id^="page-name-link-"').eq(index).click()
+    cy.wait(500)
+}
+
+export function returnToOverview() {
+    cy.get('#form-return_to_overview').click()
 }
 
 
@@ -150,11 +189,7 @@ export function createLotCustomQuestionnaire() {
 
     viewSection(1) // View Lot
 
-    cy.wait(1000)
-
     createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
-
-    cy.wait(1000)
 }
 
 export function createLot2CustomQuestionnaire() {
@@ -164,9 +199,11 @@ export function createLot2CustomQuestionnaire() {
 
     viewSection(1) // View Lot
 
-    cy.wait(1000)
-
     createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+
+    cy.wait(500)
+
+    createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
     createPriceQuestion(0, "Lot Price", "Enter price")
 
@@ -174,14 +211,15 @@ export function createLot2CustomQuestionnaire() {
 
     viewSection(2) // View Lot
 
-    cy.wait(1000)
-
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
     createLotSubSection()
 
     createPriceQuestion(1, "Lot Price", "Enter price")
+
+    createPriceQuestion(1, "Lot Price", "Enter price again")
 }
+
 
 export function createLot(lotName, secName, subName) {
     cy.get('#add-lot').click()
@@ -195,15 +233,6 @@ export function createLot(lotName, secName, subName) {
     cy.wait(500)
 
     cy.reload()
-}
-
-export function viewSection(index) {
-    cy.get('[id^="page-name-link-"').eq(index).click()
-}
-
-
-export function returnToOverview() {
-    cy.get('#form-return_to_overview').click()
 }
 
 
@@ -266,6 +295,23 @@ export function importSectionLot () {
 
     cy.get('[name^="pagecheck_"]').eq(0).check()
     
+    cy.get('#addSelected').click()
+
+    cy.wait(500)
+}
+
+export function importLotLot() {
+    cy.get('#add-lot').click()
+
+    cy.contains('Import Lot').should('exist')
+
+    cy.get('#expanderHead-lot').click()
+
+    cy.wait(500)
+
+    cy.get('#expanderContent-lot').find('[name="select"]').click()
+    cy.get('[name^="lotcheck"]').check()
+
     cy.get('#addSelected').click()
 
     cy.wait(500)

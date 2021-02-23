@@ -12,27 +12,16 @@ import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as Functions from "../support/functions"
+
 
 const tenderName = "testTenderName"
 const sqName = "testSQName"
 const boxName = "testBoxName"
 
+Functions.GetServer()
+
 describe ('Tender Manager - Stage 1', function() {
-    var onTest = true;
-
-    before (function () {
-        let url = Cypress.config().baseUrl;
-
-        if (url.includes('live')) {
-            onTest = false;
-            console.log('On live, dont run certain tests');
-        } else {
-            onTest = true;
-            console.log('Not on live, run every test');
-        }
-        
-    })
-
     beforeEach(function () {
         cy.visit('')
 
@@ -55,20 +44,16 @@ describe ('Tender Manager - Stage 1', function() {
         cy.contains('Tender Exercise ' + tenderName + ' has been created')
     })
 
-    if (onTest == true) {
+    if (Cypress.env('live') === true) {
         // In Progress
         it ('Set up an existing notice', () => {
-        DashboardPage.gotoTenderManager()
+            DashboardPage.gotoTenderManager()
 
-        cy.wait(1000)
+            TenderManagerPage.gotoExistingTender()
 
-        TenderManagerPage.gotoExistingTender()
+            TenderExercisePage.gotoExistingNotice()
 
-        cy.wait(2000)
-
-        TenderExercisePage.gotoExistingNotice()
-
-        NoticePage.createContractNotice()
+            NoticePage.createContractNotice()
         })
     }
 
@@ -310,7 +295,6 @@ describe ('Tender Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        //QuestionnairePage.createCustomQuestionnaire()
         QuestionnairePage.createPriceCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
@@ -406,7 +390,7 @@ describe ('Supplier for TenderBox', function () {
 
         //cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
 
-        cy.get('[name="confirmSubmit"').click()
+        cy.get('[name="confirmSubmit"]').click()
 
         cy.contains('Response Successfully Submitted').should('exist')
     })

@@ -16,7 +16,6 @@ export function createContractNotice() {
     //cy.get('[name="validate"]')
 }
 
-
 function fillPage1() {
     // Page 1
 
@@ -305,4 +304,9 @@ function fillPage7() {
     cy.get('#Go6').click()
 
     cy.get('#finish').click()
+}
+
+
+export function createCompetitiveNotice() {
+    cy.contains('Competitive Contract Notice').click()
 }
