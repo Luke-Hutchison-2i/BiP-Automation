@@ -12,3 +12,19 @@ export function GetServer () {
 
     Cypress.env('live', live)
 }
+
+export function GetWaitTime(timeMin, timeHour) {
+    let min = parseInt(Cypress.moment().format('m'));
+    let hour = parseInt(Cypress.moment().format('H'));
+    let curTime = (hour * 60) + min;
+
+    let targetTime = (timeHour * 60) + timeMin;
+
+    let waitTime = (targetTime - curTime) * 60 * 1000
+
+    cy.log(targetTime)
+    cy.log(curTime)
+    cy.log(waitTime)
+
+    return waitTime
+}

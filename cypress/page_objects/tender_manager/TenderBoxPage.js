@@ -47,11 +47,74 @@ export function initialBoxSetUp(name) {
 
     cy.get('#endDateDayWeb').type(date,{force:true})
 
-    const hour = parseInt(Cypress.moment().format('H'))
-    const min = parseInt(Cypress.moment().format('m'))
+    //#region Time
+    // const hour = parseInt(Cypress.moment().format('H'))
+    // const min = parseInt(Cypress.moment().format('m'))
 
-    var openMin = (Math.ceil((min+2)/5)*5)
-    var openHour = hour
+    // var openMin = (Math.ceil((min+2)/5)*5)
+    // var openHour = hour
+
+    // if (openMin >= 60) {
+    //     openMin -= 60
+    //     openHour += 1
+    //     if (openHour > 24) {
+    //         openHour -= 24
+    //     }
+    // }
+
+    // cy.get('#metadata\\.openingHour').select(openHour.toString())
+    // cy.get('#metadata\\.openingMin').select(openMin.toString())
+
+    // var closeMin = (Math.ceil((min+2)/5)*5) + 5
+    // var closeHour = hour
+
+    // if (closeMin >= 60) {
+    //     closeMin -= 60
+    //     closeHour += 1
+    //     if (closeHour >= 24) {
+    //         closeHour -= 24
+    //     }
+    // }
+
+    // cy.get('#metadata\\.closingHour').select(closeHour.toString())
+    // cy.get('#metadata\\.closingMin').select(closeMin.toString())
+
+    // cy.wait(2000)
+
+    // exports.openMin = openMin;
+    // exports.openHour = openHour;
+    // exports.closeMin = closeMin;
+    // exports.closeHour = closeHour;
+    //#endregion
+
+    SetOpenAndCloseTime(5)
+
+    cy.get('#save_dates').click()
+}
+
+export function initialSQSetUp(name) {
+    cy.get('#list-setup').find('[name="name"]').clear().type(name)
+
+    const date = Cypress.moment().format('DD/MM/YYYY')
+
+    cy.get('#startDateDayWeb').type(date)
+
+    cy.wait(500)
+
+    cy.get('#endDateDayWeb').type(date,{force:true})
+
+    SetOpenAndCloseTime(5)
+
+    cy.get('#save_dates').click()
+}
+
+
+export function SetOpenAndCloseTime(delay) {
+    let hour = parseInt(Cypress.moment().format('H'))
+    let min = parseInt(Cypress.moment().format('m'))
+
+    let openMin = (Math.ceil((min+2)/5)*5)
+    let openHour = hour
 
     if (openMin >= 60) {
         openMin -= 60
@@ -64,8 +127,8 @@ export function initialBoxSetUp(name) {
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 
-    var closeMin = (Math.ceil((min+2)/5)*5) + 5
-    var closeHour = hour
+    let closeMin = openMin + 5
+    let closeHour = hour
 
     if (closeMin >= 60) {
         closeMin -= 60
@@ -80,10 +143,6 @@ export function initialBoxSetUp(name) {
 
     cy.wait(2000)
 
-    exports.openMin = openMin;
-    exports.openHour = openHour;
     exports.closeMin = closeMin;
     exports.closeHour = closeHour;
-
-    cy.get('#save_dates').click()
 }

@@ -22,12 +22,22 @@ const boxName = "testBoxName"
 Functions.GetServer()
 
 describe ('Tender Manager - Stage 1', function() {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('buyer')
     })
 
     it ('Create Tender Exercise', () => {
@@ -64,7 +74,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.initialSQSetUp(sqName)
+        TenderBoxPage.initialSQSetUp(sqName)
 
         cy.url().should('include', 'delta/buyers/select/viewListStatus.html')
     })
@@ -153,29 +163,15 @@ describe ('Tender Manager - Stage 1', function() {
         cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
     })
 })
 
 describe ('Supplier for SQ', function () {
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqOpenMin = SQPage.openMin;
-        const sqOpenHour = SQPage.openHour;
-
-        var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-        const waitTime = (openTime - curTime) * 60 * 1000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
@@ -216,21 +212,7 @@ describe ('Supplier for SQ', function () {
     })
 
     after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqCloseMin = SQPage.closeMin;
-        const sqCloseHour = SQPage.closeHour;
-
-        var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
         if (waitTime > 0) {
             cy.wait(waitTime)
@@ -239,12 +221,22 @@ describe ('Supplier for SQ', function () {
 })
 
 describe ('Tender Manager - Stage 2', function () {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('buyer')
     })
 
     it ('Evaluate responses for SQ', () => {
@@ -337,29 +329,15 @@ describe ('Tender Manager - Stage 2', function () {
         AddSuppliersPage.addExisitingSuppliers()
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
     })
 })
 
 describe ('Supplier for TenderBox', function () {
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqOpenMin = TenderBoxPage.openMin;
-        const sqOpenHour = TenderBoxPage.openHour;
-
-        var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-        const waitTime = (openTime - curTime) * 60 * 1000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
@@ -400,22 +378,8 @@ describe ('Supplier for TenderBox', function () {
     })
 
     after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqCloseMin = TenderBoxPage.closeMin;
-        const sqCloseHour = TenderBoxPage.closeHour;
-
-        var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
@@ -423,12 +387,22 @@ describe ('Supplier for TenderBox', function () {
 })
 
 describe ('Tender Manager - Stage 3', function () {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('buyer')
     })
 
     it ('Evaluate responses for Tender Box', () => {
@@ -463,7 +437,7 @@ describe ('Tender Manager - Stage 3', function () {
         cy.contains('TenderBox: ' + boxName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
     })
 })
