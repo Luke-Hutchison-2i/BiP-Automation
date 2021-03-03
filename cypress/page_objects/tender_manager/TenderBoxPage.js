@@ -34,6 +34,7 @@ export function gotoEvaluateResponses() {
     })
 }
 
+
 export function initialBoxSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
@@ -128,7 +129,7 @@ export function SetOpenAndCloseTime(delay) {
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 
     let closeMin = openMin + 5
-    let closeHour = hour
+    let closeHour = openHour
 
     if (closeMin >= 60) {
         closeMin -= 60

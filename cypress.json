@@ -7,6 +7,6 @@
         "toConsole": true,
         "attachments": true
     },
-    "videoCompression": 0,
+    "video": true,
     "baseUrl": "https://test.delta-esourcing.com/"
 }

@@ -5,7 +5,7 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
 
     //cy.wait(1000)
 
-    var qurl = ""
+    let qurl = ""
 
     //#region Question Score
 
@@ -13,7 +13,7 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
         // Replace window.open(url, target)-function with our own arrow function
         cy.stub(win, 'open', url => 
         {
-          qurl = 'https://test.delta-esourcing.com' + url;
+          qurl = Cypress.config().baseUrl + url;
         }).as("popup") // alias it with popup, so we can wait refer it with @popup
     })
 
@@ -51,7 +51,7 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
         // Replace window.open(url, target)-function with our own arrow function
         cy.stub(win, 'open', url => 
         {
-          qurl = 'https://test.delta-esourcing.com' + url;
+          qurl = Cypress.config().baseUrl + url;
         }).as("popup") // alias it with popup, so we can wait refer it with @popup
     })
 

@@ -14,7 +14,9 @@ Functions.GetServer()
 
 describe('Multi-Lots Questionnaire', function() {
     before(function () {
-        cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta')
+        cy.visit('https://dev.delta-esourcing.com')
+
+        cy.contains('Log in').click()
 
         cy.login('buyer')
 
@@ -33,7 +35,7 @@ describe('Multi-Lots Questionnaire', function() {
 
     beforeEach(function () {
         // cy.visit('')
-        cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta')
+        cy.visit('https://dev.delta-esourcing.com/delta/mainMenu.html')
         //cy.contains('Login / Register').click()
 
         //cy.login('buyer')
@@ -124,6 +126,8 @@ describe('Multi-Lots Questionnaire', function() {
         QuestionnairePage.importSectionLot()
         QuestionnairePage.viewSection(1)
 
+        cy.wait(1000)
+
         cy.get('#section_table_wrapper').should('have.length', 2)
 
         QuestionnairePage.returnToOverview()
@@ -140,7 +144,7 @@ describe('Multi-Lots Questionnaire', function() {
         cy.get('#section_table_wrapper').should('not.have.length', 0)
     })
 
-    it.only ('Make Lot questionnaire a template', () => {
+    it ('Make Lot questionnaire a template', () => {
         QuestionnairePage.createLotCustomQuestionnaire()
 
         cy.get('#edit-settings').click({force:true})
@@ -156,6 +160,7 @@ describe('Multi-Lots Questionnaire', function() {
         cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta/admin/listTemplates.html?tab=orgTemplates')
 
         cy.contains(boxName).should('exist')
+        // Should it be at top of list
     })
 
     it ('Use template for Lot questionnaire', () => {
@@ -165,7 +170,7 @@ describe('Multi-Lots Questionnaire', function() {
     afterEach(function () {
         //TenderBoxPage.gotoExistingQuestionnaire()
 
-        QuestionnairePage.deleteQuestionnaire()
+        //QuestionnairePage.deleteQuestionnaire()
 
         //cy.logout()
     })

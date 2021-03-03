@@ -54,7 +54,7 @@ describe ('Smoke Test', function () {
     }
 
     if (Cypress.env('live') === false) {
-        it ('Publish Competitive Contract Notice', function () {
+        it.only ('Publish Competitive Contract Notice', function () {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoCreateTenderExercise()

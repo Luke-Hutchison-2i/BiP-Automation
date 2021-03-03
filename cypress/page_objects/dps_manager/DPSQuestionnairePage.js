@@ -74,6 +74,7 @@ export function gotoEvaluateResponses() {
     })
 }
 
+// Diff
 export function gotoViewSelectList() {
     cy.get('#responses-view_supplier_list').click()
 }

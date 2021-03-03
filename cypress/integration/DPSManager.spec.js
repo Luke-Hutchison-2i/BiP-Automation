@@ -9,8 +9,9 @@ import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as DPSSelectListPage from "../page_objects/DPSSelectListPage";
-import * as DPSMiniCompPage from "../page_objects/dps_manager/DPSMiniCompPage";
+import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
 import * as Functions from "../support/functions"
+
 
 const dpsName = "testDPSName"
 const questionnaireName = "testQuestionnaireName"
@@ -19,12 +20,24 @@ const mcName = "testCompName"
 Functions.GetServer()
 
 describe ('DPS Manager - Stage 1', function() {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        //cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
+
+        //cy.login('buyer')
     })
 
     it ('Create DPS Exercise', () => {
@@ -48,7 +61,8 @@ describe ('DPS Manager - Stage 1', function() {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.initialQuestionnaireSetUp(questionnaireName)
+        //TenderBoxPage.initialQuestionnaireSetUp(questionnaireName)
+        TenderBoxPage.initialSQSetUp(questionnaireName)
 
         cy.url().should('include', 'delta/buyers/select/viewListStatus.html')
 
@@ -62,7 +76,7 @@ describe ('DPS Manager - Stage 1', function() {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoCreateQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
@@ -80,7 +94,7 @@ describe ('DPS Manager - Stage 1', function() {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoCreateEvalPlan()
+        TenderBoxPage.gotoCreateEvalPlan()
 
         EvalPlanPage.createEvalPlan()
 
@@ -96,40 +110,26 @@ describe ('DPS Manager - Stage 1', function() {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
 
-        DPSQuestionnairePage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addExisitingSuppliers()
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
 describe ('Supplier for DPS Questionnaire', function () {
-    Functions.GetServer()
-
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const questionnaireOpenMin = DPSQuestionnairePage.openMin;
-        const questionnaireOpenHour = DPSQuestionnairePage.openHour;
-
-        var openTime = (questionnaireOpenHour * 60) + questionnaireOpenMin;
-
-        const waitTime = ((openTime - curTime) * 60 * 1000) + 30000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
@@ -169,38 +169,33 @@ describe ('Supplier for DPS Questionnaire', function () {
         cy.logout()
     })
 
-    // after(function () {
-    //     const min = parseInt(Cypress.moment().format('m'));
-    //     const hour = parseInt(Cypress.moment().format('H'));
+    after (function () {
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
-    //     var curTime = (hour * 60) + min;
-
-    //     const questionnaireCloseMin = DPSQuestionnairePage.closeMin;
-    //     const questionnaireCloseHour = DPSQuestionnairePage.closeHour;
-
-    //     var closeTime = (questionnaireCloseHour * 60) + questionnaireCloseMin;
-
-    //     const waitTime = (closeTime - curTime) * 60 * 1000
-
-    //     cy.log(closeTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime)
-
-    //     if (waitTime > 0) {
-    //         cy.wait(waitTime)
-    //     }
-    // })
+        if (waitTime > 0) {
+            cy.wait(waitTime)
+        }
+    })
 })
 
 describe ('DPS Manager - Stage 2', function () {
-    Functions.GetServer()
-
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('buyer')
     })
 
     it ('Evaluate responses for DPS Questionnaire', () => {
@@ -210,7 +205,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         // EvalResponsesPage.dpsEvalResponse(0)
         // EvalResponsesPage.dpsEvalSideBySide()
@@ -226,7 +221,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.dpsApproveSupplier(0)
 
@@ -254,7 +249,8 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoCreateMiniComp()
 
-        DPSMiniCompPage.initialBoxSetUp(mcName)
+        // TenderBoxPage.initialBoxSetUp(mcName)
+        TenderBoxPage.initialBoxSetUp(mcName)
 
         cy.contains("Tenderbox with name '" + mcName + "' has now been created.")
     })
@@ -266,7 +262,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.gotoCreateNewQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
@@ -285,7 +281,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.gotoCreateEvalPlan()
+        TenderBoxPage.gotoCreateEvalPlan()
 
         EvalPlanPage.createPriceEvalPlan()
         //EvalPlanPage.createEvalPlan()
@@ -302,40 +298,26 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.dpsAddExistingSuppliers()
 
-        DPSMiniCompPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         cy.contains('demosupplieracccount@bipsolutions.com').should('exist')
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
 describe ('Supplier for Mini Comp', function () {
-    Functions.GetServer()
-
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const mcOpenMin = DPSMiniCompPage.openMin;
-        const mcOpenHour = DPSMiniCompPage.openHour;
-
-        var openTime = (mcOpenHour * 60) + mcOpenMin;
-
-        const waitTime = ((openTime - curTime) * 60 * 1000) + 30000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
@@ -399,22 +381,8 @@ describe ('Supplier for Mini Comp', function () {
         cy.logout()
     })
 
-    after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const mcCloseMin = DPSMiniCompPage.closeMin;
-        const mcCloseHour = DPSMiniCompPage.closeHour;
-
-        var closeTime = (mcCloseHour * 60) + mcCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+    after (function () {
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
         if (waitTime > 0) {
             cy.wait(waitTime)
@@ -423,14 +391,23 @@ describe ('Supplier for Mini Comp', function () {
 })
 
 describe ('DPS Manager - Stage 3', function () {
-    Functions.GetServer()
-
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
+
+        // cy.contains('Login / Register').click()
+
+        // cy.login('buyer')
     })
 
     it ('Evaluate responses for Mini Comp', () => {
@@ -440,7 +417,7 @@ describe ('DPS Manager - Stage 3', function () {
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.evalDPSPriceConsensus(0)
         //EvalResponsesPage.evalSideBySide(0)
@@ -453,14 +430,16 @@ describe ('DPS Manager - Stage 3', function () {
 
         DPSExercisePage.gotoExistingMiniComp()
 
-        DPSMiniCompPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.awardContract()
 
         cy.contains('TenderBox: ' + mcName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })

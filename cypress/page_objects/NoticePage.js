@@ -116,7 +116,7 @@ function fillPage2() {
             // Replace window.open(url, target)-function with our own arrow function
             cy.stub(win, 'open', url => 
             {
-                newurl = 'https://test.delta-esourcing.com' + url;
+                newurl = Cypress.config().baseUrl + url;
             }).as("popup") // alias it with popup, so we can wait refer it with @popup
         })
 
@@ -309,4 +309,55 @@ function fillPage7() {
 
 export function createCompetitiveNotice() {
     cy.contains('Competitive Contract Notice').click()
+
+    fillTitle()
+    fillContractsType()
+}
+
+function fillContractsFinder() {
+    // Not need/already done
+}
+
+function fillTitle () {
+    cy.get('#country').select('US').should('have.value', 'US')
+    cy.get('#country').select('GB').should('have.value', 'GB')
+
+    cy.get('#town').type('Glasgow').should('have.value', 'Glasgow')
+
+    cy.get('#noticeTitle').type('Notice Title')
+}
+
+function fillAwardingAuthority () {
+    // Already done, might need to add an email
+}
+
+function fillContractsType () {
+    cy.get('#worksDiv').should('not.be.visible')
+    cy.get('#Works').check()
+    cy.get('#worksDiv').should('be.visible')
+    cy.get('#contractsFinder\\.worksContractSubtypeExecution').check()
+}
+
+function fillDescription () {
+    
+}
+
+function fillCPVCodes () {
+    
+}
+
+function fillNUTSCode () {
+    
+}
+
+function fillEstimatedValue () {
+    
+}
+
+function fillDeadline () {
+    
+}
+
+function fillAddress () {
+    // Not required, do later
 }

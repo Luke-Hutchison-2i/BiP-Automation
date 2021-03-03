@@ -4,7 +4,7 @@ import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
 import * as NoticePage from "../page_objects/NoticePage";
-import * as SQPage from "../page_objects/tender_manager/SQPage";
+//import * as TenderBoxPage from "../page_objects/tender_manager/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
@@ -26,6 +26,7 @@ describe ('Tender Manager - Stage 1', function() {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('buyer')
     })
@@ -54,7 +55,7 @@ describe ('Tender Manager - Stage 1', function() {
         cy.contains('Tender Exercise ' + tenderName + ' has been created')
     })
 
-    if (Cypress.env('live') === true) {
+    if (Cypress.env('live') === false) {
         // In Progress
         it ('Set up an existing notice', () => {
             DashboardPage.gotoTenderManager()
@@ -86,7 +87,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoCreateNewQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
@@ -107,7 +108,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoCreateEvalPlan()
+        TenderBoxPage.gotoCreateEvalPlan()
 
         EvalPlanPage.createEvalPlan()
 
@@ -123,11 +124,11 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
 
-        SQPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addExisitingSuppliers()
     })
@@ -139,7 +140,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoMessageCentre()
+        TenderBoxPage.gotoMessageCentre()
 
         cy.url().should('include', 'supplierListMessageCentre')
         cy.url().should('include', 'listType=TenderBox')
@@ -165,6 +166,8 @@ describe ('Tender Manager - Stage 1', function() {
 
     after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
@@ -181,6 +184,7 @@ describe ('Supplier for SQ', function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('supplier')
 
@@ -225,6 +229,7 @@ describe ('Tender Manager - Stage 2', function () {
         cy.visit('')
 
         cy.contains('Login / Register').click()
+        //cy.contains('Log in').click()
 
         cy.login('buyer')
     })
@@ -246,7 +251,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         //EvalResponsesPage.evalSideBySide()
         EvalResponsesPage.evalConsensus(0)
@@ -259,7 +264,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.shortListSupplier(0)
 
@@ -331,6 +336,8 @@ describe ('Tender Manager - Stage 2', function () {
 
     after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
@@ -348,7 +355,7 @@ describe ('Supplier for TenderBox', function () {
 
         cy.contains('Login / Register').click()
 
-        cy.login('supplier', 'Tenders2020')
+        cy.login('supplier')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -439,6 +446,8 @@ describe ('Tender Manager - Stage 3', function () {
 
     after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
