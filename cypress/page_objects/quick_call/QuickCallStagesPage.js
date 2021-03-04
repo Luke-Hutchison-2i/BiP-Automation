@@ -68,7 +68,7 @@ export function completeStage5 () {
 }
 
 export function completeStage6 () {
-    cy.get('[name="awardAmountActual"]').type('10001').should('have.value', '10001')
+    cy.get('[name="awardAmountActual"]').clear().type('10001').should('have.value', '10001')
 
     cy.get('[name="comment"]').type('You have won the contract.').should('have.value', 'You have won the contract.')
 

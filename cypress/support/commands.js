@@ -26,25 +26,27 @@
 import 'cypress-file-upload';
 
 Cypress.Commands.add("login", function(type) {
-    var email
-    var password
+    let email
+    let password
+
+    let id = Cypress.env('id')
 
     cy.fixture('logins.json').then((logins) => {
         if (type === "buyer") {
-            email = logins.buyer.email
+            email = logins[id].buyer.email
 
             if (Cypress.env('live') == true) {
-                password = logins.buyer.livePassword
+                password = logins[id].buyer.livePassword
             } else {
-                password = logins.buyer.password
+                password = logins[id].buyer.password
             }
         } else if (type === "supplier") {
-            email = logins.supplier.email
+            email = logins[id].supplier.email
 
             if (Cypress.env('live') == true) {
-                password = logins.supplier.livePassword
+                password = logins[id].supplier.livePassword
             } else {
-                password = logins.supplier.password
+                password = logins[id].supplier.password
             }
         }
 

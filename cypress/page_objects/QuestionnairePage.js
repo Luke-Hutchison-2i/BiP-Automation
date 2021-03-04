@@ -19,8 +19,6 @@ export function createCustomQuestionnaire() {
 export function createPriceCustomQuestionnaire() {
     createPriceQuestion(0, 'Name', 'Enter full price')
 
-    cy.wait(500)
-
     createQuestion(0, 'What currency?', 'Not much help', 'currency', true)
 
     returnToOverview()
@@ -93,6 +91,8 @@ export function createLotSubSection() {
 export function createQuestion(sub, text, help, type, mand) {
     cy.get('#form-section_' + sub + '-add').click()
 
+    cy.wait(500)
+
     cy.get('#answerType').select(type)
 
     cy.get('#questionText').type(text)
@@ -105,11 +105,13 @@ export function createQuestion(sub, text, help, type, mand) {
 
     cy.get('[onclick="javascript:submitQuestion()"]').click()
 
-    cy.wait(100)
+    cy.wait(500)
 }
 
 export function createMultipleQuestion(sub, text, help, mand) {
     cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
 
     cy.get('#questionText').type(text)
 
@@ -132,7 +134,7 @@ export function createMultipleQuestion(sub, text, help, mand) {
 
     cy.get('[onclick="javascript:submitQuestion()"]').click()
 
-    cy.wait(1000)
+    cy.wait(500)
 }
 
 export function createPriceQuestion(sub, text, help) {

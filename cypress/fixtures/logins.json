@@ -1,12 +1,26 @@
 {
-    "buyer": {
-        "email": "userguideaccounta@bipsolutions.com",
-        "password": "Tenders2020",
-        "livePassword": "nah"
+    "1" : {
+        "buyer": {
+            "email": "userguideaccount3@bipsolutions.com",
+            "password": "Tenders2020",
+            "livePassword": "nah"
+        },
+        "supplier": {
+            "email": "demosupplieracccount@bipsolutions.com",
+            "password": "Tenders2020",
+            "livePassword": "nah"
+        }
     },
-    "supplier": {
-        "email": "demosupplieracccount@bipsolutions.com",
-        "password": "Tenders2020",
-        "livePassword": "nah"
+    "2" : {
+        "buyer": {
+            "email": "auto-testing-buyer-1@bipsolutions.com",
+            "password": "Password123",
+            "livePassword": "nah"
+        },
+        "supplier": {
+            "email": "auto-testing-supplier-1@bipsolutions.com",
+            "password": "Password123",
+            "livePassword": "nah"
+        }
     }
 }
