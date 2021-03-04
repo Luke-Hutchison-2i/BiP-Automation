@@ -175,15 +175,15 @@ describe('Multi-Lots Questionnaire', function() {
         //cy.logout()
     })
 
-    // after(function () {
-    //     cy.logout()
-    // })
+    after(function () {
+        cy.logout()
+    })
 
 })
 
 describe ('Multi-Lots Eval Plan', function() {
     before(function () {
-        cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta')
+        cy.visit('https://dev.delta-esourcing.com')
 
         cy.login('buyer')
 
@@ -207,7 +207,7 @@ describe ('Multi-Lots Eval Plan', function() {
     })
     beforeEach(function () {
         // cy.visit('')
-        cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta')
+        cy.visit('https://dev.delta-esourcing.com/delta/mainMenu.html')
         //cy.contains('Login / Register').click()
 
         //cy.login('buyer')
@@ -271,11 +271,13 @@ describe ('Multi-Lots Eval Plan', function() {
         
     })
 
-    afterEach(function () {
-        // TenderBoxPage.gotoExistingQuestionnaire()
+    // afterEach(function () {
+    //     TenderBoxPage.gotoExistingQuestionnaire()
 
-        // QuestionnairePage.deleteQuestionnaire()
+    //     QuestionnairePage.deleteQuestionnaire()
+    // })
 
-        //cy.logout()
+    after(function () {
+        cy.logout()
     })
 })
