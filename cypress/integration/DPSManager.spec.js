@@ -138,7 +138,7 @@ describe ('Supplier for DPS Questionnaire', function () {
     it ('Supplier submits response for DPS Questionnaire', () => {
         cy.visit('')
 
-        cy.contains('Login / Register').click()
+        cy.contains('Login / Register').click({force:true})
 
         cy.login('supplier')
 
@@ -304,7 +304,10 @@ describe ('DPS Manager - Stage 2', function () {
 
         TenderBoxPage.gotoAddSuppliers()
 
-        cy.contains('demosupplieracccount@bipsolutions.com').should('exist')
+        //cy.contains('demosupplieracccount@bipsolutions.com').should('exist')
+        cy.fixture('logins.json').then((logins) => {
+            cy.contains(logins[Cypress.env('id')].supplier.email).should('exist')
+        })
     })
 
     after (function () {
