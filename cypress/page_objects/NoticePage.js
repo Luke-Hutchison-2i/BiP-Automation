@@ -311,11 +311,21 @@ export function createCompetitiveNotice() {
     cy.contains('Competitive Contract Notice').click()
 
     fillTitle()
+    fillAwardingAuthority()
     fillContractsType()
-}
 
-function fillContractsFinder() {
-    // Not need/already done
+    fillDescription()
+    fillEstimatedValue()
+
+    fillDeadline()
+
+    cy.get('[name="validate"]').eq(0).click()
+
+    fillContractsFinder()
+
+    fillCPVCodes()
+
+    cy.get('[name="validate"]').eq(0).click()
 }
 
 function fillTitle () {
@@ -328,7 +338,21 @@ function fillTitle () {
 }
 
 function fillAwardingAuthority () {
-    // Already done, might need to add an email
+    cy.get('#-1\\.OFFICIALNAME').clear().type('BiP Solutions')
+
+    cy.get('#awardingAuthorityAddress\\.firstLine').clear().type('123 Road')
+
+    cy.get('#awardingAuthorityAddress\\.town').clear().type('Glasgow')
+
+    cy.get('#awardingAuthorityAddress\\.postcode').clear().type('G42 3LG')
+
+    cy.get("#awardingAuthorityAddress\\.responseDataAccessor\\.refVals\\[\\'ADDRESS\\'\\]\\.addressResponse\\.country").select('GB').should('contain.text', 'United Kingdom')
+
+    cy.get('#-1\\.FORATTENTIONOF').clear().type('Attention')
+
+    cy.get('#-1\\.TELEPHONE').clear().type('+44 123456789')
+
+    cy.get('#-1\\.EMAIL').clear().type('bip.solutions@gmail.com')
 }
 
 function fillContractsType () {
@@ -339,11 +363,40 @@ function fillContractsType () {
 }
 
 function fillDescription () {
-    
+    cy.get('#description').type('A meaningful description').should('have.value', 'A meaningful description')
 }
 
 function fillCPVCodes () {
-    
+    let newurl = ""
+
+    cy.window().then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, 'open', url => 
+        {
+            newurl = Cypress.config().baseUrl + url;
+        }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    })
+
+    cy.get('#bookmarkCpv1 input[type="button"]').click()
+
+    let oldurl = cy.url()
+
+    cy.get("@popup").should("be.called").then(() => {
+        cy.visit(newurl)
+    })
+
+    cy.get('[name="field"]').eq(0).check()
+    cy.get('[name="search"]').type('03000000')
+    cy.get('[value="Search"]').click()
+    cy.get('[type="checkbox"]').eq(0).check()
+    cy.get('[name="cpvpaste"]').click()
+
+    cy.wait(2000)
+
+    cy.go('back')
+    cy.go('back')
+
+    cy.visit(oldurl)
 }
 
 function fillNUTSCode () {
@@ -351,13 +404,31 @@ function fillNUTSCode () {
 }
 
 function fillEstimatedValue () {
-    
+    cy.get('[name="estValueOfRequirement"]').select('D').should('contain.text', 'Category D: 10M to 20M')
+
+    cy.get('#currency').select('GBP').should('contain.text', 'United Kingdom Pound - GBP')
 }
 
 function fillDeadline () {
-    
+    let date = Cypress.moment().add(1, 'day').format('DD/MM/YYYY')
+    cy.get('#interestDeadline').type(date, {force:true}).should('have.value', date)
+
+    cy.get('#hours').select('23', {force:true}).should('contain.text', '23')
+    cy.get('#minutes').select('00', {force:true}).should('contain.text', '00')
 }
 
 function fillAddress () {
     // Not required, do later
+}
+
+function fillContractsFinder () {
+    cy.get('[name="contractsFinder.isVCO"]').eq(0).check()
+
+    cy.get('#contractsFinder\\.procedureTypeOpen').check()
+
+    let openDate = Cypress.moment().add(7, 'day').format('DD/MM/YYYY')
+    let closeDate = Cypress.moment().add(14, 'day').format('DD/MM/YYYY')
+
+    cy.get('#contractsFinder\\.periodWorkDateStarting').type(openDate, {force:true})
+    cy.get('#contractsFinder\\.periodWorkDateEnding').type(closeDate, {force:true})
 }

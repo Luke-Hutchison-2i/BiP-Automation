@@ -20,24 +20,23 @@ const mcName = "testCompName"
 Functions.GetServer()
 
 describe ('DPS Manager - Stage 1', function() {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     cy.visit('')
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+    //     cy.contains('Login / Register').click()
+    //     //cy.contains('Log in').click()
 
-        cy.login('buyer')
-    })
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        //cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+        cy.contains('Log in').click()
 
-        //cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Create DPS Exercise', () => {
@@ -119,7 +118,7 @@ describe ('DPS Manager - Stage 1', function() {
         AddSuppliersPage.addExisitingSuppliers()
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -136,9 +135,11 @@ describe ('Supplier for DPS Questionnaire', function () {
     })
 
     it ('Supplier submits response for DPS Questionnaire', () => {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
 
-        cy.contains('Login / Register').click({force:true})
+        //cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
 
@@ -179,23 +180,23 @@ describe ('Supplier for DPS Questionnaire', function () {
 })
 
 describe ('DPS Manager - Stage 2', function () {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     cy.visit('')
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+    //     cy.contains('Login / Register').click()
+    //     //cy.contains('Log in').click()
 
-        cy.login('buyer')
-    })
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        // cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        // cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Evaluate responses for DPS Questionnaire', () => {
@@ -310,7 +311,7 @@ describe ('DPS Manager - Stage 2', function () {
         })
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -327,11 +328,13 @@ describe ('Supplier for Mini Comp', function () {
     })
 
     it ('Supplier submits response for Mini Comp', () => {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
 
-        cy.contains('Login / Register').click()
+        //cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        cy.login('supplier', 'Tenders2020')
+        cy.login('supplier')
 
         cy.get('#modules-responses_and_invites').click()
 
@@ -394,23 +397,23 @@ describe ('Supplier for Mini Comp', function () {
 })
 
 describe ('DPS Manager - Stage 3', function () {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     cy.visit('')
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+    //     cy.contains('Login / Register').click()
+    //     //cy.contains('Log in').click()
 
-        cy.login('buyer')
-    })
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        // cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        // cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Evaluate responses for Mini Comp', () => {
@@ -440,7 +443,7 @@ describe ('DPS Manager - Stage 3', function () {
         cy.contains('TenderBox: ' + mcName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
         cy.clearCookies()

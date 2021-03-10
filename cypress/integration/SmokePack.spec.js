@@ -31,12 +31,22 @@ const boxName = "smokeBox"
 Functions.GetServer()
 
 describe ('Smoke Test', function () {
-    beforeEach(function () {
-        cy.visit('')
+    before (function () {
+        //cy.visit('')
+        cy.visit('/delta/index.html')
 
-        cy.contains('Login / Register').click()
+        cy.wait(3000)
+
+        //cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     if (Cypress.env('live') === false) {
@@ -211,7 +221,9 @@ describe ('Smoke Test', function () {
         EvalResponsesPage.awardContract()
     })
 
-    afterEach(function () {
+    after (function () {
         //cy.logout()
+
+        cy.clearCookies()
     })
 })

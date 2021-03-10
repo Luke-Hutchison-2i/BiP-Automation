@@ -10,9 +10,10 @@ Functions.GetServer()
 
 describe('Quick Call - Stages 1-4', function() {
     beforeEach(function () {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
 
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('buyer')
 
@@ -67,15 +68,18 @@ describe('Quick Call - Stages 1-4', function() {
 
     afterEach(function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 
 })
 
 describe('Quick Call - Supplier', function() {
     before(function () {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
         //cy.visit()
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
     })

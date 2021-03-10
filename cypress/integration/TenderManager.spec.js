@@ -22,23 +22,26 @@ const boxName = "testBoxName"
 Functions.GetServer()
 
 describe ('Tender Manager - Stage 1', function() {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     //cy.visit('')
+    //     cy.visit('/delta/index.html')
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+    //     cy.wait(3000)
 
-        cy.login('buyer')
-    })
+    //     //cy.contains('Login / Register').click()
+    //     cy.contains('Log in').click()
+
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        // cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        // cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Create Tender Exercise', () => {
@@ -164,10 +167,10 @@ describe ('Tender Manager - Stage 1', function() {
         cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
-        cy.clearCookies()
+        //cy.clearCookies()
     })
 })
 
@@ -181,10 +184,11 @@ describe ('Supplier for SQ', function () {
     })
 
     it ('Supplier submits response for SQ', () => {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+        //cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
 
@@ -211,11 +215,9 @@ describe ('Supplier for SQ', function () {
         cy.contains('Response Successfully Submitted').should('exist')
     })
 
-    afterEach(function () {
-        cy.logout()
-    })
-
     after(function () {
+        cy.logout()
+
         let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
         if (waitTime > 0) {
@@ -225,23 +227,26 @@ describe ('Supplier for SQ', function () {
 })
 
 describe ('Tender Manager - Stage 2', function () {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     //cy.visit('')
+    //     cy.visit('/delta/index.html')
 
-        cy.contains('Login / Register').click()
-        //cy.contains('Log in').click()
+    //     cy.wait(3000)
 
-        cy.login('buyer')
-    })
+    //     //cy.contains('Login / Register').click()
+    //     cy.contains('Log in').click()
+
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        // cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        // cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Evaluate responses for SQ', () => {
@@ -334,7 +339,7 @@ describe ('Tender Manager - Stage 2', function () {
         AddSuppliersPage.addExisitingSuppliers()
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -351,9 +356,11 @@ describe ('Supplier for TenderBox', function () {
     })
 
     it ('Supplier submits response for Tender Box', () => {
-        cy.visit('')
+        cy.visit('/delta/index.html')
+        cy.wait(3000)
 
-        cy.contains('Login / Register').click()
+        //cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
 
@@ -380,11 +387,9 @@ describe ('Supplier for TenderBox', function () {
         cy.contains('Response Successfully Submitted').should('exist')
     })
 
-    afterEach(function () {
-        cy.logout()
-    })
-
     after(function () {
+        cy.logout()
+
         let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
         
         if (waitTime > 0) {
@@ -394,22 +399,26 @@ describe ('Supplier for TenderBox', function () {
 })
 
 describe ('Tender Manager - Stage 3', function () {
-    before (function () {
-        cy.visit('')
+    // before (function () {
+    //     //cy.visit('')
+    //     cy.visit('/delta/index.html')
 
-        cy.contains('Login / Register').click()
+    //     cy.wait(3000)
 
-        cy.login('buyer')
-    })
+    //     //cy.contains('Login / Register').click()
+    //     cy.contains('Log in').click()
+
+    //     cy.login('buyer')
+    // })
 
     beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+        //Cypress.Cookies.preserveOnce('JSESSIONID')
 
-        cy.visit('/delta')
+        cy.visit('/delta/index.html')
 
-        // cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        // cy.login('buyer')
+        cy.login('buyer')
     })
 
     it ('Evaluate responses for Tender Box', () => {
@@ -444,7 +453,7 @@ describe ('Tender Manager - Stage 3', function () {
         cy.contains('TenderBox: ' + boxName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
-    after (function () {
+    afterEach (function () {
         cy.logout()
 
         cy.clearCookies()
