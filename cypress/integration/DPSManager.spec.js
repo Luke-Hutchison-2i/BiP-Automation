@@ -20,23 +20,18 @@ const mcName = "testCompName"
 Functions.GetServer()
 
 describe ('DPS Manager - Stage 1', function() {
-    // before (function () {
-    //     cy.visit('')
-
-    //     cy.contains('Login / Register').click()
-    //     //cy.contains('Log in').click()
-
-    //     cy.login('buyer')
-    // })
-
-    beforeEach(function () {
-        //Cypress.Cookies.preserveOnce('JSESSIONID')
-
-        cy.visit('/delta/index.html')
+    before (function () {
+        cy.visit('')
 
         cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Create DPS Exercise', () => {
@@ -118,7 +113,7 @@ describe ('DPS Manager - Stage 1', function() {
         AddSuppliersPage.addExisitingSuppliers()
     })
 
-    afterEach (function () {
+    after (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -135,10 +130,8 @@ describe ('Supplier for DPS Questionnaire', function () {
     })
 
     it ('Supplier submits response for DPS Questionnaire', () => {
-        cy.visit('/delta/index.html')
-        cy.wait(3000)
+        cy.visit('')
 
-        //cy.contains('Login / Register').click()
         cy.contains('Log in').click()
 
         cy.login('supplier')
@@ -168,6 +161,8 @@ describe ('Supplier for DPS Questionnaire', function () {
 
     afterEach(function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 
     after (function () {
@@ -180,23 +175,18 @@ describe ('Supplier for DPS Questionnaire', function () {
 })
 
 describe ('DPS Manager - Stage 2', function () {
-    // before (function () {
-    //     cy.visit('')
-
-    //     cy.contains('Login / Register').click()
-    //     //cy.contains('Log in').click()
-
-    //     cy.login('buyer')
-    // })
-
-    beforeEach(function () {
-        //Cypress.Cookies.preserveOnce('JSESSIONID')
-
-        cy.visit('/delta/index.html')
+    before (function () {
+        cy.visit('')
 
         cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Evaluate responses for DPS Questionnaire', () => {
@@ -311,7 +301,7 @@ describe ('DPS Manager - Stage 2', function () {
         })
     })
 
-    afterEach (function () {
+    after (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -328,10 +318,8 @@ describe ('Supplier for Mini Comp', function () {
     })
 
     it ('Supplier submits response for Mini Comp', () => {
-        cy.visit('/delta/index.html')
-        cy.wait(3000)
+        cy.visit('')
 
-        //cy.contains('Login / Register').click()
         cy.contains('Log in').click()
 
         cy.login('supplier')
@@ -397,23 +385,18 @@ describe ('Supplier for Mini Comp', function () {
 })
 
 describe ('DPS Manager - Stage 3', function () {
-    // before (function () {
-    //     cy.visit('')
-
-    //     cy.contains('Login / Register').click()
-    //     //cy.contains('Log in').click()
-
-    //     cy.login('buyer')
-    // })
-
-    beforeEach(function () {
-        //Cypress.Cookies.preserveOnce('JSESSIONID')
-
-        cy.visit('/delta/index.html')
+    before (function () {
+        cy.visit('')
 
         cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Evaluate responses for Mini Comp', () => {
@@ -443,7 +426,7 @@ describe ('DPS Manager - Stage 3', function () {
         cy.contains('TenderBox: ' + mcName + ' has been awarded to: BiP Solutions').should('exist')
     })
 
-    afterEach (function () {
+    after (function () {
         cy.logout()
 
         cy.clearCookies()

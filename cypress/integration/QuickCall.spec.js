@@ -10,8 +10,7 @@ Functions.GetServer()
 
 describe('Quick Call - Stages 1-4', function() {
     beforeEach(function () {
-        cy.visit('/delta/index.html')
-        cy.wait(3000)
+        cy.visit('')
 
         cy.contains('Log in').click()
 
@@ -76,9 +75,8 @@ describe('Quick Call - Stages 1-4', function() {
 
 describe('Quick Call - Supplier', function() {
     before(function () {
-        cy.visit('/delta/index.html')
-        cy.wait(3000)
-        //cy.visit()
+        cy.visit('')
+    
         cy.contains('Log in').click()
 
         cy.login('supplier')
@@ -109,6 +107,8 @@ describe('Quick Call - Supplier', function() {
 
     afterEach(function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 
     after(function() {
@@ -136,10 +136,20 @@ describe('Quick Call - Supplier', function() {
 })
 
 describe('Quick Call - Stages 5-7', function() {
-    before(function () {
+    // before(function () {
+    //     cy.visit('')
+    //     //cy.visit()
+    //     cy.contains('Login / Register').click()
+
+    //     cy.login('buyer')
+
+    //     DashboardPage.gotoQuickCall()
+    // })
+
+    beforeEach(function () {
         cy.visit('')
-        //cy.visit()
-        cy.contains('Login / Register').click()
+
+        cy.contains('Log in').click()
 
         cy.login('buyer')
 
