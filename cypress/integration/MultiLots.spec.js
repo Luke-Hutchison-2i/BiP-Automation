@@ -36,9 +36,6 @@ describe('Multi-Lots Questionnaire', function() {
     beforeEach(function () {
         // cy.visit('')
         cy.visit('https://dev.delta-esourcing.com/delta/mainMenu.html')
-        //cy.contains('Login / Register').click()
-
-        //cy.login('buyer')
 
         DashboardPage.gotoTenderManager()
 
@@ -208,9 +205,6 @@ describe ('Multi-Lots Eval Plan', function() {
     beforeEach(function () {
         // cy.visit('')
         cy.visit('https://dev.delta-esourcing.com/delta/mainMenu.html')
-        //cy.contains('Login / Register').click()
-
-        //cy.login('buyer')
 
         DashboardPage.gotoTenderManager()
 

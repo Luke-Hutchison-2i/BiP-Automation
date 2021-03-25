@@ -1,48 +1,39 @@
 // Set up complete evaluation plan
 export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQuestionnaire
-    //cy.get('select[name^="evalSection_"][name$="_action"]').eq(0).select('Question')
     changeScoringLevel(0, 'Question')
 
-    //cy.wait(1000)
-
-    let qurl = ""
+    setMultiQuestionScore(0, 2)
 
     //#region Question Score
+    // let qurl = ""
 
-    cy.window().then((win) => {
-        // Replace window.open(url, target)-function with our own arrow function
-        cy.stub(win, 'open', url => 
-        {
-          qurl = Cypress.config().baseUrl + url;
-        }).as("popup") // alias it with popup, so we can wait refer it with @popup
-    })
+    // cy.window().then((win) => {
+    //     // Replace window.open(url, target)-function with our own arrow function
+    //     cy.stub(win, 'open', url => 
+    //     {
+    //       qurl = Cypress.config().baseUrl + url;
+    //     }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    // })
 
-    cy.get('#editBut').eq(0).click()
+    // cy.get('#editBut').eq(0).click()
 
-    cy.get("@popup").should("be.called").then(() => {
-        cy.visit(qurl)
-    })
+    // cy.get("@popup").should("be.called").then(() => {
+    //     cy.visit(qurl)
+    // })
 
-    cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
-    cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
+    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
+    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
 
-    cy.get('[name="save"]').click()
+    // cy.get('[name="save"]').click()
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
-    cy.go('back')
-    cy.go('back')
+    // cy.go('back')
+    // cy.go('back')
 
     //#endregion
 
-    //cy.get('#page_nav-page_2').click()
     gotoSection(2)
-
-    // cy.wait(1000)
-
-    // cy.get('select[name^="evalSection_"][name$="_action"]').eq(0).select('Question')
-
-    // cy.wait(1000)
 
     changeScoringLevel(0, 'Question')
 
@@ -91,9 +82,9 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
 }
 
 export function createPriceEvalPlan() { // Works with QuestionnairePage CreateCustomPriceQuestionnaire
-    cy.get('#table-price_weight').clear().type('50')
+    setPriceWeighting(value)
 
-    cy.get('#button-save_evaluation_settings').click()
+    saveEvalSettings()
 
     cy.get('#table-tech_weight').should('have.value', '50.00')
     
@@ -104,9 +95,32 @@ export function createPriceEvalPlan() { // Works with QuestionnairePage CreateCu
     cy.get('#button-return_to_overview').click()
 }
 
+export function setPriceWeighting(value) {
+    cy.get('#table-price_weight').clear().type(value);
+}
+
+export function createSmokeEvalPlan () {
+    changeScoringLevel(0, 'Question')
+
+    saveEvalWeightings()
+
+    setMultiQuestionScore(0, 3)
+
+    editWeighting(0, 100) // Move after changeSScoringLevel
+
+    saveEvalWeightings()
+
+    setPriceWeighting(50)
+
+    saveEvalSettings()
+
+    cy.get('#table-tech_weight').should('have.value', '50.00')
+}
+
 
 export function saveEvalSettings() {
-    cy.contains('Save Evaluation Settings').click()
+    cy.get('#button-save_evaluation_settings').click()
+    cy.wait(500)
 }
 
 export function saveEvalWeightings() {
@@ -122,11 +136,11 @@ export function gotoSection(int) {
 
 
 export function editWeighting(index, value) {
-    cy.get('[name^="evalSection_"][name$="weight"]').eq(index).clear().type(value)
+    cy.get('#input-weighting').eq(index).clear().type(value)
 }
 
 export function getWeightingInput(index) {
-    return cy.get('[name^="evalSection_"][name$="weight"]').eq(index)
+    return cy.get('#input-weighting').eq(index)
 }
 
 export function changeScoringLevel(index, type) {
@@ -135,8 +149,43 @@ export function changeScoringLevel(index, type) {
 }
 
 
+export function setMultiQuestionScore (index, answers) {
+    let qurl = ""
+
+    cy.window().then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, 'open', url => 
+        {
+          qurl = Cypress.config().baseUrl + url;
+        }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    })
+
+    cy.get('#editBut').eq(index).click()
+
+    cy.get("@popup").should("be.called").then(() => {
+        cy.visit(qurl)
+    })
+
+    let score = 100
+
+    for (let index = 0; index < answers; index++) {
+        cy.get('[name="answer\\.multiChoiceAnswer\\.options[' + index + ']\\.score"]').select(score.toString())
+        score = score * -1
+    }
+
+    cy.get('[name="save"]').click()
+
+    cy.wait(1000)
+
+    cy.go('back')
+    cy.go('back')
+
+    cy.wait(500)
+}
+
+
 export function returnToOverview() {
-    cy.get('#return_to_overview').click()
+    cy.get('#button-return_to_overview').click()
 }
 
 export function deleteEvalPlan() { // Not for Multi-lot

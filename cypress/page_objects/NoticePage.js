@@ -13,7 +13,9 @@ export function createContractNotice() {
 
     fillPage7()
 
-    //cy.get('[name="validate"]')
+    validateNotice()
+
+    //publishNotice()
 }
 
 function fillPage1() {
@@ -60,7 +62,7 @@ function fillPage1() {
         // Replace window.open(url, target)-function with our own arrow function
         cy.stub(win, 'open', url => 
         {
-            newurl = 'https://test.delta-esourcing.com' + url;
+            newurl = Cypress.config().baseUrl + url;
         }).as("popup") // alias it with popup, so we can wait refer it with @popup
     })
 
@@ -74,21 +76,19 @@ function fillPage1() {
     cy.get('[name="search"]').type('uk')
     cy.get('[value="Search"]').click()
     cy.get('[type="checkbox"]').eq(0).check()
+    cy.wait(1000)
     cy.get('#regionpaste').click()
 
     cy.wait(2000)
 
     cy.go('back')
-
     cy.go('back')
 
-    cy.go('back')
+    cy.wait(1000)
 
     cy.go('back')
-
     cy.go('back')
-
-    cy.wait(2000)
+    cy.go('back')
 }
 
 function fillPage2() {
@@ -133,18 +133,12 @@ function fillPage2() {
         cy.get('[name="cpvpaste"]').click()
 
         cy.wait(2000)
-
         cy.go('back')
-
         cy.go('back')
-
+        cy.wait(1000)
         cy.go('back')
-
         cy.go('back')
-
         cy.go('back')
-
-        cy.wait(2000)
     
         //cy.get('#backToIndex').click()
 }
@@ -189,7 +183,7 @@ function fillPage3() {
         // Replace window.open(url, target)-function with our own arrow function
         cy.stub(win, 'open', url => 
         {
-            newurl = 'https://test.delta-esourcing.com' + url;
+            newurl = Cypress.config().baseUrl + url;
         }).as("popup") // alias it with popup, so we can wait refer it with @popup
     })
 
@@ -206,18 +200,12 @@ function fillPage3() {
     cy.get('#regionpaste').click()
 
     cy.wait(2000)
-
     cy.go('back')
-
     cy.go('back')
-
+    cy.wait(1000)
     cy.go('back')
-
     cy.go('back')
-
     cy.go('back')
-
-    cy.wait(2000)
 
     //cy.get('#backToIndex').click()
 }
@@ -319,13 +307,20 @@ export function createCompetitiveNotice() {
 
     fillDeadline()
 
-    cy.get('[name="validate"]').eq(0).click()
+    validateNotice()
 
     fillContractsFinder()
+    saveNotice()
 
     fillCPVCodes()
+    saveNotice()
 
-    cy.get('[name="validate"]').eq(0).click()
+    fillNUTSCode()
+    saveNotice()
+
+    validateNotice()
+
+    publishNotice()
 }
 
 function fillTitle () {
@@ -379,7 +374,10 @@ function fillCPVCodes () {
 
     cy.get('#bookmarkCpv1 input[type="button"]').click()
 
-    let oldurl = cy.url()
+    // let oldurl = ""
+    // cy.url().then(url => {
+    //     oldurl = url      
+    // })
 
     cy.get("@popup").should("be.called").then(() => {
         cy.visit(newurl)
@@ -396,11 +394,49 @@ function fillCPVCodes () {
     cy.go('back')
     cy.go('back')
 
-    cy.visit(oldurl)
+    cy.wait(1000)
+    cy.go('back')
+    //cy.go('back')
+
+    //cy.wait(2000)
+
+    // cy.then(() => {
+    //     cy.visit(oldurl)
+    // })
+   
 }
 
 function fillNUTSCode () {
-    
+    let newurl = ""
+
+    cy.window().then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, 'open', url => 
+        {
+            newurl = Cypress.config().baseUrl + url;
+        }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    })
+
+    cy.get('#bookmarkNuts1 input[type="button"]').click()
+
+    cy.get("@popup").should("be.called").then(() => {
+        cy.visit(newurl)
+    })
+
+    cy.get('[name="field"]').eq(0).check()
+    cy.get('[name="search"]').type('UK')
+    cy.get('[value="Search"]').click()
+    cy.get('[type="checkbox"]').eq(0).check()
+    cy.get('[name="regionpaste"]').click()
+
+    cy.wait(2000)
+
+    cy.go('back')
+    cy.go('back')
+
+    cy.wait(1000)
+    cy.go('back')
+    //cy.go('back')
 }
 
 function fillEstimatedValue () {
@@ -431,4 +467,18 @@ function fillContractsFinder () {
 
     cy.get('#contractsFinder\\.periodWorkDateStarting').type(openDate, {force:true})
     cy.get('#contractsFinder\\.periodWorkDateEnding').type(closeDate, {force:true})
+}
+
+function saveNotice () {
+    cy.get('[name="save"]').eq(0).click()
+}
+
+function validateNotice () {
+    cy.get('[name="validate"]').eq(0).click()
+}
+
+function publishNotice () {
+    cy.contains('Publish').click()
+
+    cy.contains('Notice has been successfully submitted.').should('exist')
 }

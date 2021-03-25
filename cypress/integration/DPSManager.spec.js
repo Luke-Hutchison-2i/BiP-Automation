@@ -10,6 +10,8 @@ import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as DPSSelectListPage from "../page_objects/DPSSelectListPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
+import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 
@@ -74,7 +76,7 @@ describe ('DPS Manager - Stage 1', function() {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createBasicQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -136,27 +138,19 @@ describe ('Supplier for DPS Questionnaire', function () {
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(questionnaireName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(questionnaireName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#yes0').check()
+        ResponsePage.completeBasicResponse()
 
-        cy.get('#mytext').type('I can do this because I can.')
+        ResponsePage.saveAndContinue()
 
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
     })
 
     afterEach(function () {
@@ -258,7 +252,6 @@ describe ('DPS Manager - Stage 2', function () {
         QuestionnairePage.chooseCustonQuestionnaire()
 
         QuestionnairePage.createPriceCustomQuestionnaire()
-        //QuestionnairePage.createCustomQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -324,51 +317,17 @@ describe ('Supplier for Mini Comp', function () {
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(mcName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(mcName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#bid_0').type('25000')
+        ResponsePage.completePriceResponse()
 
-        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
-
-        // cy.visit('')
-
-        // cy.contains('Login / Register').click()
-
-        // cy.login('supplier')
-
-        // cy.get('#modules-responses_and_invites').click()
-
-        // cy.contains(mcName).parent().find('[name="oneClickRespond"]').click()
-
-        // cy.get('#respondButton').click() // Accept invitation
-
-        // cy.contains('Continue to Stage Two').click()
-
-        // cy.get('#yes0').check()
-
-        // cy.get('#mytext').type('I can do this because I can.')
-
-        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        // cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        // cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        // cy.get('[name="confirmSubmit"').click()
-
-        // cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
     })
 
     afterEach(function () {

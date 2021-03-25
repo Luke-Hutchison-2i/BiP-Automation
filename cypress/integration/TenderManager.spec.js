@@ -4,7 +4,6 @@ import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
 import * as NoticePage from "../page_objects/NoticePage";
-//import * as TenderBoxPage from "../page_objects/tender_manager/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
@@ -12,6 +11,8 @@ import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
+import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 
@@ -51,8 +52,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     if (Cypress.env('live') === false) {
-        // In Progress
-        it ('Set up an existing notice', () => {
+        it.skip ('Set up an existing notice', () => {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoExistingTender()
@@ -86,7 +86,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createBasicQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -182,27 +182,17 @@ describe ('Supplier for SQ', function () {
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(sqName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(sqName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#yes0').check()
+        ResponsePage.completeBasicResponse()
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
     })
 
     after(function () {
@@ -314,10 +304,6 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderBoxPage.gotoAddSuppliers()
 
-        AddSuppliersPage.addByEmail()
-
-        TenderBoxPage.gotoAddSuppliers()
-
         AddSuppliersPage.addExisitingSuppliers()
     })
 
@@ -344,27 +330,17 @@ describe ('Supplier for TenderBox', function () {
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(boxName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#bid_0').type('25000')
+        ResponsePage.completePriceResponse()
 
-        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        //cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        //cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"]').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
     })
 
     afterEach(function () {

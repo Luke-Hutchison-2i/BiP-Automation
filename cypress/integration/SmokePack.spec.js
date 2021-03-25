@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
@@ -9,6 +11,8 @@ import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
+import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 
@@ -28,26 +32,33 @@ import * as Functions from "../support/functions"
 const tenderName = "smokeTender"
 const boxName = "smokeBox"
 
+const messageSubject = "Smoke Test"
+const messageBody = "This is the body"
+
 Functions.GetServer()
 
 describe ('Smoke Test', function () {
-    before (function () {
-        //cy.visit('')
-        cy.visit('/delta/index.html')
+    beforeEach (function () {
+        cy.visit('')
 
-        cy.wait(3000)
-
-        //cy.contains('Login / Register').click()
         cy.contains('Log in').click()
 
         cy.login('buyer')
     })
 
-    beforeEach(function () {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+    if (Cypress.env('live') === false) {
+        it ('Publish Competitive Contract Notice', function () {
+            DashboardPage.gotoTenderManager()
 
-        cy.visit('/delta')
-    })
+            TenderManagerPage.gotoCreateTenderExercise()
+    
+            TenderManagerPage.createTenderExercise(tenderName)
+
+            TenderExercisePage.gotoCreateNotice()
+
+            NoticePage.createCompetitiveNotice()
+        })
+    }
 
     if (Cypress.env('live') === false) {
         it ('Publish OJEU Notice', function () {
@@ -63,20 +74,6 @@ describe ('Smoke Test', function () {
         })
     }
 
-    if (Cypress.env('live') === false) {
-        it.only ('Publish Competitive Contract Notice', function () {
-            DashboardPage.gotoTenderManager()
-
-            TenderManagerPage.gotoCreateTenderExercise()
-    
-            TenderManagerPage.createTenderExercise(tenderName)
-
-            TenderExercisePage.gotoCreateNotice()
-
-            NoticePage.createCompetitiveNotice()
-        })
-    }
-
     it ('Complete and award Tenderbox', function () {
         DashboardPage.gotoTenderManager()
 
@@ -84,20 +81,18 @@ describe ('Smoke Test', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoCreateTenderBox()
+        TenderExercisePage.gotoExistingTenderBox()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
-        QuestionnairePage.importExistingQuestionnaire()
+        QuestionnairePage.importExistingQuestionnaire('smoke')
 
         cy.get('[id^="page-name-link-"').should('have.length', 2)
 
         // Add document to price document upload
-        //QuestionnairePage.viewSection(2)
-        cy.get('[id^="page-name-link-"').eq(1).click()
-        cy.wait(1000)
+        QuestionnairePage.viewSection(1)
 
         cy.get('#body-edit_question').click()
         cy.wait(500)
@@ -106,90 +101,73 @@ describe ('Smoke Test', function () {
 
         QuestionnairePage.returnToOverview()
 
+        TenderBoxPage.gotoCreateEvalPlan()
+
+        EvalPlanPage.createSmokeEvalPlan()
+
+        EvalPlanPage.returnToOverview()
+
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
 
         cy.logout()
+        cy.clearCookies()
 
-        // Supplier part
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqOpenMin = TenderBoxPage.openMin;
-        const sqOpenHour = TenderBoxPage.openHour;
-
-        var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-        const waitTime = (openTime - curTime) * 60 * 1000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        //#region Supplier
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
 
         cy.visit('')
 
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(boxName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#yes0').check()
+        ResponsePage.completeSmokeResponse()
 
-        cy.get('#buttons-next_page').click()
-
-        cy.get('#dragandrophandler input').attachFile('QuickCallTestFile.docx')
-
-        cy.get('[name="upload"]').click()
-        cy.wait(500)
-
-        cy.contains('Save and Proceed to Stage 3 ').click()
-
-        cy.contains('Submit Response').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
 
         // Message buyer
+        ResponsePage.gotoMessageCentre()
 
-        const min2 = parseInt(Cypress.moment().format('m'));
-        const hour2 = parseInt(Cypress.moment().format('H'));
+        MessageCentrePage.supplierEnterSubject(messageSubject)
 
-        var curTime = (hour2 * 60) + min2;
+        MessageCentrePage.supplierEnterMessage(messageBody)
 
-        const sqCloseMin2 = TenderBoxPage.closeMin;
-        const sqCloseHour2 = TenderBoxPage.closeHour;
+        MessageCentrePage.supplierUploadDoc()
 
-        var closeTime = (sqCloseHour2 * 60) + sqCloseMin2;
+        MessageCentrePage.supplierSendMessage()
 
-        const waitTime2 = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime2)
-
-        if (waitTime2 > 0) {
-            cy.wait(waitTime2)
-        }
+        cy.contains('Email has been successfully sent to buyer').should('exist')
 
         cy.logout()
+        cy.clearCookies()
 
-        // Back to buyer
+        // waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
+        
+        // if (waitTime > 0) {
+        //     cy.wait(waitTime)
+        // }
+
+        cy.wait(120000)
+
+        //#endregion
+
         cy.visit('')
 
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('buyer')
 
@@ -207,22 +185,133 @@ describe ('Smoke Test', function () {
         EvalResponsesPage.smokeSideBySide()
         EvalResponsesPage.finishSideBySideEval()
 
-        cy.contains('Not started').should('exist')
+        //cy.contains('Not started').should('exist')
 
         EvalResponsesPage.startConsensusEval()
         EvalResponsesPage.smokeConsensus()
         EvalResponsesPage.finishConsensusEval()
 
-        cy.contains('Completed').should('exist')
+        //cy.contains('Completed').should('exist')
         // Check overview page looks correct as well
 
-        // Check download scorecard etc
+        // Download files
+        EvalResponsesPage.gotoOverviewPage()
+
+        let url;
+
+        cy.url().then(oldurl => {
+            url = oldurl
+        })
+        
+        cy.intercept({
+            pathname: '/delta/buyers/select/viewSupplierResponsesTeamEval.html',
+        }, (req) => {
+            req.redirect(url)
+        }).as('records')
+
+        cy.intercept({
+            pathname: '/delta/buyers/tenderbox/response/question/documents/zipAllDocumentsInList.html',
+        }, (req) => {
+            req.redirect(url)
+        }).as('docs')
+
+
+
+        cy.get('#buttons-download_responses').click()
+        cy.wait('@records').its('request').then((req) => {
+            cy.request({method: 'POST', url: req.url, body: req.body, headers: req.headers, encoding: 'binary'})
+            .then(({ body, headers }) => {
+                expect(headers).to.have.property('content-type', 'application/vnd.ms-excel;charset=UTF-8')
+                cy.writeFile('cypress/downloads/Scorecard Report.xls', body, 'binary')
+                // cy.task('createXLSX', body).then((sheet) => {
+                //     cy.log(sheet)
+                // })
+            })
+        })
+
+        cy.get('input[name="downloadResponsesReport"]').click()
+        cy.wait('@records').its('request').then((req) => {
+            cy.request({method: 'POST', url: req.url, body: req.body, headers: req.headers, encoding: 'binary'})
+            .then(({ body, headers }) => {
+                expect(headers).to.have.property('content-type', 'application/vnd.ms-excel;charset=UTF-8')
+                cy.writeFile('cypress/downloads/Response Report.xls', body, 'binary')
+            })
+        })
+
+        cy.get('input[name="downloadAllDocuments"]').click()
+        cy.wait('@docs').its('request').then((req) => {
+            cy.request({method: 'POST', url: req.url, body: req.body, headers: req.headers, encoding: 'binary'})
+            .then(({ body, headers }) => {
+                expect(headers).to.have.property('content-type', 'application/zip;charset=UTF-8')
+                cy.writeFile('cypress/downloads/docs.zip', body, 'binary')
+            })
+        })
 
         EvalResponsesPage.awardContract()
+
+        cy.contains('TenderBox: ' + boxName + ' has been awarded to: ').should('exist')
     })
 
-    after (function () {
-        //cy.logout()
+    it ('Buyer Message Centre', function () {
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender()
+
+        TenderExercisePage.gotoExistingTenderBox()
+
+        TenderBoxPage.gotoMessageCentre()
+
+        cy.get('[id^="buttons-enter_message_"]').should('have.length', 1)
+
+        cy.get('[id^="buttons-enter_message_"]').click()
+
+        cy.contains(messageSubject).should('exist') // Subject
+        cy.contains(messageSubject).should('exist') // Body
+
+        cy.get('[id^="messages-download_document_"]').invoke('attr', 'href').then((href) => {
+            cy.request({
+                method: 'GET',
+                url: Cypress.config().baseUrl + '/delta/' + href,
+                encoding: 'binary'
+            }).then((res) => {
+                expect(res.headers).to.have.property('content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=UTF-8')
+                cy.writeFile('cypress/downloads/MessageCentre.docx', res.body, 'binary')
+            })
+        })
+    })
+
+    it ('Questionnaire Builder', function () {
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoCreateTenderExercise()
+
+        TenderManagerPage.createTenderExercise(tenderName)
+
+        TenderExercisePage.gotoExistingTenderBox()
+
+        TenderBoxPage.initialBoxSetUp(boxName)
+
+        TenderBoxPage.gotoCreateNewQuestionnaire()
+
+        QuestionnairePage.chooseCustonQuestionnaire()
+
+        // Test add and remove different questionnaire parts
+        QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+        QuestionnairePage.createSubSection()
+        QuestionnairePage.createSection()
+
+        cy.get('#page_table tbody tr').eq(1).find('#sidebar-remove_section').click()
+        cy.reload()
+
+        cy.get('#section_table > tbody > tr').eq(1).find('#body-remove_subsection').click()
+        cy.reload()
+        
+        cy.get('#table_anchor_1').find('#body-remove_question').click()
+        cy.reload()
+    })
+
+    afterEach (function () {
+        cy.logout()
 
         cy.clearCookies()
     })

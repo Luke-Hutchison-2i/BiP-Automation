@@ -22,6 +22,12 @@ import './functions'
 // require('./commands')
 //fs = require('fs')
 require('cypress-axe');
+const dayjs = require('dayjs')
+const xlsx = require('node-xlsx')
+
+Cypress.dayjs = dayjs
+Cypress.xlsx = xlsx
+
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from

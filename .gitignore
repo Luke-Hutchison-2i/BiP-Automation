@@ -1,5 +1,6 @@
 results
 cypress/videos
 cypress/screenshots
+cypress/downloads
 node_modules
 cypress.env.json

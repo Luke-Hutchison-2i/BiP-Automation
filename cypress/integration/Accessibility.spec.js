@@ -2,13 +2,14 @@ import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
 import * as NoticePage from "../page_objects/NoticePage";
-import * as SQPage from "../page_objects/tender_manager/SQPage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
+import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
+import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 var testName = 'None'
@@ -53,12 +54,18 @@ function accessibilityTest() {
 Functions.GetServer()
 
 describe('Accessibility - TenderManager 1', function() {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
-        
-        cy.contains('Login / Register').click()
+
+        cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Dashboard Page', () => {
@@ -118,7 +125,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.initialSQSetUp(sqName)
+        TenderBoxPage.initialSQSetUp(sqName)
 
         accessibilityTest()
     })
@@ -132,7 +139,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoCreateNewQuestionnaire()
+        TenderBoxPage.gotoCreateNewQuestionnaire()
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
@@ -148,11 +155,11 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoEditQuestionnaire()
+        TenderBoxPage.gotoExistingQuestionnaire()
 
-        QuestionnairePage.createCustomQuestionnaire()
+        QuestionnairePage.createBasicQuestionnaire()
 
-        SQPage.gotoCreateEvalPlan()
+        TenderBoxPage.gotoCreateEvalPlan()
 
         accessibilityTest()
     })
@@ -166,11 +173,11 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
 
-        SQPage.gotoAddSuppliers()
+        TenderBoxPage.gotoAddSuppliers()
 
         accessibilityTest()
     })
@@ -184,89 +191,51 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoMessageCentre()
+        TenderBoxPage.gotoMessageCentre()
 
         accessibilityTest()
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
 describe ('Supplier for SQ', function () {
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqOpenMin = SQPage.openMin;
-        const sqOpenHour = SQPage.openHour;
-
-        var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-        const waitTime = (openTime - curTime) * 60 * 1000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
     })
 
     it ('Supplier submits response for SQ', () => {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(sqName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(sqName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#yes0').check()
+        ResponsePage.completeBasicResponse()
 
-        cy.get('#mytext').type('I can do this because I can.')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
-    })
-
-    afterEach(function () {
-        cy.logout()
+        ResponsePage.submitResponse()
     })
 
     after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
+        cy.logout()
 
-        var curTime = (hour * 60) + min;
-
-        const sqCloseMin = SQPage.closeMin;
-        const sqCloseHour = SQPage.closeHour;
-
-        var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
         if (waitTime > 0) {
             cy.wait(waitTime)
@@ -276,87 +245,18 @@ describe ('Supplier for SQ', function () {
 
 describe ('Accessibility - Tender Manager 2', function () {
     
-    //#region Comments
-    // before(function () {
-    //     const min = parseInt(Cypress.moment().format('m'));
-    //     const hour = parseInt(Cypress.moment().format('H'));
+    before (function () {
+        cy.visit('')
 
-    //     var curTime = (hour * 60) + min;
-
-    //     const sqOpenMin = SQPage.openMin;
-    //     const sqOpenHour = SQPage.openHour;
-
-    //     var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-    //     const waitTime = (openTime - curTime) * 60 * 1000
-
-    //     cy.log(openTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime)
-
-    //     if (waitTime > 0) {
-    //         cy.wait(waitTime)
-    //     }
-
-    //     cy.visit('https://test.delta-esourcing.com/')
-
-    //     cy.contains('Login / Register').click()
-
-    //     cy.login('supplier', 'Tenders2020')
-
-    //     cy.get('#modules-responses_and_invites').click()
-
-    //     cy.contains(sqName).parent().find('[name="oneClickRespond"]').click()
-
-    //     cy.get('#respondButton').click() // Accept invitation
-
-    //     cy.contains('Continue to Stage Two').click()
-
-    //     cy.get('#yes0').check()
-
-    //     cy.get('#mytext').type('I can do this because I can.')
-
-    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-    //     cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-    //     cy.get('[name="confirmSubmit"').click()
-
-    //     cy.contains('Response Successfully Submitted').should('exist')
-
-    //     cy.logout()
-
-    //     const min2 = parseInt(Cypress.moment().format('m'));
-    //     const hour2 = parseInt(Cypress.moment().format('H'));
-
-    //     var curTime = (hour2 * 60) + min2;
-
-    //     const sqCloseMin = SQPage.closeMin;
-    //     const sqCloseHour = SQPage.closeHour;
-
-    //     var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-    //     const waitTime2 = (closeTime - curTime) * 60 * 1000
-
-    //     cy.log(closeTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime2)
-
-    //     if (waitTime2 > 0) {
-    //         cy.wait(waitTime2)
-    //     }
-    // })
-    //#endregion
-    
-
-    beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
-
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Evaluate Responses Page', () => {
@@ -368,7 +268,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.evalConsensus(0)
 
@@ -384,7 +284,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         TenderExercisePage.gotoExistingSQ()
 
-        SQPage.gotoEvaluateResponses()
+        TenderBoxPage.gotoEvaluateResponses()
 
         EvalResponsesPage.shortListSupplier(0)
 
@@ -415,84 +315,46 @@ describe ('Accessibility - Tender Manager 2', function () {
         AddSuppliersPage.addByEmail()
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })
 
 describe ('Supplier for TenderBox', function () {
     before(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const sqOpenMin = TenderBoxPage.openMin;
-        const sqOpenHour = TenderBoxPage.openHour;
-
-        var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-        const waitTime = (openTime - curTime) * 60 * 1000
-
-        cy.log(openTime)
-        cy.log(curTime)
-        cy.log(waitTime)
-
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+        
         if (waitTime > 0) {
             cy.wait(waitTime)
         }
     })
 
     it ('Supplier submits response for Tender Box', () => {
-        cy.visit('https://test.delta-esourcing.com/')
+        cy.visit('')
 
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
-        cy.login('supplier', 'Tenders2020')
+        cy.login('supplier')
 
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(boxName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
-        cy.get('#bid_0').type('25000')
+        ResponsePage.completePriceResponse()
 
-        cy.get('[name="responses\\[1\\]\\.currency"]').type('10000')
-
-        cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        //cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-        //cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-        cy.get('[name="confirmSubmit"').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
-    })
-
-    afterEach(function () {
-        cy.logout()
+        ResponsePage.submitResponse()
     })
 
     after(function () {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
+        cy.logout()
 
-        var curTime = (hour * 60) + min;
-
-        const sqCloseMin = TenderBoxPage.closeMin;
-        const sqCloseHour = TenderBoxPage.closeHour;
-
-        var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
 
         if (waitTime > 0) {
             cy.wait(waitTime)
@@ -501,116 +363,18 @@ describe ('Supplier for TenderBox', function () {
 })
 
 describe ('Accessability - Tender Manager 3', function () {
-    //#region Comments
-    // before(function () {
-    //     cy.visit('https://test.delta-esourcing.com/')
+    before (function () {
+        cy.visit('')
 
-    //     cy.contains('Login / Register').click()
-
-    //     cy.login('buyer')
-
-    //     DashboardPage.gotoTenderManager()
-
-    //     TenderManagerPage.gotoExistingTender()
-
-    //     TenderExercisePage.gotoExistingTenderBox()
-
-    //     TenderBoxPage.initialBoxSetUp(boxName)
-
-    //     TenderBoxPage.gotoCreateNewQuestionnaire()
-
-    //     QuestionnairePage.chooseCustonQuestionnaire()
-
-    //     QuestionnairePage.createCustomQuestionnaire()
-
-    //     TenderBoxPage.gotoCreateEvalPlan()
-
-    //     EvalPlanPage.createEvalPlan()
-
-    //     TenderBoxPage.gotoAddSuppliers()
-
-    //     AddSuppliersPage.addByEmail()
-
-    //     cy.logout()
-
-    //     const min = parseInt(Cypress.moment().format('m'));
-    //     const hour = parseInt(Cypress.moment().format('H'));
-
-    //     var curTime = (hour * 60) + min;
-
-    //     const sqOpenMin = TenderBoxPage.openMin;
-    //     const sqOpenHour = TenderBoxPage.openHour;
-
-    //     var openTime = (sqOpenHour * 60) + sqOpenMin;
-
-    //     const waitTime = (openTime - curTime) * 60 * 1000
-
-    //     cy.log(openTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime)
-
-    //     if (waitTime > 0) {
-    //         cy.wait(waitTime)
-    //     }
-
-    //     cy.visit('https://test.delta-esourcing.com/')
-
-    //     cy.contains('Login / Register').click()
-
-    //     cy.login('supplier', 'Tenders2020')
-
-    //     cy.get('#modules-responses_and_invites').click()
-
-    //     cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
-
-    //     cy.get('#respondButton').click() // Accept invitation
-
-    //     cy.contains('Continue to Stage Two').click()
-
-    //     cy.get('#yes0').check()
-
-    //     cy.get('#mytext').type('I can do this because I can.')
-
-    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-    //     cy.get('#responses\\[2\\]\\.selections\\[0\\]\\.selected').check()
-
-    //     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
-
-    //     cy.get('[name="confirmSubmit"').click()
-
-    //     cy.contains('Response Successfully Submitted').should('exist')
-
-    //     cy.logout()
-
-    //     const min2 = parseInt(Cypress.moment().format('m'));
-    //     const hour2 = parseInt(Cypress.moment().format('H'));
-
-    //     var curTime = (hour2 * 60) + min2;
-
-    //     const sqCloseMin = TenderBoxPage.closeMin;
-    //     const sqCloseHour = TenderBoxPage.closeHour;
-
-    //     var closeTime = (sqCloseHour * 60) + sqCloseMin;
-
-    //     const waitTime2 = (closeTime - curTime) * 60 * 1000
-
-    //     cy.log(closeTime)
-    //     cy.log(curTime)
-    //     cy.log(waitTime2)
-
-    //     if (waitTime2 > 0) {
-    //         cy.wait(waitTime2)
-    //     }
-    // })
-    //#endregion
-
-    beforeEach(function () {
-        cy.visit('https://test.delta-esourcing.com/')
-
-        cy.contains('Login / Register').click()
+        cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
     })
 
     it ('Award Contract Page', () => {
@@ -634,7 +398,9 @@ describe ('Accessability - Tender Manager 3', function () {
         accessibilityTest()
     })
 
-    afterEach(function () {
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 })

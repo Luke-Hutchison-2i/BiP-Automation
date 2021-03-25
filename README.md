@@ -1,20 +1,20 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+These are the Cypress tests which cover the functionality and UI of Delta.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+To run locally, install the dependancies by running `npm install` inside the root folder.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Create `cypress.env.json` inside the root folder, and enter in the token variable:
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+```
+{
+  "id": {1 or 2},
+}
+```
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+# Build and Test=
+To open the test runner use `npx cypress open` inside the root folder then select the spec file to run
+
+To run in the terminal use `npx cypress run` to run every spec file
+Can add the optional flag `--spec` followed by the relative path to the spec file
+    E.g. `npx cypress run --spec "cypress/integration/TenderManager.spec.js"`

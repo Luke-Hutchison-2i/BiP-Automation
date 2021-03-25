@@ -3,6 +3,7 @@ export function gotoCreateTenderExercise() {
 }
 
 export function gotoExistingTender() {
+    // Update to take in name
     cy.get('#tenders tr').eq(1).find('td a').eq(0).click()
 }
 

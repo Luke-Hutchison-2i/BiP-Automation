@@ -193,11 +193,30 @@ export function awardContract() {
 
 export function gotoOverviewPage() {
     cy.get('#tabs-overview').click()
+    cy.wait(500)
+}
+
+export function responseNextPage() {
+    cy.get('#buttons-next_page').click()
+}
+
+export function responseDownloadDocs() {
+    cy.contains('Download all response docs').invoke('attr', 'href').then((href) => {
+        //cy.downloadFile(Cypress.config().baseUrl + href, 'cypress/downloads', 'Docs.zip')
+        cy.request({
+            method: 'GET',
+            url: Cypress.config().baseUrl + href,
+            encoding: 'binary'
+        }).then((res) => {
+            expect(res.headers).to.have.property('content-type', 'application/zip;charset=UTF-8')
+            cy.writeFile('cypress/downloads/SupplierResponses.zip', res.body, 'binary')
+        })
+    })
 }
 
 
 export function startSideBySideEval() {
-    cy.get('#buttons-sxs_eval').click()
+    cy.get('#buttons-side_by_side').click()
 }
 
 export function finishSideBySideEval() {
@@ -209,7 +228,7 @@ export function finishSideBySideEval() {
 }
 
 export function startConsensusEval (index) {
-    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').click()//.eq(index).click()
 }
 
 export function finishConsensusEval () {
@@ -223,9 +242,30 @@ export function finishConsensusEval () {
 
 
 export function smokeSideBySide() {
+    cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
+    cy.wait(500)
 
+    cy.get('#score').select('10')
+
+    cy.get('#button_update').click()
+
+    cy.get('[id^="completed"]').should('be.enabled')
 }
 
 export function smokeConsensus () {
-    
+    cy.get('#dropdown-rating').select('7')
+
+    cy.get('#buttons-next_page').click()
+
+    // Eval Price Upload
+    cy.get('#editSubmitPrice').click()
+
+    cy.get('#priceScore').type('50')
+
+    cy.wait(500)
+
+    cy.get('#priceScoreWeighting').should('contain.text', '25')
+
+    cy.get('#save-button').click()
+    cy.wait(500)
 }

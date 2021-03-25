@@ -9,3 +9,7 @@ export function gotoDPSManager() {
 export function gotoQuickCall() {
     cy.get('#modules-quick_calls').click()
 }
+
+export function gotoResponsesAndInvites() {
+    cy.get('#modules-responses_and_invites').click()
+}

@@ -1,5 +1,5 @@
 // Set up complete questionnaire
-export function createCustomQuestionnaire() {
+export function createBasicQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
     createSubSection()
@@ -24,6 +24,10 @@ export function createPriceCustomQuestionnaire() {
     returnToOverview()
 }
 
+export function createSmokeQuestionnaire () {
+
+}
+
 
 export function chooseCustonQuestionnaire() {
     cy.get('#customQuestionnaire').check()
@@ -33,11 +37,11 @@ export function chooseCustonQuestionnaire() {
     cy.url().should('include', 'editQuestionnaireForm.html')
 }
 
-export function importExistingQuestionnaire () {
+export function importExistingQuestionnaire (name) {
     cy.get('#importQuestionnaire').check()
 
     //cy.get('#importDropDown').select(/.\*smoke.\*/gm)
-    cy.get('#importDropDown').contains('smoke').then(el => {
+    cy.get('#importDropDown').contains(name).then(el => {
         cy.get('#importDropDown').select(el.val())
     })
 
@@ -155,9 +159,10 @@ export function createPriceQuestion(sub, text, help) {
 
 export function setPriceDocumentUpload() {
     cy.get('#fileupload').attachFile('DocUploadFile.docx')
+    cy.wait(1000)
 
     cy.get('#form-upload_files').click()
-    cy.wait(1000)
+    cy.wait(2000)
 
     cy.get('#modal-save_question').click()
 

@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import 'cypress-file-upload';
+require('cypress-downloadfile/lib/downloadFileCommand')
 
 Cypress.Commands.add("login", function(type) {
     let email
@@ -61,6 +62,4 @@ Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
 
     cy.wait(6000)
-
-    //cy.url().should('eq', 'https://test.delta-esourcing.com/')
 })

@@ -1,6 +1,8 @@
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as QuickCallManagerPage from "../page_objects/quick_call/QuickCallManagerPage";
 import * as QuickCallStagesPage from "../page_objects/quick_call/QuickCallStagesPage";
+import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
+import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 
@@ -83,26 +85,20 @@ describe('Quick Call - Supplier', function() {
     })
 
     it ('Supplier response', () => {
-        cy.get('#modules-responses_and_invites').click()
+        DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(callName).parent().find('[name="oneClickRespond"]').click()
+        ResponseManagerPage.viewInvite(callName)
 
-        cy.get('#respondButton').click() // Accept invitation
+        ResponsePage.acceptInvite()
 
         // Step 1
-        cy.contains('Continue to Stage Two').click()
+        ResponsePage.continueStage2()
 
         // Step 2
-        cy.get('[name="responses\\[0\\]\\.currency"]').type('10000')
-
-        cy.get('[name="submitResponse"]').eq(1).click()   
-        //cy.get('#confirmSubmit').eq(1).click()
-        //cy.contains('Save and Proceed to Stage 3').click()
+        ResponsePage.completeQuickCallResponse()
 
         // Step 3
-        cy.get('[name="confirmSubmit"]').click()
-
-        cy.contains('Response Successfully Submitted').should('exist')
+        ResponsePage.submitResponse()
     })
 
     afterEach(function () {
@@ -112,21 +108,7 @@ describe('Quick Call - Supplier', function() {
     })
 
     after(function() {
-        const min = parseInt(Cypress.moment().format('m'));
-        const hour = parseInt(Cypress.moment().format('H'));
-
-        var curTime = (hour * 60) + min;
-
-        const callCloseMin = QuickCallStagesPage.closeMin;
-        const callCloseHour = QuickCallStagesPage.closeHour;
-
-        var closeTime = (callCloseHour * 60) + callCloseMin;
-
-        const waitTime = (closeTime - curTime) * 60 * 1000
-
-        cy.log(closeTime)
-        cy.log(curTime)
-        cy.log(waitTime)
+        let waitTime = Functions.GetWaitTime(QuickCallStagesPage.closeMin, QuickCallStagesPage.closeHour)
 
         if (waitTime > 0) {
             cy.wait(waitTime)
@@ -136,15 +118,6 @@ describe('Quick Call - Supplier', function() {
 })
 
 describe('Quick Call - Stages 5-7', function() {
-    // before(function () {
-    //     cy.visit('')
-    //     //cy.visit()
-    //     cy.contains('Login / Register').click()
-
-    //     cy.login('buyer')
-
-    //     DashboardPage.gotoQuickCall()
-    // })
 
     beforeEach(function () {
         cy.visit('')
