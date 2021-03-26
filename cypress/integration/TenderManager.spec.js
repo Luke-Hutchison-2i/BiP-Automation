@@ -52,7 +52,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     if (Cypress.env('live') === false) {
-        it.skip ('Set up an existing notice', () => {
+        it ('Set up an existing notice', () => {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoExistingTender()

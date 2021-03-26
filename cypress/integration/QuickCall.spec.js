@@ -11,15 +11,31 @@ const callName = "testQuickCallName"
 Functions.GetServer()
 
 describe('Quick Call - Stages 1-4', function() {
-    beforeEach(function () {
+    before (function () {
         cy.visit('')
 
         cy.contains('Log in').click()
 
         cy.login('buyer')
+    })
+
+    beforeEach(function () {
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+
+        cy.visit('/delta')
 
         DashboardPage.gotoQuickCall()
     })
+
+    // beforeEach(function () {
+    //     cy.visit('')
+
+    //     cy.contains('Log in').click()
+
+    //     cy.login('buyer')
+
+    //     DashboardPage.gotoQuickCall()
+    // })
 
     it ('Complete Stage 1', () => {
         QuickCallManagerPage.gotoCreateQuickCall()
@@ -67,7 +83,13 @@ describe('Quick Call - Stages 1-4', function() {
         cy.contains('You have now created your Quick Call, which has been sent to your suppliers. You can send an email to all suppliers; however, you are not required to do anything further at this time.').should('exist')
     })
 
-    afterEach(function () {
+    // afterEach(function () {
+    //     cy.logout()
+
+    //     cy.clearCookies()
+    // })
+
+    after (function () {
         cy.logout()
 
         cy.clearCookies()
@@ -99,9 +121,7 @@ describe('Quick Call - Supplier', function() {
 
         // Step 3
         ResponsePage.submitResponse()
-    })
 
-    afterEach(function () {
         cy.logout()
 
         cy.clearCookies()
@@ -163,8 +183,14 @@ describe('Quick Call - Stages 5-7', function() {
     //     QuickCallStagesPage.saveAndContinue()
     // })
 
-    afterEach(function () {
+    // afterEach(function () {
+    //     cy.logout()
+    // })
+
+    after (function () {
         cy.logout()
+
+        cy.clearCookies()
     })
 
 })
