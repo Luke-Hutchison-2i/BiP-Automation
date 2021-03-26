@@ -148,8 +148,6 @@ describe ('Supplier for DPS Questionnaire', function () {
 
         ResponsePage.completeBasicResponse()
 
-        ResponsePage.saveAndContinue()
-
         ResponsePage.submitResponse()
     })
 

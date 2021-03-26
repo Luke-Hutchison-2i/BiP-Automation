@@ -38,32 +38,34 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
     changeScoringLevel(0, 'Question')
 
     //#region Question Scores
-    cy.window().then((win) => {
-        // Replace window.open(url, target)-function with our own arrow function
-        cy.stub(win, 'open', url => 
-        {
-          qurl = Cypress.config().baseUrl + url;
-        }).as("popup") // alias it with popup, so we can wait refer it with @popup
-    })
+    // cy.window().then((win) => {
+    //     // Replace window.open(url, target)-function with our own arrow function
+    //     cy.stub(win, 'open', url => 
+    //     {
+    //       qurl = Cypress.config().baseUrl + url;
+    //     }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    // })
 
-    cy.get('#editBut').eq(0).click()
+    // cy.get('#editBut').eq(0).click()
 
-    cy.get("@popup").should("be.called").then(() => {
-        cy.visit(qurl)
-    })
+    // cy.get("@popup").should("be.called").then(() => {
+    //     cy.visit(qurl)
+    // })
 
-    cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
-    cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
-    cy.get('[name="answer\\.multiChoiceAnswer\\.options[2]\\.score"]').select("-100")
+    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
+    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
+    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[2]\\.score"]').select("-100")
 
-    cy.get('[name="save"]').click()
+    // cy.get('[name="save"]').click()
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
-    cy.go('back')
-    cy.go('back')
+    // cy.go('back')
+    // cy.go('back')
 
     //#endregion
+
+    setMultiQuestionScore (0, 3)
 
     // Choose evaluators
     cy.get('[name="chooseEvaluators"][type="submit"]').click()
@@ -82,13 +84,13 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
 }
 
 export function createPriceEvalPlan() { // Works with QuestionnairePage CreateCustomPriceQuestionnaire
-    setPriceWeighting(value)
+    setPriceWeighting(50)
 
     saveEvalSettings()
 
     cy.get('#table-tech_weight').should('have.value', '50.00')
     
-    editWeighting(2, '100')
+    editWeighting(1, '100')
 
     cy.get('#positionIndicator').click()
 
@@ -136,7 +138,7 @@ export function gotoSection(int) {
 
 
 export function editWeighting(index, value) {
-    cy.get('#input-weighting').eq(index).clear().type(value)
+    cy.get('input#input-weighting').eq(index).clear().type(value)
 }
 
 export function getWeightingInput(index) {

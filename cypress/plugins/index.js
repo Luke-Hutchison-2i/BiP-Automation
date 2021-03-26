@@ -34,27 +34,6 @@ module.exports = (on, config) => {
   })
 }
 
-const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
-module.exports = (on, config) => {
-  on('task', {downloadFile})
-}
-
-const xlsx = require('node-xlsx')
-const fs = require('fs')
-module.exports = (on, config) => {
-    on ('task', {
-        createXLSX (body) {
-            //const sheet = xlsx.parse('cypress/downloads/test.xls')
-            var buffer = xlsx.build([{name: "mySheetName", data: body}])
-            //const sheet = xlsx.parse(buffer)
-            //console.log(JSON.stringify(sheet))
-            //console.log(sheet)
-            fs.writeFileSync('cypress/downloads/hope.xls', JSON.stringify(body))
-            return JSON.stringify(buffer)
-        }
-    }),
-    on('task', {downloadFile})
-}
 
 
 // module.exports = (on, config) => {

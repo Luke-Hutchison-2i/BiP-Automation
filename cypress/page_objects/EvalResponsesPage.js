@@ -264,7 +264,7 @@ export function smokeConsensus () {
 
     cy.wait(500)
 
-    cy.get('#priceScoreWeighting').should('contain.text', '25')
+    cy.get('#priceScoreWeighting').should('have.value', '25')
 
     cy.get('#save-button').click()
     cy.wait(500)
