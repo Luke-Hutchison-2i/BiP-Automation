@@ -61,7 +61,7 @@ describe ('Smoke Test', function () {
     }
 
     if (Cypress.env('live') === false) {
-        it ('Publish OJEU Notice', function () {
+        it.only ('Publish OJEU Notice', function () {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoCreateTenderExercise()
