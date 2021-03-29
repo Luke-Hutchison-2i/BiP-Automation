@@ -42,21 +42,23 @@ export function gotoViewSelectList() {
 
 
 export function initialBoxSetUp(name) {
-    cy.get('#list-setup').find('[name="name"]').clear().type(name)
+    // cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
     cy.get('#dropdown-select_tenderbox_type').select('ITT')
 
-    const date = Cypress.dayjs().format('DD/MM/YYYY')
+    initialSQSetUp(name)
 
-    cy.get('#startDateDayWeb').type(date)
+    // const date = Cypress.dayjs().format('DD/MM/YYYY')
 
-    cy.wait(500)
+    // cy.get('#startDateDayWeb').type(date)
 
-    cy.get('#endDateDayWeb').type(date,{force:true})
+    // cy.wait(500)
 
-    SetOpenAndCloseTime(5)
+    // cy.get('#endDateDayWeb').type(date,{force:true})
 
-    cy.get('#save_dates').click()
+    // SetOpenAndCloseTime(5)
+
+    // cy.get('#save_dates').click()
 }
 
 export function initialSQSetUp(name) {
