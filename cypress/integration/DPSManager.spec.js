@@ -3,7 +3,6 @@
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as DPSManagerPage from "../page_objects/dps_manager/DPSManagerPage";
 import * as DPSExercisePage from "../page_objects/dps_manager/DPSExercisePage";
-import * as DPSQuestionnairePage from "../page_objects/dps_manager/DPSQuestionnairePage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
@@ -57,7 +56,6 @@ describe ('DPS Manager - Stage 1', function() {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        //TenderBoxPage.initialQuestionnaireSetUp(questionnaireName)
         TenderBoxPage.initialSQSetUp(questionnaireName)
 
         cy.url().should('include', 'delta/buyers/select/viewListStatus.html')
@@ -232,7 +230,6 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoCreateMiniComp()
 
-        // TenderBoxPage.initialBoxSetUp(mcName)
         TenderBoxPage.initialBoxSetUp(mcName)
 
         cy.contains("Tenderbox with name '" + mcName + "' has now been created.")
