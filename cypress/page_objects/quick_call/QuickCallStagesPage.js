@@ -36,12 +36,12 @@ export function completeStage4 () {
     cy.get('#sendNow').check()
     cy.get('#startDateDayWeb').eq(0).should('be.disabled')
 
-    const date = Cypress.moment().format('DD/MM/YYYY')
+    const date = Cypress.dayjs().format('DD/MM/YYYY')
 
     cy.get('[name="dataContext\\.closingDate"]').type(date,{force:true})
 
-    const hour = parseInt(Cypress.moment().format('H'))
-    const min = parseInt(Cypress.moment().format('m'))
+    const hour = parseInt(Cypress.dayjs().format('H'))
+    const min = parseInt(Cypress.dayjs().format('m'))
 
     var closeMin = (Math.ceil((min+2)/5)*5) + 5
     var closeHour = hour

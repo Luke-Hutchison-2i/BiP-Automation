@@ -1,7 +1,7 @@
 export function initialQuestionnaireSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
-    const date = Cypress.moment().format('DD/MM/YYYY')
+    const date = Cypress.dayjs().format('DD/MM/YYYY')
 
     cy.get('#startDateDayWeb').type(date)
 
@@ -9,8 +9,8 @@ export function initialQuestionnaireSetUp(name) {
 
     cy.get('#endDateDayWeb').type(date,{force:true})
 
-    const hour = parseInt(Cypress.moment().format('H'))
-    const min = parseInt(Cypress.moment().format('m'))
+    const hour = parseInt(Cypress.dayjs().format('H'))
+    const min = parseInt(Cypress.dayjs().format('m'))
 
     var openMin = Math.ceil((min+2)/5)*5
     var openHour = hour

@@ -40,7 +40,7 @@ export function initialBoxSetUp(name) {
 
     cy.get('#dropdown-select_tenderbox_type').select('ITT')
 
-    const date = Cypress.moment().format('DD/MM/YYYY')
+    const date = Cypress.dayjs().format('DD/MM/YYYY')
 
     cy.get('#startDateDayWeb').type(date)
 
@@ -96,7 +96,7 @@ export function initialBoxSetUp(name) {
 export function initialSQSetUp(name) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
-    const date = Cypress.moment().format('DD/MM/YYYY')
+    const date = Cypress.dayjs().format('DD/MM/YYYY')
 
     cy.get('#startDateDayWeb').type(date)
 
@@ -111,8 +111,8 @@ export function initialSQSetUp(name) {
 
 
 export function SetOpenAndCloseTime(delay) {
-    let hour = parseInt(Cypress.moment().format('H'))
-    let min = parseInt(Cypress.moment().format('m'))
+    let hour = parseInt(Cypress.dayjs().format('H'))
+    let min = parseInt(Cypress.dayjs().format('m'))
 
     let openMin = (Math.ceil((min+2)/5)*5)
     let openHour = hour

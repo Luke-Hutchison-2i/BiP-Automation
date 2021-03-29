@@ -233,7 +233,7 @@ function fillPage5() {
 
     cy.get('#procedure\\.isCoveredByGPAYes').click()
 
-    const date = Cypress.moment().add(40, 'd').format('DD/MM/YYYY')
+    const date = Cypress.dayjs().add(40, 'd').format('DD/MM/YYYY')
 
     cy.get('#procedure\\.administrativeInformation\\.dateLimitReceiptOfTenders').type(date, {force:true})
 
@@ -242,7 +242,7 @@ function fillPage5() {
     cy.get('#languages4').check()
 
 
-    const opendate = Cypress.moment().add(45, 'd').format('DD/MM/YYYY')
+    const opendate = Cypress.dayjs().add(45, 'd').format('DD/MM/YYYY')
     cy.get('#procedure\\.administrativeInformation\\.dateCondOpeningTender').type(opendate, {force:true})
     cy.get('#procedure\\.administrativeInformation\\.timeCondOpeningTender').type('00:00', {force:true})
 
@@ -277,11 +277,11 @@ function fillPage6() {
 
     cy.get('[name="contractsFinder.isVCO"]').eq(0).click()
 
-    const openDate = Cypress.moment().add(50, 'd').format('DD/MM/YYYY') // Broke
+    const openDate = Cypress.dayjs().add(50, 'd').format('DD/MM/YYYY') // Broke
 
     cy.get('#contractsFinder\\.periodWorkDateStarting').type(openDate, {force:true})
 
-    const closeDate = Cypress.moment().add(100, 'd').format('DD/MM/YYYY') // Broke
+    const closeDate = Cypress.dayjs().add(100, 'd').format('DD/MM/YYYY') // Broke
 
     cy.get('#contractsFinder\\.periodWorkDateEnding').type(closeDate, {force: true})
 
@@ -446,7 +446,7 @@ function fillEstimatedValue () {
 }
 
 function fillDeadline () {
-    let date = Cypress.moment().add(1, 'day').format('DD/MM/YYYY')
+    let date = Cypress.dayjs().add(1, 'day').format('DD/MM/YYYY')
     cy.get('#interestDeadline').type(date, {force:true}).should('have.value', date)
 
     cy.get('#hours').select('23', {force:true}).should('contain.text', '23')
@@ -462,8 +462,8 @@ function fillContractsFinder () {
 
     cy.get('#contractsFinder\\.procedureTypeOpen').check()
 
-    let openDate = Cypress.moment().add(7, 'day').format('DD/MM/YYYY')
-    let closeDate = Cypress.moment().add(14, 'day').format('DD/MM/YYYY')
+    let openDate = Cypress.dayjs().add(7, 'day').format('DD/MM/YYYY')
+    let closeDate = Cypress.dayjs().add(14, 'day').format('DD/MM/YYYY')
 
     cy.get('#contractsFinder\\.periodWorkDateStarting').type(openDate, {force:true})
     cy.get('#contractsFinder\\.periodWorkDateEnding').type(closeDate, {force:true})

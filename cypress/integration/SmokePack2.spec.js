@@ -228,7 +228,7 @@ describe ('Registration Tests', function () {
 
         cy.get('#title').select('Dr')
         cy.get('#firstName').type('New')
-        cy.get('#lastName').type('Supplier')
+        cy.get('#lastName').type('Buyer')
         cy.get('#position').type('Tester')
         cy.get('#email').type(username)
         cy.get('#confirmEmail').type(username)
@@ -284,5 +284,9 @@ describe ('Registration Tests', function () {
         cy.contains('Login').click()
 
         cy.url().should('contain', '/delta/mainMenu.html')
+    })
+
+    afterEach(function () {
+        cy.clearCookies()
     })
 })
