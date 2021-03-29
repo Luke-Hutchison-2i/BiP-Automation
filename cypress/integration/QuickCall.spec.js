@@ -27,16 +27,6 @@ describe('Quick Call - Stages 1-4', function() {
         DashboardPage.gotoQuickCall()
     })
 
-    // beforeEach(function () {
-    //     cy.visit('')
-
-    //     cy.contains('Log in').click()
-
-    //     cy.login('buyer')
-
-    //     DashboardPage.gotoQuickCall()
-    // })
-
     it ('Complete Stage 1', () => {
         QuickCallManagerPage.gotoCreateQuickCall()
 
@@ -82,12 +72,6 @@ describe('Quick Call - Stages 1-4', function() {
 
         cy.contains('You have now created your Quick Call, which has been sent to your suppliers. You can send an email to all suppliers; however, you are not required to do anything further at this time.').should('exist')
     })
-
-    // afterEach(function () {
-    //     cy.logout()
-
-    //     cy.clearCookies()
-    // })
 
     after (function () {
         cy.logout()

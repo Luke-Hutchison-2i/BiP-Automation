@@ -9,7 +9,6 @@ import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
 import * as MessageCentrePage from "../page_objects/MessageCentrePage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
-import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
 import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
 import * as ResponsePage from "../page_objects/supplier/ResponsePage"

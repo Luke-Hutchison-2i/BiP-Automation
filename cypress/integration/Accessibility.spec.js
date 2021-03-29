@@ -1,11 +1,9 @@
 import * as DashboardPage from "../page_objects/DashboardPage";
 import * as TenderManagerPage from "../page_objects/tender_manager/TenderManagerPage";
 import * as TenderExercisePage from "../page_objects/tender_manager/TenderExercisePage";
-import * as NoticePage from "../page_objects/NoticePage";
 import * as QuestionnairePage from "../page_objects/QuestionnairePage";
 import * as EvalPlanPage from "../page_objects/EvalPlanPage";
 import * as AddSuppliersPage from "../page_objects/AddSuppliersPage";
-import * as ShortlistedSuppliersPage from "../page_objects/ShortlistedSuppliersPage";
 import * as EvalResponsesPage from "../page_objects/EvalResponsesPage";
 import * as TenderBoxPage from "../page_objects/tender_manager/TenderBoxPage";
 import * as ResponseManagerPage from "../page_objects/supplier/ResponseManagerPage"
