@@ -57,7 +57,7 @@ describe('Quick Call - Stages 1-4', function() {
 
         QuickCallStagesPage.saveAndContinue()
 
-        cy.contains('Invite emails will be sent to the following suppliers/users; demosupplieracccount@bipsolutions.com').should('exist')
+        cy.contains('Invite emails will be sent to the following suppliers/users; peter.supplier@bipsolutions.com').should('exist')
    
     })
 

@@ -242,10 +242,17 @@ export function finishConsensusEval () {
 
 
 export function smokeSideBySide() {
-    cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
+    cy.get('a#evaluateQuestion').eq(0).click()
     cy.wait(500)
 
     cy.get('#score').select('10')
+
+    cy.get('#button_update').click()
+
+    cy.get('a#evaluateQuestion').eq(1).click()
+    cy.wait(500)
+
+    cy.get('#score').select('5')
 
     cy.get('#button_update').click()
 
@@ -253,7 +260,8 @@ export function smokeSideBySide() {
 }
 
 export function smokeConsensus () {
-    cy.get('#dropdown-rating').select('7')
+    cy.get('select#dropdown-rating').eq(0).select('7')
+    cy.get('select#dropdown-rating').eq(1).select('9')
 
     cy.get('#buttons-next_page').click()
 

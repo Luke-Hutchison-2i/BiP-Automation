@@ -46,7 +46,9 @@ export function completePriceResponse () {
 }
 
 export function completeSmokeResponse() {
-    cy.get('#0_dropdown').select('asd')
+    cy.get('#0_dropdown').select('Option3')
+
+    cy.get('#yes1').check()
 
     cy.get('#buttons-next_page').click()
 

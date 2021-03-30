@@ -73,7 +73,7 @@ describe ('Smoke Test', function () {
         })
     }
 
-    it ('Complete and award Tenderbox', function () {
+    it.only ('Complete and award Tenderbox', function () {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoCreateTenderExercise()
@@ -86,7 +86,7 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
-        QuestionnairePage.importExistingQuestionnaire('smoke')
+        QuestionnairePage.importExistingQuestionnaire('Smoke')
 
         cy.get('[id^="page-name-link-"').should('have.length', 2)
 
@@ -114,11 +114,13 @@ describe ('Smoke Test', function () {
         cy.clearCookies()
 
         //#region Supplier
-        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
-        
-        if (waitTime > 0) {
-            cy.wait(waitTime)
-        }
+        cy.then(() => {   
+            let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+            
+            if (waitTime > 0) {
+                cy.wait(waitTime)
+            }
+        })
 
         cy.visit('')
 
@@ -154,13 +156,13 @@ describe ('Smoke Test', function () {
         cy.logout()
         cy.clearCookies()
 
-        // waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
-        
-        // if (waitTime > 0) {
-        //     cy.wait(waitTime)
-        // }
-
-        cy.wait(120000)
+        cy.then(() => {   
+            let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
+            
+            if (waitTime > 0) {
+                cy.wait(waitTime)
+            }
+        })
 
         //#endregion
 

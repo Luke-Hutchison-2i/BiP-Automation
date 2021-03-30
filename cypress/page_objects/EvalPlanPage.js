@@ -2,68 +2,17 @@
 export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQuestionnaire
     changeScoringLevel(0, 'Question')
 
+    editWeighting(0,100)
+
+    saveEvalWeightings()
+
     setMultiQuestionScore(0, 2)
-
-    //#region Question Score
-    // let qurl = ""
-
-    // cy.window().then((win) => {
-    //     // Replace window.open(url, target)-function with our own arrow function
-    //     cy.stub(win, 'open', url => 
-    //     {
-    //       qurl = Cypress.config().baseUrl + url;
-    //     }).as("popup") // alias it with popup, so we can wait refer it with @popup
-    // })
-
-    // cy.get('#editBut').eq(0).click()
-
-    // cy.get("@popup").should("be.called").then(() => {
-    //     cy.visit(qurl)
-    // })
-
-    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
-    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
-
-    // cy.get('[name="save"]').click()
-
-    // cy.wait(1000)
-
-    // cy.go('back')
-    // cy.go('back')
-
-    //#endregion
 
     gotoSection(2)
 
     changeScoringLevel(0, 'Question')
 
-    //#region Question Scores
-    // cy.window().then((win) => {
-    //     // Replace window.open(url, target)-function with our own arrow function
-    //     cy.stub(win, 'open', url => 
-    //     {
-    //       qurl = Cypress.config().baseUrl + url;
-    //     }).as("popup") // alias it with popup, so we can wait refer it with @popup
-    // })
-
-    // cy.get('#editBut').eq(0).click()
-
-    // cy.get("@popup").should("be.called").then(() => {
-    //     cy.visit(qurl)
-    // })
-
-    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select("100")
-    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select("-100")
-    // cy.get('[name="answer\\.multiChoiceAnswer\\.options[2]\\.score"]').select("-100")
-
-    // cy.get('[name="save"]').click()
-
-    // cy.wait(1000)
-
-    // cy.go('back')
-    // cy.go('back')
-
-    //#endregion
+    editWeighting(0,100)
 
     setMultiQuestionScore (0, 3)
 
@@ -104,13 +53,18 @@ export function setPriceWeighting(value) {
 export function createSmokeEvalPlan () {
     changeScoringLevel(0, 'Question')
 
+    editWeighting(0, 100) // Move after changeScoringLevel
+    editWeighting(1, 100) // Move after changeScoringLevel
+
     saveEvalWeightings()
+
+    // Check weighting is split evenly
 
     setMultiQuestionScore(0, 3)
 
-    editWeighting(0, 100) // Move after changeSScoringLevel
+    //saveEvalWeightings()
 
-    saveEvalWeightings()
+    setYesNoScore(1)
 
     setPriceWeighting(50)
 
@@ -162,18 +116,48 @@ export function setMultiQuestionScore (index, answers) {
         }).as("popup") // alias it with popup, so we can wait refer it with @popup
     })
 
-    cy.get('#editBut').eq(index).click()
+    cy.get('input#editBut').eq(index).click()
 
     cy.get("@popup").should("be.called").then(() => {
         cy.visit(qurl)
     })
 
-    let score = 100
+    let score = 10
 
     for (let index = 0; index < answers; index++) {
         cy.get('[name="answer\\.multiChoiceAnswer\\.options[' + index + ']\\.score"]').select(score.toString())
-        score = score * -1
+        score = index
     }
+
+    cy.get('[name="save"]').click()
+
+    cy.wait(1000)
+
+    cy.go('back')
+    cy.go('back')
+
+    cy.wait(500)
+}
+
+export function setYesNoScore (index) {
+    let qurl = ""
+
+    cy.window().then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, 'open', url => 
+        {
+          qurl = Cypress.config().baseUrl + url;
+        }).as("popup") // alias it with popup, so we can wait refer it with @popup
+    })
+
+    cy.get('input#editBut').eq(index).click()
+
+    cy.get("@popup").should("be.called").then(() => {
+        cy.visit(qurl)
+    })
+
+    cy.get('[name="answer\\.multiChoiceAnswer\\.options[0]\\.score"]').select('10')
+    cy.get('[name="answer\\.multiChoiceAnswer\\.options[1]\\.score"]').select('-100')
 
     cy.get('[name="save"]').click()
 
