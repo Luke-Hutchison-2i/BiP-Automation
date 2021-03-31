@@ -57,7 +57,9 @@ describe('Quick Call - Stages 1-4', function() {
 
         QuickCallStagesPage.saveAndContinue()
 
-        cy.contains('Invite emails will be sent to the following suppliers/users; peter.supplier@bipsolutions.com').should('exist')
+        cy.fixture('logins.json').then((logins) => {
+            cy.contains('Invite emails will be sent to the following suppliers/users; ' + logins[Cypress.env('id')].supplier.email).should('exist')
+        })
    
     })
 

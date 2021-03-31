@@ -52,10 +52,10 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     if (Cypress.env('live') === false) {
-        it ('Set up an existing notice', () => {
+        it.skip ('Set up an existing notice', () => {
             DashboardPage.gotoTenderManager()
 
-            TenderManagerPage.gotoExistingTender()
+            TenderManagerPage.gotoExistingTender(tenderName)
 
             TenderExercisePage.gotoExistingNotice()
 
@@ -66,7 +66,7 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Create SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -78,7 +78,7 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Set up custom questionnaire for SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -99,7 +99,7 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Set up evaluation plan for SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -115,7 +115,7 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Add suppliers to SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -131,7 +131,7 @@ describe ('Tender Manager - Stage 1', function() {
     it ('Message suppliers from Message Centre', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -224,20 +224,21 @@ describe ('Tender Manager - Stage 2', function () {
     it ('Evaluate responses for SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        //EvalResponsesPage.evalSideBySide()
+        EvalResponsesPage.evalSideBySide()
+        
         EvalResponsesPage.evalConsensus(0)
     })
 
     it ('Shortlist supplier for SQ', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -251,7 +252,7 @@ describe ('Tender Manager - Stage 2', function () {
     it ('Create Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -261,7 +262,7 @@ describe ('Tender Manager - Stage 2', function () {
     it ('Set up custom questionnaire for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -279,7 +280,7 @@ describe ('Tender Manager - Stage 2', function () {
     it ('Set up evaluation plan for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -298,7 +299,7 @@ describe ('Tender Manager - Stage 2', function () {
     it ('Add suppliers to Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -374,7 +375,7 @@ describe ('Tender Manager - Stage 3', function () {
     it ('Evaluate responses for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -392,7 +393,7 @@ describe ('Tender Manager - Stage 3', function () {
     it ('Award contract to supplier', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -409,32 +410,3 @@ describe ('Tender Manager - Stage 3', function () {
         cy.clearCookies()
     })
 })
-
-// describe('Message Centre', function () {
-//     beforeEach(function () {
-//         cy.visit('')
-
-//         cy.contains('Login / Register').click()
-
-//         cy.login('userguideaccount2@bipsolutions.com', 'Tenders2020')
-
-//         DashboardPage.gotoTenderManager()
-
-//         TenderManagerPage.gotoExistingTender()
-
-//         TenderExercisePage.gotoExistingSQ()
-
-//         SQPage.gotoMessageCentre()
-//     })
-
-//     it ('Disable Message with no supplier selected', () => {
-//         MessageCentrePage.disableMessages()
-
-//         cy.contains('Please select at least one item before submitting an action')
-//     })
-
-
-//     afterEach(function () {
-//         cy.logout()
-//     })
-// })

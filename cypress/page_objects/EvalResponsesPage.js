@@ -1,7 +1,7 @@
 export function evalResponse(index) {
     cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
 
-    cy.get('[name="scores\\[2\\]\\.evaluatorScores\\[0\\]\\.score"]').select('100')
+    cy.get('[name="scores\\[2\\]\\.evaluatorScores\\[0\\]\\.score"]').select('10')
 
     cy.get('[name="scores\\[1\\]\\.evaluatorScores\\[0\\]\\.score"]').select('100')
 
@@ -21,7 +21,7 @@ export function evalResponse(index) {
 export function evalConsensus(index) {
     startConsensusEval(index)
 
-    cy.get('[name^="scores"][name$="score"]').eq(0).select('100')
+    cy.get('[name^="scores"][name$="score"]').eq(0).select('10')
     cy.get('[name^="scores"][name$="comment"]').eq(0).type('Very good answer')
 
     cy.get('[name^="scores"][name$="score"]').eq(1).select('100')
@@ -47,7 +47,7 @@ export function evalSideBySide() {
 
     cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
 
-    cy.get('#score').select('100')
+    cy.get('#score').select('10')
 
     cy.get('#button_update').click()
 
@@ -113,7 +113,7 @@ export function dpsEvalSideBySide() {
 export function dpsEvalConsensus(index) {
     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
 
-    cy.get('[name^="scores"][name$="score"]').eq(0).select('100')
+    cy.get('[name^="scores"][name$="score"]').eq(0).select('10')
     cy.get('[name^="scores"][name$="comment"]').eq(0).type('Very good answer')
 
     cy.get('#navigation-page_2').click()

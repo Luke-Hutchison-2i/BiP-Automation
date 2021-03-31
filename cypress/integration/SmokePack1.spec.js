@@ -73,7 +73,7 @@ describe ('Smoke Test', function () {
         })
     }
 
-    it.only ('Complete and award Tenderbox', function () {
+    it ('Complete and award Tenderbox', function () {
         DashboardPage.gotoTenderManager()
 
         TenderManagerPage.gotoCreateTenderExercise()
@@ -174,7 +174,7 @@ describe ('Smoke Test', function () {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -256,7 +256,7 @@ describe ('Smoke Test', function () {
     it ('Buyer Message Centre', function () {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 

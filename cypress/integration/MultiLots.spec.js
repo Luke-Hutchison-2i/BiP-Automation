@@ -39,7 +39,7 @@ describe('Multi-Lots Questionnaire', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -208,7 +208,7 @@ describe ('Multi-Lots Eval Plan', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 

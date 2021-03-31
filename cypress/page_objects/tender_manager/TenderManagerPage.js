@@ -2,9 +2,10 @@ export function gotoCreateTenderExercise() {
     cy.get('#info-create_tender_exercise').click()
 }
 
-export function gotoExistingTender() {
+export function gotoExistingTender(name) {
     // Update to take in name
-    cy.get('#tenders tr').eq(1).find('td a').eq(0).click()
+    //cy.get('#tenders tr').eq(1).find('td a').eq(0).click()
+    cy.contains(name).click()
 }
 
 export function createTenderExercise(name) {

@@ -4,3 +4,5 @@ cypress/screenshots
 cypress/downloads
 node_modules
 cypress.env.json
+cypress/integration/MessageCentre.spec.js
+cypress/integration/Questionnaire.spec.js

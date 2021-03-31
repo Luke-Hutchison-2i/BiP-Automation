@@ -107,7 +107,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoCreateSQ()
 
@@ -119,7 +119,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -133,7 +133,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -149,7 +149,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -167,7 +167,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -185,7 +185,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -262,7 +262,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -278,7 +278,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingSQ()
 
@@ -292,7 +292,7 @@ describe ('Accessibility - Tender Manager 2', function () {
     it ('Complete buyer steps for Tender Box', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 
@@ -378,7 +378,7 @@ describe ('Accessability - Tender Manager 3', function () {
     it ('Award Contract Page', () => {
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 

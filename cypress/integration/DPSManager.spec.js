@@ -216,7 +216,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
-        DPSQuestionnairePage.gotoViewSelectList()
+        TenderBoxPage.gotoViewSelectList()
 
         DPSSelectListPage.publishSelectList()
 

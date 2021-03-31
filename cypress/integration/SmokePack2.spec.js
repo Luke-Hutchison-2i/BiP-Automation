@@ -52,7 +52,7 @@ describe ('Smoke Tests 2', function () {
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
-        QuestionnairePage.importExistingQuestionnaire('smoke')
+        QuestionnairePage.importExistingQuestionnaire('Smoke')
 
         cy.get('[id^="page-name-link-"').should('have.length', 2)
 
@@ -76,11 +76,13 @@ describe ('Smoke Tests 2', function () {
         cy.clearCookies()
 
         //#region Supplier
-        let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
-        
-        if (waitTime > 0) {
-            cy.wait(waitTime)
-        }
+        cy.then(() => {   
+            let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+            
+            if (waitTime > 0) {
+                cy.wait(waitTime)
+            }
+        })
 
         cy.visit('')
 
@@ -105,7 +107,13 @@ describe ('Smoke Tests 2', function () {
         cy.logout()
         cy.clearCookies()
 
-        cy.wait(120000)
+        cy.then(() => {   
+            let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour)
+            
+            if (waitTime > 0) {
+                cy.wait(waitTime)
+            }
+        })
 
         //#endregion
 
@@ -117,7 +125,7 @@ describe ('Smoke Tests 2', function () {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender()
+        TenderManagerPage.gotoExistingTender(tenderName)
 
         TenderExercisePage.gotoExistingTenderBox()
 

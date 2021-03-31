@@ -24,10 +24,9 @@ export function completeStage2 () {
 
 export function completeStage3 () {
     // Invite additional suppliers
-    // cy.fixture('logins.json').then((logins) => {
-    //     cy.get('[name="dataContext\\.emails"]').type(logins[Cypress.env('id')].supplier.email)
-    // })
-    cy.get('[name="dataContext\\.emails"]').type('peter.supplier@bipsolutions.com')
+    cy.fixture('logins.json').then((logins) => {
+        cy.get('[name="dataContext\\.emails"]').type(logins[Cypress.env('id')].supplier.email)
+    })
 
     // Think about how to test adding the supplier to the contract list
     // cy.get('[name="dataContext\\.addSuppliersToList"])
@@ -46,7 +45,7 @@ export function completeStage4 () {
     const hour = parseInt(Cypress.dayjs().format('H'))
     const min = parseInt(Cypress.dayjs().format('m'))
 
-    var closeMin = (Math.ceil((min+2)/5)*5) + 5
+    var closeMin = (Math.ceil((min+2)/5)*5)
     var closeHour = hour
 
     if (closeMin >= 60) {

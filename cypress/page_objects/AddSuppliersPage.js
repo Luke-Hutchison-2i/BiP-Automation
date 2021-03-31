@@ -3,7 +3,7 @@ export function addExisitingSuppliers() {
 
     cy.get('select[name="filterByExercise"]').select('Org')
 
-    cy.get('#filterByTitle').type('IT Supplier') // FORTEST
+    cy.get('#filterByTitle').type('FORTEST')
 
     cy.get('[name="submit"]').click()
 
@@ -19,7 +19,6 @@ export function addExisitingSuppliers() {
 export function addByEmail() {
     cy.get('#buttons-add_emails').click()
 
-    //cy.get('[name="emailAddress"]').type('demosupplieracccount@bipsolutions.com,mckechniesupplies@bipsolutions.com')
     cy.fixture('logins.json').then((logins) => {
         cy.get('[name="emailAddress"]').type(logins[Cypress.env('id')].supplier.email)
     })
