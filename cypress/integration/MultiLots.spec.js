@@ -28,14 +28,15 @@ describe('Multi-Lots Questionnaire', function() {
 
         TenderExercisePage.gotoExistingTenderBox()
 
-        TenderBoxPage.initialBoxSetUp(boxName)
+        TenderBoxPage.MLinitialBoxSetUp(boxName)
 
         //cy.logout()
     })
 
     beforeEach(function () {
-        // cy.visit('')
-        cy.visit('https://dev.delta-esourcing.com/delta/mainMenu.html')
+        Cypress.Cookies.preserveOnce('JSESSIONID')
+        
+        cy.visit('https://dev.delta-esourcing.com/delta')
 
         DashboardPage.gotoTenderManager()
 
@@ -79,7 +80,11 @@ describe('Multi-Lots Questionnaire', function() {
 
         cy.contains('Lot 1: Lot1').should('exist')
 
-        cy.get('#page_table').find('#editForm3').eq(1).click()//
+        cy.get('#page_table').find('#editForm3').eq(1).click()
+
+        cy.wait(1000)
+
+        cy.reload()
 
         cy.contains('Lot 1: Lot1').should('not.exist')
 
@@ -118,14 +123,14 @@ describe('Multi-Lots Questionnaire', function() {
         QuestionnairePage.createLot('Lot1', 'Sec1', 'Sub1')
         QuestionnairePage.viewSection(1)
 
-        cy.get('#section_table_wrapper').should('have.length', 1)
+        cy.get('div#section_table_wrapper').should('have.length', 1)
 
         QuestionnairePage.importSectionLot()
         QuestionnairePage.viewSection(1)
 
         cy.wait(1000)
 
-        cy.get('#section_table_wrapper').should('have.length', 2)
+        cy.get('div#section_table_wrapper').should('have.length', 2)
 
         QuestionnairePage.returnToOverview()
     })
@@ -154,7 +159,7 @@ describe('Multi-Lots Questionnaire', function() {
 
         cy.get('#settings-submit').click()
 
-        cy.visit('https://delta-2020-dev.bipsolutions.co.uk/delta/admin/listTemplates.html?tab=orgTemplates')
+        cy.visit('https://dev.delta-esourcing.com/delta/admin/listTemplates.html?tab=orgTemplates')
 
         cy.contains(boxName).should('exist')
         // Should it be at top of list
@@ -165,11 +170,23 @@ describe('Multi-Lots Questionnaire', function() {
     })
 
     afterEach(function () {
-        //TenderBoxPage.gotoExistingQuestionnaire()
+        //cy.visit('https://dev.delta-esourcing.com/delta')
+        cy.visit('https://dev.delta-esourcing.com/delta/buyers/tenders/listTenders.html')
 
-        //QuestionnairePage.deleteQuestionnaire()
+        cy.contains(tenderName).click({force: true})
 
-        //cy.logout()
+        cy.get('#tender-create_tenderbox').parent().parent().find('[id^="tender-view_tender_"]').eq(0).click({force: true})
+
+        //DashboardPage.gotoTenderManager()
+        //cy.get('#modules-tender_manager').click({force: true})
+
+        //TenderManagerPage.gotoExistingTender(tenderName)
+
+        //TenderExercisePage.gotoExistingTenderBox()
+
+        TenderBoxPage.gotoExistingQuestionnaire()
+
+        QuestionnairePage.deleteQuestionnaire()
     })
 
     after(function () {
