@@ -14,24 +14,6 @@ export function GetServer () {
 }
 
 export function GetWaitTime(timeMin, timeHour) {
-    // let hour
-    // let min
-    // let sec
-    // cy.then(() => {
-    //     hour = parseInt(Cypress.dayjs().format('H'));
-    //     min = parseInt(Cypress.dayjs().format('m'));
-    //     sec = parseInt(Cypress.dayjs().format('s'));
-
-    //     let curTime = ((hour * 60 * 60) + (min * 60) + sec) * 1000
-    //     let targetTime = ((timeHour * 60 * 60) + (timeMin * 60)) * 1000;
-
-    //     let waitTime = targetTime - curTime
-
-    //     cy.log(targetTime)
-    //     cy.log(hour + " " + min + " " + sec)
-        
-    //     return waitTime
-    // })
     let hour = parseInt(Cypress.dayjs().format('H'));
     let min = parseInt(Cypress.dayjs().format('m'));
     let sec = parseInt(Cypress.dayjs().format('s'));

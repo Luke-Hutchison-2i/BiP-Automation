@@ -180,7 +180,7 @@ export function deleteQuestionnaire () {
 
 export function viewSection(index) {
     cy.get('[id^="page-name-link-"').eq(index).click()
-    cy.wait(500)
+    cy.wait(1000)
 }
 
 export function returnToOverview() {

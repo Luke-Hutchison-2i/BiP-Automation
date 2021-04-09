@@ -42,23 +42,26 @@ export function gotoViewSelectList() {
 
 
 export function initialBoxSetUp(name) {
-    // cy.get('#list-setup').find('[name="name"]').clear().type(name)
-
     cy.get('#dropdown-select_tenderbox_type').select('ITT')
 
     initialSQSetUp(name)
+}
+export function MLinitialBoxSetUp(name) {
+    cy.get('select[name="qType"]').select('ITT')
 
-    // const date = Cypress.dayjs().format('DD/MM/YYYY')
+    cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
-    // cy.get('#startDateDayWeb').type(date)
+    const date = Cypress.dayjs().format('DD/MM/YYYY')
 
-    // cy.wait(500)
+    cy.get('#startDateDayWeb').type(date)
 
-    // cy.get('#endDateDayWeb').type(date,{force:true})
+    cy.wait(500)
 
-    // SetOpenAndCloseTime(5)
+    cy.get('#endDateDayWeb').type(date,{force:true})
 
-    // cy.get('#save_dates').click()
+    SetOpenAndCloseTime(60)
+
+    cy.get('#save_dates').click()
 }
 
 export function initialSQSetUp(name) {
@@ -72,7 +75,7 @@ export function initialSQSetUp(name) {
 
     cy.get('#endDateDayWeb').type(date,{force:true})
 
-    SetOpenAndCloseTime(5)
+    SetOpenAndCloseTime(0)
 
     cy.get('#save_dates').click()
 }
@@ -82,16 +85,18 @@ export function SetOpenAndCloseTime(delay) {
     let hour = parseInt(Cypress.dayjs().format('H'))
     let min = parseInt(Cypress.dayjs().format('m'))
 
-    let openMin = (Math.ceil((min+2)/5)*5)
+    let openMin = (Math.ceil((min+2)/5)*5) + delay
     let openHour = hour
 
-    if (openMin >= 60) {
+    while (openMin >= 60) {
         openMin -= 60
         openHour += 1
-        if (openHour > 24) {
-            openHour -= 24
-        }
     }
+
+    if (openHour > 24) {
+        openHour -= 24
+    }
+    
 
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())

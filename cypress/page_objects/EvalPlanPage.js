@@ -14,6 +14,8 @@ export function createEvalPlan() { // Works with QuestionnairePage CreateCustomQ
 
     editWeighting(0,100)
 
+    saveEvalWeightings()
+
     setMultiQuestionScore (0, 3)
 
     // Choose evaluators

@@ -60,7 +60,7 @@ describe ('Smoke Test', function () {
     }
 
     if (Cypress.env('live') === false) {
-        it ('Publish OJEU Notice', function () {
+        it.skip ('Publish OJEU Notice', function () {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoCreateTenderExercise()
@@ -88,7 +88,7 @@ describe ('Smoke Test', function () {
 
         QuestionnairePage.importExistingQuestionnaire('Smoke')
 
-        cy.get('[id^="page-name-link-"').should('have.length', 2)
+        cy.get('[id^="page-name-link-"').should('have.length', 2) // Should have 2 sections
 
         // Add document to price document upload
         QuestionnairePage.viewSection(1)
@@ -224,9 +224,6 @@ describe ('Smoke Test', function () {
             .then(({ body, headers }) => {
                 expect(headers).to.have.property('content-type', 'application/vnd.ms-excel;charset=UTF-8')
                 cy.writeFile('cypress/downloads/Scorecard Report.xls', body, 'binary')
-                // cy.task('createXLSX', body).then((sheet) => {
-                //     cy.log(sheet)
-                // })
             })
         })
 
