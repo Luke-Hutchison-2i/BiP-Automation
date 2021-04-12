@@ -163,7 +163,7 @@ describe ('Smoke Tests 2', function () {
 
 })
 
-describe ('Registration Tests', function () {
+describe.skip ('Registration Tests', function () {
     beforeEach(function () {
         cy.visit('')
 
