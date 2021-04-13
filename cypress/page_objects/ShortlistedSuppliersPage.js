@@ -1,3 +1,5 @@
+// Utility
+
 export function exportSupplierToTenderBox() {
     cy.get('#pqqResp tbody').find('input[type="checkbox"]').eq(0).check()
 

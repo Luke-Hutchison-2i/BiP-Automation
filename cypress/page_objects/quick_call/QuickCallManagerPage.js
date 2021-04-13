@@ -1,3 +1,5 @@
+// Links
+
 export function gotoCreateQuickCall() {
     cy.get('#button-create_quickcall').click()
 }

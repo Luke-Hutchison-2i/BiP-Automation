@@ -1,3 +1,5 @@
+// Links
+
 export function gotoCreateTenderExercise() {
     cy.get('#info-create_tender_exercise').click()
 }
@@ -5,6 +7,9 @@ export function gotoCreateTenderExercise() {
 export function gotoExistingTender(name) {
     cy.contains(name).click()
 }
+
+
+// Set up
 
 export function createTenderExercise(name) {
     cy.get('[name=tenderName]').type(name)

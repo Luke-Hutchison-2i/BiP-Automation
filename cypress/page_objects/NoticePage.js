@@ -1,3 +1,5 @@
+// Complete Notice
+
 export function createContractNotice() {
     fillPage1()
 
@@ -17,6 +19,37 @@ export function createContractNotice() {
 
     //publishNotice()
 }
+
+export function createCompetitiveNotice() {
+    cy.contains('Competitive Contract Notice').click()
+
+    fillTitle()
+    fillAwardingAuthority()
+    fillContractsType()
+
+    fillDescription()
+    fillEstimatedValue()
+
+    fillDeadline()
+
+    validateNotice()
+
+    fillContractsFinder()
+    saveNotice()
+
+    fillCPVCodes()
+    saveNotice()
+
+    fillNUTSCode()
+    saveNotice()
+
+    validateNotice()
+
+    publishNotice()
+}
+
+
+// Pages for Contract Notice
 
 function fillPage1() {
     // Page 1
@@ -295,33 +328,7 @@ function fillPage7() {
 }
 
 
-export function createCompetitiveNotice() {
-    cy.contains('Competitive Contract Notice').click()
-
-    fillTitle()
-    fillAwardingAuthority()
-    fillContractsType()
-
-    fillDescription()
-    fillEstimatedValue()
-
-    fillDeadline()
-
-    validateNotice()
-
-    fillContractsFinder()
-    saveNotice()
-
-    fillCPVCodes()
-    saveNotice()
-
-    fillNUTSCode()
-    saveNotice()
-
-    validateNotice()
-
-    publishNotice()
-}
+// For Competitive Notice
 
 function fillTitle () {
     cy.get('#country').select('US').should('have.value', 'US')
@@ -468,6 +475,9 @@ function fillContractsFinder () {
     cy.get('#contractsFinder\\.periodWorkDateStarting').type(openDate, {force:true})
     cy.get('#contractsFinder\\.periodWorkDateEnding').type(closeDate, {force:true})
 }
+
+
+// Utility
 
 function saveNotice () {
     cy.get('[name="save"]').eq(0).click()

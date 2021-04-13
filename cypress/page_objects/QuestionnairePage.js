@@ -1,4 +1,5 @@
-// Set up complete questionnaire
+// Complete Questionnaires
+
 export function createBasicQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
@@ -7,34 +8,27 @@ export function createBasicQuestionnaire() {
     createQuestion(1, 'Explain why', 'Why can you do it', 'textArea', true)
 
     // Click onto next section
-    createSection()
+    createSection('Section 2')
 
     viewSection(1)
 
-    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
-
-    returnToOverview()
-}
-
-export function createPriceCustomQuestionnaire() {
-    createPriceQuestion(0, 'Name', 'Enter full price')
-
-    createQuestion(0, 'What currency?', 'Not much help', 'currency', true)
+    createMultiSelectQuestion(0, 'Multi-choice', 'Pick 1', true)
 
     returnToOverview()
 }
 
 export function createSmokeQuestionnaire () {
+    createMultiDropQuestion(0, 'Multi')
 
-}
+    createQuestion(0, 'Yes/No', 'Yes you can', 'yesNo', false)
 
+    createSection('Price')
 
-export function chooseCustonQuestionnaire() {
-    cy.get('#customQuestionnaire').check()
+    viewSection(1)
 
-    cy.get('[name="selectPQQ"]').click()
+    createPriceUploadQuestion(0)
 
-    cy.url().should('include', 'editQuestionnaireForm.html')
+    returnToOverview()
 }
 
 export function importExistingQuestionnaire (name) {
@@ -53,10 +47,132 @@ export function importExistingQuestionnaire (name) {
 }
 
 
-export function createSection() {
+// Questions
+
+export function createQuestion(sub, text, help, type, mand) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
+
+    cy.get('#answerType').select(type)
+
+    cy.get('#questionText').type(text)
+
+    cy.get('#helpText').type(help)
+
+    if (mand === true) {
+        cy.get('#isMandatory').check()
+    }
+
+    saveQuestion()
+}
+
+export function createMultiDropQuestion(sub, text) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
+
+    cy.get('#questionText').type(text)
+
+    cy.get('#answerType').select('multiChoiceDropdown')
+
+    cy.get('#newOptionValue').type('Option1')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option2')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option3')
+    cy.get('#form-add_new_option').click()
+
+    saveQuestion()
+}
+
+export function createMultiSelectQuestion(sub, text, help, mand) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
+
+    cy.get('#questionText').type(text)
+
+    cy.get('#helpText').type(help)
+
+    cy.get('#answerType').select('multiSelect')
+
+    if (mand === true) {
+        cy.get('#isMandatory').check()
+    }
+
+    cy.get('#newOptionValue').type('Option1')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option2')
+    cy.get('#form-add_new_option').click()
+
+    cy.get('#newOptionValue').type('Option3')
+    cy.get('#form-add_new_option').click()
+
+    saveQuestion()
+}
+
+export function createPriceQuestion(sub, text, help) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
+
+    cy.get('#answerType').select('lot')
+
+    cy.get('#questionText').should('have.value', 'Total Bid Amount')
+
+    cy.get('#helpText').type(help)
+
+    saveQuestion()
+}
+
+export function createPriceUploadQuestion(sub) {
+    cy.get('#form-section_' + sub + '-add').click()
+
+    cy.wait(500)
+
+    cy.get('#answerType').select('priceDocUpload')
+
+    cy.get('#questionText').should('have.value', 'Please upload your completed pricing document')
+
+    setPriceDocumentUpload()
+}
+
+export function setPriceDocumentUpload() {
+    cy.get('#fileupload').attachFile('DocUploadFile.docx')
+    cy.wait(1000)
+
+    cy.get('#form-upload_files').click()
+    cy.wait(2000)
+
+    saveQuestion()
+}
+
+function saveQuestion() {
+    cy.get('#modal-save_question', { timeout: 10000 }).click()
+
+    cy.wait(500)
+}
+
+
+// Utility features
+
+export function chooseCustonQuestionnaire() {
+    cy.get('#customQuestionnaire').check()
+
+    cy.get('[name="selectPQQ"]').click()
+
+    cy.url().should('include', 'editQuestionnaireForm.html')
+}
+
+
+export function createSection(name) {
     cy.contains('Add Section').click()
 
-    cy.get('#pageName').type('Section 2')
+    cy.get('#pageName').type(name)
 
     cy.get('#pageSectionName').type('Sub Section 1')
 
@@ -79,94 +195,10 @@ export function createSubSection() {
     cy.reload()
 }
 
-export function createLotSubSection() {
-    cy.contains('Add Lot Subsection').click()
 
-    cy.get('#sectionName').type('LotSub')
-
-    cy.get('#modal-save_subsection').click()
-
-    cy.wait(500)
-
-    cy.reload()
-}
-
-
-export function createQuestion(sub, text, help, type, mand) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
-
-    cy.get('#answerType').select(type)
-
-    cy.get('#questionText').type(text)
-
-    cy.get('#helpText').type(help)
-
-    if (mand === true) {
-        cy.get('#isMandatory').check()
-    }
-
-    cy.get('[onclick="javascript:submitQuestion()"]').click()
-
-    cy.wait(500)
-}
-
-export function createMultipleQuestion(sub, text, help, mand) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
-
-    cy.get('#questionText').type(text)
-
-    cy.get('#helpText').type(help)
-
-    cy.get('#answerType').select('multiSelect')
-
-    if (mand === true) {
-        cy.get('#isMandatory').check()
-    }
-
-    cy.get('#newOptionValue').type('Option 1')
-    cy.get('#form-add_new_option').click()
-
-    cy.get('#newOptionValue').type('Option 2')
-    cy.get('#form-add_new_option').click()
-
-    cy.get('#newOptionValue').type('Option 3')
-    cy.get('#form-add_new_option').click()
-
-    cy.get('[onclick="javascript:submitQuestion()"]').click()
-
-    cy.wait(500)
-}
-
-export function createPriceQuestion(sub, text, help) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
-
-    cy.get('#answerType').select('lot')
-
-    cy.get('#questionText').should('have.value', 'Total Bid Amount')
-
-    cy.get('#helpText').type(help)
-
-    cy.get('[onclick="javascript:submitQuestion()"]').click()
-
-    cy.wait(500)
-}
-
-export function setPriceDocumentUpload() {
-    cy.get('#fileupload').attachFile('DocUploadFile.docx')
+export function viewSection(index) {
+    cy.get('[id^="page-name-link-"').eq(index).click()
     cy.wait(1000)
-
-    cy.get('#form-upload_files').click()
-    cy.wait(2000)
-
-    cy.get('#modal-save_question').click()
-
-    cy.wait(500)
 }
 
 
@@ -178,14 +210,12 @@ export function deleteQuestionnaire () {
     cy.wait(1000)
 }
 
-export function viewSection(index) {
-    cy.get('[id^="page-name-link-"').eq(index).click()
-    cy.wait(1000)
-}
 
 export function returnToOverview() {
     cy.get('#form-return_to_overview').click()
 }
+
+
 
 
 // Multi-lot on Dev server has some different tags
@@ -196,7 +226,7 @@ export function createLotCustomQuestionnaire() {
 
     viewSection(1) // View Lot
 
-    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+    createMultiSelectQuestion(0, 'Multi-choice', 'Pick 1', true)
 }
 
 export function createLot2CustomQuestionnaire() {
@@ -206,7 +236,7 @@ export function createLot2CustomQuestionnaire() {
 
     viewSection(1) // View Lot
 
-    createMultipleQuestion(0, 'Multi-choice', 'Pick 1', true)
+    createMultiSelectQuestion(0, 'Multi-choice', 'Pick 1', true)
 
     cy.wait(500)
 
@@ -236,6 +266,18 @@ export function createLot(lotName, secName, subName) {
     cy.get('#lotPageSectionName').type(subName)
 
     cy.get('#modal-save_multilot_section').click()
+
+    cy.wait(500)
+
+    cy.reload()
+}
+
+export function createLotSubSection() {
+    cy.contains('Add Lot Subsection').click()
+
+    cy.get('#sectionName').type('LotSub')
+
+    cy.get('#modal-save_subsection').click()
 
     cy.wait(500)
 

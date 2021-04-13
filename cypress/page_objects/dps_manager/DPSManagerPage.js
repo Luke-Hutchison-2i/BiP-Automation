@@ -1,10 +1,16 @@
+// Links
+
 export function gotoCreateDPSExercise() {
     cy.get('#info-create_tender_exercise').click()
 }
 
-export function gotoExistingDPS() {
-    cy.get('#tenders tr').eq(1).find('td a').eq(0).click()
+export function gotoExistingDPS(name) {
+    //cy.get('#tenders tr').eq(1).find('td a').eq(0).click()
+    cy.contains(name).click()
 }
+
+
+// Set up
 
 export function createDPSExercise(name) {
     cy.get('[name=tenderName]').type(name)

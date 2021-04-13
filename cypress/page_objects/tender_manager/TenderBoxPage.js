@@ -1,45 +1,4 @@
-export function gotoCreateNewQuestionnaire() {
-    cy.get('#documents-select_questionnaire_type').click()
-}
-
-export function gotoExistingQuestionnaire() {
-    cy.get('#documents-edit_questionnaire').should('exist').click()
-}
-
-export function gotoCreateEvalPlan() {
-    cy.get('#documents-edit_evaluation_plan').click()
-}
-
-export function gotoUploadDocs() {
-    cy.get('#documents-upload_documents').click()
-}
-
-export function gotoAddSuppliers() {
-    cy.get('#suppliers-add_suppliers').click()
-}
-
-export function gotoMessageCentre() {
-    cy.get('#suppliers-message_centre').click()
-}
-
-export function gotoEvaluateResponses() {
-    cy.get('#responses-view_responses').click()
-
-    cy.wait(1000)
-
-    cy.get('body').then($body => {
-        if ($body.find('#confirm-popup #ok-confirm').length) {
-            cy.get('#ok-confirm').click()
-        }
-    })
-}
-
-
-// For DPS Questionnaire
-export function gotoViewSelectList() {
-    cy.get('#responses-view_supplier_list').click()
-}
-
+// Complete Set Up
 
 export function initialBoxSetUp(name) {
     cy.get('#dropdown-select_tenderbox_type').select('ITT')
@@ -119,4 +78,48 @@ export function SetOpenAndCloseTime(delay) {
 
     exports.closeMin = closeMin;
     exports.closeHour = closeHour;
+}
+
+
+// Links
+
+export function gotoCreateNewQuestionnaire() {
+    cy.get('#documents-select_questionnaire_type').click()
+}
+
+export function gotoExistingQuestionnaire() {
+    cy.get('#documents-edit_questionnaire').should('exist').click()
+}
+
+export function gotoCreateEvalPlan() {
+    cy.get('#documents-edit_evaluation_plan').click()
+}
+
+export function gotoUploadDocs() {
+    cy.get('#documents-upload_documents').click()
+}
+
+export function gotoAddSuppliers() {
+    cy.get('#suppliers-add_suppliers').click()
+}
+
+export function gotoMessageCentre() {
+    cy.get('#suppliers-message_centre').click()
+}
+
+export function gotoEvaluateResponses() {
+    cy.get('#responses-view_responses').click()
+
+    cy.wait(1000)
+
+    cy.get('body').then($body => {
+        if ($body.find('#confirm-popup #ok-confirm').length) {
+            cy.get('#ok-confirm').click()
+        }
+    })
+}
+
+// For DPS Questionnaire
+export function gotoViewSelectList() {
+    cy.get('#responses-view_supplier_list').click()
 }

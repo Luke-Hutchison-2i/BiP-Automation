@@ -1,5 +1,7 @@
+// Add Suppliers
+
 export function addExisitingSuppliers() {
-    cy.get('#buttons-import_supplier').click()
+    startExisting()
 
     cy.get('select[name="filterByExercise"]').select('Org')
 
@@ -17,7 +19,7 @@ export function addExisitingSuppliers() {
 }
 
 export function addByEmail() {
-    cy.get('#buttons-add_emails').click()
+    startByEmail()
 
     cy.fixture('logins.json').then((logins) => {
         cy.get('[name="emailAddress"]').type(logins[Cypress.env('id')].supplier.email)
@@ -28,12 +30,42 @@ export function addByEmail() {
     cy.get('[name="invite"]').click()
 }
 
-export function emailSuppliers() {
-    // Goes to Message Centre
+export function dpsAddExistingSuppliers() {
+    startExisting()
 
-    cy.get('[name="email"]').click()
+    cy.get('#table-confirm').eq(0).click()
+
+    cy.get('input[type="checkbox"]').check()
+
+    cy.get('[name="inviteSelectedSuppliers"]').click()
+
+    cy.get('[name="invite"]').click()
 }
 
+
+// Utility
+
+export function startExisting() {
+    cy.get('#buttons-import_supplier').click()
+}
+
+export function startByEmail () {
+    cy.get('#buttons-add_emails').click()
+}
+
+
+// Links
+
+export function emailSuppliers() {
+    // Goes to Message Centre
+    cy.get('#buttons-email').click()
+}
+
+
+
+
+
+// ???
 export function removeTopSupplier() {
     let length
 
@@ -46,18 +78,4 @@ export function removeTopSupplier() {
     cy.get('[name="action"]').click().then(() => {
         cy.get('#suppliersListing').find('input[type="checkbox"]').should('have.length', length - 1)
     })
-}
-
-
-
-export function dpsAddExistingSuppliers() {
-    cy.get('#buttons-import_supplier').click()
-
-    cy.get('#table-confirm').eq(0).click()
-
-    cy.get('input[type="checkbox"]').check()
-
-    cy.get('[name="inviteSelectedSuppliers"]').click()
-
-    cy.get('[name="invite"]').click()
 }

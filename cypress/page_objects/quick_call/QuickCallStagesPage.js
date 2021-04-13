@@ -1,3 +1,5 @@
+// Stages
+
 export function completeStage1 (name) {
     // Title
     // Description
@@ -80,6 +82,9 @@ export function completeStage6 () {
 export function completeStage7 () {
     cy.get('[name="confirm"]').click()
 }
+
+
+// Utility
 
 export function saveAndContinue () {
     cy.get('[name="saveContinue"]').click()

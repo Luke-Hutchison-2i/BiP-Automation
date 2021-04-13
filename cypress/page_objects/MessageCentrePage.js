@@ -1,57 +1,86 @@
+// // Buyer
+// Messages
+
+export function sendDirectMessage(supplier) {
+    pickSupplier(supplier)
+
+    startDirectMessage()
+
+    cy.url().should('include', 'emailSuppliers')
+
+    enterSubject('Test Subject')
+
+    enterBody('Test Body')
+
+    clickSend()
+
+    cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
+}
+
+export function sendNewTopic() {
+    startTopic()
+
+    enterSubject('Topic Subject')
+
+    enterBody('Topic Body')
+
+    clickSend()
+
+    cy.contains('Message have been successfully sent to All Suppliers').should('exist')
+}
+
+
+// Other Features
+
+export function disableMessages() {
+    cy.get('#form-disable_messages').click()
+
+    cy.contains('Enable Messages').should('exist')
+}
+
+
+// Utility 
+
 export function pickSupplier(i) {
     cy.get('#pqqResp [type="checkbox"]').eq(i).check()
 }
 
-export function sendDirectMessage() {
-    //pickSupplier(0)
-
+export function startDirectMessage() {
     cy.get('#form-new_direct').click()
-
-    cy.url().should('include', 'emailSuppliers')
-
-    cy.get('#input-message_subject').type('Test Subject')
-
-    cy.get('#invitationText').type('Test Body')
-
-    //cy.get('#buttons-send_message').click()
-    cy.get('#buttons-send_message').click()
-
-    //cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
 }
 
-export function sendNewTopic() {
+export function startTopic() {
     cy.get('#form-new_topic').click()
 
-    cy.wait(500)
+    //cy.wait(500)
 
-    //cy.contains('Please make sure that there will be no suppliers details on this message. All suppliers will be able to see this message.').should('exist')
+    cy.contains('Please make sure that there will be no suppliers details on this message. All suppliers will be able to see this message.').should('exist')
 
-    cy.get('#input-message_subject').type('Topic Subject')
+}
 
-    cy.get('#invitationText').type('Topic Body')
+export function enterSubject(text) {
+    cy.get('#input-message_subject').type(text)
+}
 
-    //cy.get('#buttons-send_message').click()
+export function enterBody(text) {
+    cy.get('#invitationText').type(text)
+}
+
+export function clickSend() {
     cy.get('#buttons-send_message').click()
-
-    //cy.contains('Message have been successfully sent to All Suppliers').should('exist')
 }
 
-export function disableMessages() {
-    //pickSupplier(0)
 
-    cy.get('#form-disable_messages').click()
-
-    //cy.contains('Enable Messages').should('exist')
-}
-
+// // Supplier
+// Utility
 
 export function supplierEnterSubject(text) {
     cy.get('#subject').type(text)//.should('have.text', text)
 }
 
-export function supplierEnterMessage(text) {
-    cy.get('#invitationText').type(text)//.should('have.text', text)
-}
+// export function supplierEnterMessage(text) {
+//     cy.get('#invitationText').type(text)//.should('have.text', text)
+// }
 
 export function supplierUploadDoc () {
     cy.get('#doc-upload').attachFile('DocUploadFile.docx')
