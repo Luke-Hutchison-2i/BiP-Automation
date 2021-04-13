@@ -105,7 +105,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createBasicEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -144,17 +144,17 @@ describe ('Tender Manager - Stage 1', function() {
 
         MessageCentrePage.sendDirectMessage()
 
-        cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
+        //cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
 
         MessageCentrePage.sendNewTopic()
 
-        cy.contains('Message have been successfully sent to All Suppliers').should('exist')
+        //cy.contains('Message have been successfully sent to All Suppliers').should('exist')
 
         MessageCentrePage.pickSupplier(0)
 
         MessageCentrePage.disableMessages()
 
-        cy.contains('Enable Messages').should('exist')
+        //cy.contains('Enable Messages').should('exist')
 
         cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })
@@ -230,9 +230,11 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalSideBySide()
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.basicSideBySide()
         
-        EvalResponsesPage.evalConsensus(0)
+        EvalResponsesPage.basicConsensus(0)
     })
 
     it ('Shortlist supplier for SQ', () => {
@@ -270,7 +272,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createPriceCustomQuestionnaire()
+        QuestionnairePage.createSmokeQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -286,10 +288,10 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        cy.wait(2000)
+        //cy.wait(2000)
 
-        //EvalPlanPage.createEvalPlan()
-        EvalPlanPage.createPriceEvalPlan()
+        //EvalPlanPage.createPriceEvalPlan()
+        EvalPlanPage.createSmokeEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -339,7 +341,8 @@ describe ('Supplier for TenderBox', function () {
 
         ResponsePage.continueStage2()
 
-        ResponsePage.completePriceResponse()
+        //ResponsePage.completePriceResponse()
+        ResponsePage.completeSmokeResponse()
 
         ResponsePage.submitResponse()
     })
@@ -381,11 +384,9 @@ describe ('Tender Manager - Stage 3', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalPriceQuestionnaire(0)
+        //cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(0).should('contain.text', 'Completed')
 
-        cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(0).should('contain.text', 'Completed')
-
-        EvalResponsesPage.evalPriceConsensus(0)
+        EvalResponsesPage.smokeConsensus(0)
 
         cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Completed')
     })

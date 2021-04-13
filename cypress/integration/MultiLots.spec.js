@@ -192,7 +192,6 @@ describe('Multi-Lots Questionnaire', function() {
     after(function () {
         cy.logout()
     })
-
 })
 
 describe ('Multi-Lots Eval Plan', function() {

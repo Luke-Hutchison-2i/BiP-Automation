@@ -52,7 +52,7 @@ describe ('DPS Manager - Stage 1', function() {
     it ('Create DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -66,7 +66,7 @@ describe ('DPS Manager - Stage 1', function() {
     it ('Set up custom questionnaire for DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -84,13 +84,13 @@ describe ('DPS Manager - Stage 1', function() {
     it ('Set up evaluation plan for DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createBasicEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -100,7 +100,7 @@ describe ('DPS Manager - Stage 1', function() {
     it ('Add suppliers to DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -182,7 +182,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Evaluate responses for DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -198,7 +198,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Accept supplier for DPS Questionnaire', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -212,7 +212,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Publish Select List', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingQuestionnaire()
 
@@ -226,7 +226,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Create Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoCreateMiniComp()
 
@@ -238,7 +238,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Set up custom questionnaire for Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingMiniComp()
 
@@ -246,7 +246,7 @@ describe ('DPS Manager - Stage 2', function () {
 
         QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createPriceCustomQuestionnaire()
+        QuestionnairePage.createSmokeQuestionnaire()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -256,14 +256,13 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Set up evaluation plan for Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingMiniComp()
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createPriceEvalPlan()
-        //EvalPlanPage.createEvalPlan()
+        EvalPlanPage.createSmokeEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
 
@@ -273,7 +272,7 @@ describe ('DPS Manager - Stage 2', function () {
     it ('Add suppliers to Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingMiniComp()
 
@@ -319,7 +318,7 @@ describe ('Supplier for Mini Comp', function () {
 
         ResponsePage.continueStage2()
 
-        ResponsePage.completePriceResponse()
+        ResponsePage.completeSmokeResponse()
 
         ResponsePage.submitResponse()
     })
@@ -355,20 +354,19 @@ describe ('DPS Manager - Stage 3', function () {
     it ('Evaluate responses for Mini Comp', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingMiniComp()
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.evalDPSPriceConsensus(0)
-        //EvalResponsesPage.evalSideBySide(0)
+        EvalResponsesPage.smokeConsensus()
     })
 
     it ('Award contract to supplier', () => {
         DashboardPage.gotoDPSManager()
 
-        DPSManagerPage.gotoExistingDPS()
+        DPSManagerPage.gotoExistingDPS(dpsName)
 
         DPSExercisePage.gotoExistingMiniComp()
 

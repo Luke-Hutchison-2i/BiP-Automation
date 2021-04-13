@@ -104,8 +104,6 @@ describe ('Smoke Test', function () {
 
         EvalPlanPage.createSmokeEvalPlan()
 
-        EvalPlanPage.returnToOverview()
-
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail()
@@ -145,7 +143,7 @@ describe ('Smoke Test', function () {
 
         MessageCentrePage.supplierEnterSubject(messageSubject)
 
-        MessageCentrePage.supplierEnterMessage(messageBody)
+        MessageCentrePage.enterBody(messageBody)
 
         MessageCentrePage.supplierUploadDoc()
 
@@ -180,23 +178,19 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.gotoOverviewPage()
+        EvalResponsesPage.gotoOverviewTab()
 
-        EvalResponsesPage.startSideBySideEval()
         EvalResponsesPage.smokeSideBySide()
-        EvalResponsesPage.finishSideBySideEval()
 
         //cy.contains('Not started').should('exist')
 
-        EvalResponsesPage.startConsensusEval()
         EvalResponsesPage.smokeConsensus()
-        EvalResponsesPage.finishConsensusEval()
 
         //cy.contains('Completed').should('exist')
         // Check overview page looks correct as well
 
         // Download files
-        EvalResponsesPage.gotoOverviewPage()
+        EvalResponsesPage.gotoOverviewTab()
 
         let url;
 
@@ -296,7 +290,7 @@ describe ('Smoke Test', function () {
         // Test add and remove different questionnaire parts
         QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
         QuestionnairePage.createSubSection()
-        QuestionnairePage.createSection()
+        QuestionnairePage.createSection('Section 2')
 
         cy.get('#page_table tbody tr').eq(1).find('#sidebar-remove_section').click()
         cy.reload()
