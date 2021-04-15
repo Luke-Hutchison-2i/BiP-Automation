@@ -78,10 +78,6 @@ export function supplierEnterSubject(text) {
     cy.get('#subject').type(text)//.should('have.text', text)
 }
 
-// export function supplierEnterMessage(text) {
-//     cy.get('#invitationText').type(text)//.should('have.text', text)
-// }
-
 export function supplierUploadDoc () {
     cy.get('#doc-upload').attachFile('DocUploadFile.docx')
     cy.wait(500)

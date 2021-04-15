@@ -23,6 +23,8 @@ import './functions'
 //fs = require('fs')
 require('cypress-axe');
 const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 //const xlsx = require('node-xlsx')
 
 Cypress.dayjs = dayjs

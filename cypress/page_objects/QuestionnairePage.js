@@ -49,10 +49,13 @@ export function importExistingQuestionnaire (name) {
 
 // Questions
 
-export function createQuestion(sub, text, help, type, mand) {
+export function startNewQuestion(sub) {
     cy.get('#form-section_' + sub + '-add').click()
-
     cy.wait(500)
+}
+
+export function createQuestion(sub, text, help, type, mand) {
+    startNewQuestion(sub)
 
     cy.get('#answerType').select(type)
 
@@ -68,9 +71,7 @@ export function createQuestion(sub, text, help, type, mand) {
 }
 
 export function createMultiDropQuestion(sub, text) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
+    startNewQuestion(sub)
 
     cy.get('#questionText').type(text)
 
@@ -89,9 +90,7 @@ export function createMultiDropQuestion(sub, text) {
 }
 
 export function createMultiSelectQuestion(sub, text, help, mand) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
+    startNewQuestion(sub)
 
     cy.get('#questionText').type(text)
 
@@ -116,9 +115,7 @@ export function createMultiSelectQuestion(sub, text, help, mand) {
 }
 
 export function createPriceQuestion(sub, text, help) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
+    startNewQuestion(sub)
 
     cy.get('#answerType').select('lot')
 
@@ -130,9 +127,7 @@ export function createPriceQuestion(sub, text, help) {
 }
 
 export function createPriceUploadQuestion(sub) {
-    cy.get('#form-section_' + sub + '-add').click()
-
-    cy.wait(500)
+    startNewQuestion(sub)
 
     cy.get('#answerType').select('priceDocUpload')
 
@@ -140,7 +135,6 @@ export function createPriceUploadQuestion(sub) {
 
     setPriceDocumentUpload()
 }
-
 export function setPriceDocumentUpload() {
     cy.get('#fileupload').attachFile('DocUploadFile.docx')
     cy.wait(1000)
@@ -151,23 +145,23 @@ export function setPriceDocumentUpload() {
     saveQuestion()
 }
 
-function saveQuestion() {
+export function saveQuestion() {
     cy.get('#modal-save_question', { timeout: 10000 }).click()
 
     cy.wait(500)
 }
 
-
-// Utility features
-
-export function chooseCustonQuestionnaire() {
-    cy.get('#customQuestionnaire').check()
-
-    cy.get('[name="selectPQQ"]').click()
-
-    cy.url().should('include', 'editQuestionnaireForm.html')
+export function deleteQuestion(index) {
+    cy.get('#table_anchor_1').find('input#sidebar-remove_section').eq(index).click()
 }
 
+
+// Sections
+
+export function viewSection(index) {
+    cy.get('[id^="page-name-link-"').eq(index).click()
+    cy.wait(1000)
+}
 
 export function createSection(name) {
     cy.contains('Add Section').click()
@@ -195,11 +189,28 @@ export function createSubSection() {
     cy.reload()
 }
 
-
-export function viewSection(index) {
-    cy.get('[id^="page-name-link-"').eq(index).click()
-    cy.wait(1000)
+export function deleteSection(index) {
+    cy.get('#page_table tbody tr').eq(index).find('#sidebar-remove_section').click()
 }
+
+export function deleteSubSection(index) {
+    cy.get('#section_table > tbody > tr').eq(index).find('input#body-remove_subsection').click()
+}
+
+
+// Utility features
+
+export function chooseCustonQuestionnaire() {
+    cy.get('#customQuestionnaire').check()
+
+    cy.get('[name="selectPQQ"]').click()
+
+    cy.url().should('include', 'editQuestionnaireForm.html')
+}
+
+
+
+
 
 
 export function deleteQuestionnaire () {

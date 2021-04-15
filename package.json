@@ -6,5 +6,7 @@
         "cypress-file-upload": "^5.0.2",
         "dayjs": "^1.10.4"
     },
-    "dependencies": {}
+    "dependencies": {
+        "dayjs-plugin-utc": "^0.1.2"
+    }
 }

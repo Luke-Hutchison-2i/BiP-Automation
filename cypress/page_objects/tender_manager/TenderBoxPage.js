@@ -41,7 +41,7 @@ export function initialSQSetUp(name) {
 
 
 export function SetOpenAndCloseTime(delay) {
-    let hour = parseInt(Cypress.dayjs().format('H'))
+    let hour = parseInt(Cypress.dayjs().utc().format('H')) + 1 // Temp while server time gets fixed
     let min = parseInt(Cypress.dayjs().format('m'))
 
     let openMin = (Math.ceil((min+2)/5)*5) + delay
