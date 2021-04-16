@@ -197,6 +197,14 @@ export function deleteSubSection(index) {
     cy.get('#section_table > tbody > tr').eq(index).find('input#body-remove_subsection').click()
 }
 
+export function moveSectionUp(index) {
+    cy.get('#page_table tbody tr').eq(index).find('#sidebar-move_up').click()
+}
+
+export function moveSectionDown(index) {
+    cy.get('#page_table tbody tr').eq(index).find('#sidebar-move_down').click()
+}
+
 
 // Utility features
 

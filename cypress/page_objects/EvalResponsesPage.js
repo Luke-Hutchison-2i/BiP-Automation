@@ -144,7 +144,7 @@ export function finishConsensusEval () {
 // Utility
 
 export function awardContract() {
-    cy.get('#tabs-overview').click()
+    gotoOverviewTab()
 
     cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(0).check()   
 
@@ -155,7 +155,7 @@ export function awardContract() {
 
 export function gotoOverviewTab() {
     cy.get('#tabs-overview').click()
-    cy.wait(500)
+    cy.url().should('include', '/buyers/lists/viewSupplierResponsesOverview')
 }
 
 export function shortListSupplier(index) {
