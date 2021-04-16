@@ -198,11 +198,11 @@ export function deleteSubSection(index) {
 }
 
 export function moveSectionUp(index) {
-    cy.get('#page_table tbody tr').eq(index).find('#sidebar-move_up').click()
+    cy.get('#page_table tbody tr').eq(index).find('[name="moveUp"]').click()
 }
 
 export function moveSectionDown(index) {
-    cy.get('#page_table tbody tr').eq(index).find('#sidebar-move_down').click()
+    cy.get('#page_table tbody tr').eq(index).find('[name="moveDown"]').click()
 }
 
 

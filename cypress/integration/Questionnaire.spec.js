@@ -112,6 +112,41 @@ describe ('Questions', function () {
         QuestionnairePage.setPriceDocumentUpload()
     })
 
+    it ('Question invalid input warnings', () => {
+
+    })
+
+    it.only ('Can reorder sections', () => {
+        QuestionnairePage.createSection('Section 2')
+        QuestionnairePage.createSection('Section 3')
+
+        // Check each section has correct move buttons enabled
+        // Move buttom up, check again
+        // Move top down, check again
+
+        cy.get('#page_table tbody tr').eq(0).find('#sidebar-move_up').should('not.exist')
+        cy.get('#page_table tbody tr').eq(0).find('#sidebar-move_down').should('exist')
+        cy.get('#page_table tbody tr').eq(1).find('#sidebar-move_up').should('exist')
+        cy.get('#page_table tbody tr').eq(1).find('#sidebar-move_down').should('exist')
+        cy.get('#page_table tbody tr').eq(2).find('#sidebar-move_up').should('exist')
+        cy.get('#page_table tbody tr').eq(2).find('#sidebar-move_down').should('not.exist')
+
+        QuestionnairePage.moveSectionUp(2)
+        cy.wait(500)
+        QuestionnairePage.moveSectionDown(0)
+        cy.wait(500)
+        QuestionnairePage.moveSectionUp(1)
+
+        cy.get('#page_table tbody tr').eq(0).find('[name="moveUp"]').should('not.exist')
+        cy.get('#page_table tbody tr').eq(0).find('[name="moveDown"]').should('exist')
+        cy.get('#page_table tbody tr').eq(1).find('[name="moveUp"]').should('exist')
+        cy.get('#page_table tbody tr').eq(1).find('[name="moveDown"]').should('exist')
+        cy.get('#page_table tbody tr').eq(2).find('[name="moveUp"]').should('exist')
+        cy.get('#page_table tbody tr').eq(2).find('[name="moveDown"]').should('not.exist')
+
+        // Check section names are in correct order
+    })
+
     afterEach(function () {
         cy.visit('/delta/buyers/tenders/listTenders.html')
 

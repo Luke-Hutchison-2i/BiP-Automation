@@ -107,13 +107,13 @@ describe('Quick Call - Supplier', function() {
 
         // Step 3
         ResponsePage.submitResponse()
-
-        cy.logout()
-
-        cy.clearCookies()
     })
 
     after(function() {
+        cy.logout()
+
+        cy.clearCookies()
+        
         let waitTime = Functions.GetWaitTime(QuickCallStagesPage.closeMin, QuickCallStagesPage.closeHour)
 
         if (waitTime > 0) {

@@ -14,7 +14,7 @@ export function GetServer () {
 }
 
 export function GetWaitTime(timeMin, timeHour) {
-    let hour = parseInt(Cypress.dayjs().format('H'));
+    let hour = parseInt(Cypress.dayjs().utc().format('H')) + 1; // Temporary: The Cypress servers were stuck on UTC time, so had to add an hour to match BST
     let min = parseInt(Cypress.dayjs().format('m'));
     let sec = parseInt(Cypress.dayjs().format('s'));
 
