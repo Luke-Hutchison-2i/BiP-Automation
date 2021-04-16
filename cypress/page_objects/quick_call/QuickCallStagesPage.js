@@ -44,7 +44,7 @@ export function completeStage4 () {
 
     cy.get('[name="dataContext\\.closingDate"]').type(date,{force:true})
 
-    const hour = parseInt(Cypress.dayjs().format('H'))
+    let hour = parseInt(Cypress.dayjs().utc().format('H')) + 1 // Temporary: The Cypress servers were stuck on UTC time, so had to add an hour to match BST
     const min = parseInt(Cypress.dayjs().format('m'))
 
     var closeMin = (Math.ceil((min+2)/5)*5)
