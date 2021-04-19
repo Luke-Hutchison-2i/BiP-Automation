@@ -13,10 +13,6 @@ Functions.GetServer()
 
 describe ('Questions', function () {
     before(function () {
-        const time = Cypress.dayjs().utc().format('H')
-
-        cy.log(parseInt(time) + 1)
-
         cy.visit('')
 
         cy.contains('Log in').click()
@@ -103,7 +99,7 @@ describe ('Questions', function () {
     it ('Price upload requires document', () => {
         QuestionnairePage.startNewQuestion(0)
 
-        cy.get('#answerType').select('priceDocUpload')
+        chooseAnswerType('priceDocUpload')
 
         QuestionnairePage.saveQuestion()
 
@@ -113,10 +109,21 @@ describe ('Questions', function () {
     })
 
     it ('Question invalid input warnings', () => {
+        QuestionnairePage.startNewQuestion(0)
 
+        QuestionnairePage.saveQuestion()
+
+        cy.contains('Question Text is a required field').should('exist')
+        cy.contains('Answer Type is a required field').should('exist')
+
+        QuestionnairePage.chooseAnswerType('multiSelect')
+
+        QuestionnairePage.saveQuestion()
+
+        cy.contains('You must enter at least two options for a valid multiple choice question').should('exist')
     })
 
-    it.only ('Can reorder sections', () => {
+    it ('Can reorder sections', () => {
         QuestionnairePage.createSection('Section 2')
         QuestionnairePage.createSection('Section 3')
 
@@ -135,7 +142,6 @@ describe ('Questions', function () {
         cy.wait(500)
         QuestionnairePage.moveSectionDown(0)
         cy.wait(500)
-        QuestionnairePage.moveSectionUp(1)
 
         cy.get('#page_table tbody tr').eq(0).find('[name="moveUp"]').should('not.exist')
         cy.get('#page_table tbody tr').eq(0).find('[name="moveDown"]').should('exist')
@@ -145,6 +151,9 @@ describe ('Questions', function () {
         cy.get('#page_table tbody tr').eq(2).find('[name="moveDown"]').should('not.exist')
 
         // Check section names are in correct order
+        cy.get('#page_table tbody tr').eq(0).contains('Section 3')
+        cy.get('#page_table tbody tr').eq(1).contains('Questions')
+        cy.get('#page_table tbody tr').eq(2).contains('Section 2')
     })
 
     afterEach(function () {

@@ -47,17 +47,12 @@ export function importExistingQuestionnaire (name) {
 }
 
 
-// Questions
-
-export function startNewQuestion(sub) {
-    cy.get('#form-section_' + sub + '-add').click()
-    cy.wait(500)
-}
+// Full Questions
 
 export function createQuestion(sub, text, help, type, mand) {
     startNewQuestion(sub)
 
-    cy.get('#answerType').select(type)
+    chooseAnswerType(type)
 
     cy.get('#questionText').type(text)
 
@@ -75,7 +70,7 @@ export function createMultiDropQuestion(sub, text) {
 
     cy.get('#questionText').type(text)
 
-    cy.get('#answerType').select('multiChoiceDropdown')
+    chooseAnswerType('multiChoiceDropdown')
 
     cy.get('#newOptionValue').type('Option1')
     cy.get('#form-add_new_option').click()
@@ -96,7 +91,7 @@ export function createMultiSelectQuestion(sub, text, help, mand) {
 
     cy.get('#helpText').type(help)
 
-    cy.get('#answerType').select('multiSelect')
+    chooseAnswerType('multiSelect')
 
     if (mand === true) {
         cy.get('#isMandatory').check()
@@ -117,7 +112,7 @@ export function createMultiSelectQuestion(sub, text, help, mand) {
 export function createPriceQuestion(sub, text, help) {
     startNewQuestion(sub)
 
-    cy.get('#answerType').select('lot')
+    chooseAnswerType('lot')
 
     cy.get('#questionText').should('have.value', 'Total Bid Amount')
 
@@ -129,12 +124,25 @@ export function createPriceQuestion(sub, text, help) {
 export function createPriceUploadQuestion(sub) {
     startNewQuestion(sub)
 
-    cy.get('#answerType').select('priceDocUpload')
+    chooseAnswerType('priceDocUpload')
 
     cy.get('#questionText').should('have.value', 'Please upload your completed pricing document')
 
     setPriceDocumentUpload()
 }
+
+
+// Question Parts
+
+export function startNewQuestion(sub) {
+    cy.get('#form-section_' + sub + '-add').click()
+    cy.wait(500)
+}
+
+export function chooseAnswerType(type) {
+    cy.get('#answerType').select(type)
+}
+
 export function setPriceDocumentUpload() {
     cy.get('#fileupload').attachFile('DocUploadFile.docx')
     cy.wait(1000)
