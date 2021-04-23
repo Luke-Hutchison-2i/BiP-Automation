@@ -145,7 +145,7 @@ describe ('Smoke Test', function () {
 
         MessageCentrePage.enterBody(messageBody)
 
-        MessageCentrePage.supplierUploadDoc()
+        MessageCentrePage.uploadDoc()
 
         MessageCentrePage.supplierSendMessage()
 
@@ -182,11 +182,13 @@ describe ('Smoke Test', function () {
 
         EvalResponsesPage.smokeSideBySide()
 
-        //cy.contains('Not started').should('exist')
+        cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(0).should('contain.text', 'Completed')
 
-        EvalResponsesPage.smokeConsensus()
+        cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Not Started')
 
-        //cy.contains('Completed').should('exist')
+        EvalResponsesPage.smokeConsensus(0)
+
+        cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Completed')
         // Check overview page looks correct as well
 
         // Download files
@@ -209,8 +211,6 @@ describe ('Smoke Test', function () {
         }, (req) => {
             req.redirect(url)
         }).as('docs')
-
-
 
         cy.get('#buttons-download_responses').click()
         cy.wait('@records').its('request').then((req) => {

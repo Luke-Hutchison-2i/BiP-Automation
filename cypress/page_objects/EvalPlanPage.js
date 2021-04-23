@@ -28,9 +28,7 @@ export function createBasicEvalPlan() {
 
     cy.get('[name="returnEdit"]').click()
 
-    //saveEvalWeightings()
-
-    cy.get('#button-return_to_overview').click()
+    returnToOverview()
 }
 
 export function createSmokeEvalPlan () {

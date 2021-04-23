@@ -28,3 +28,9 @@ export function GetWaitTime(timeMin, timeHour) {
 
     return waitTime
 }
+
+export function GetSupplier() {
+    cy.fixture('logins.json').then((logins) => {
+        return logins[Cypress.env('id')].supplier
+    })
+}

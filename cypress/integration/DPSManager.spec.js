@@ -360,7 +360,7 @@ describe ('DPS Manager - Stage 3', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
-        EvalResponsesPage.smokeConsensus()
+        EvalResponsesPage.smokeConsensus(0)
     })
 
     it ('Award contract to supplier', () => {

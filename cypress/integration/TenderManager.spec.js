@@ -144,17 +144,17 @@ describe ('Tender Manager - Stage 1', function() {
 
         MessageCentrePage.sendDirectMessage()
 
-        //cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
+        cy.contains('Emails have been successfully sent to all selected suppliers').should('exist')
 
         MessageCentrePage.sendNewTopic()
 
-        //cy.contains('Message have been successfully sent to All Suppliers').should('exist')
+        cy.contains('Message have been successfully sent to All Suppliers').should('exist')
 
         MessageCentrePage.pickSupplier(0)
 
         MessageCentrePage.disableMessages()
 
-        //cy.contains('Enable Messages').should('exist')
+        cy.contains('Enable Messages').should('exist')
 
         cy.get('[name^="ischecked_"]').eq(0).should('be.disabled')
     })

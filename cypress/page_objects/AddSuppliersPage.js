@@ -21,9 +21,13 @@ export function addExisitingSuppliers() {
 export function addByEmail() {
     startByEmail()
 
-    cy.fixture('logins.json').then((logins) => {
-        cy.get('[name="emailAddress"]').type(logins[Cypress.env('id')].supplier.email)
-    })
+    if (arguments.length == 0) {
+        cy.fixture('logins.json').then((logins) => {
+            cy.get('[name="emailAddress"]').type(logins[Cypress.env('id')].supplier.email)
+        })
+    } else if (arguments.length == 1) {
+        cy.get('[name="emailAddress"]').type(arguments[0])
+    }
 
     cy.get('[name="next"]').click() // Invite button
 

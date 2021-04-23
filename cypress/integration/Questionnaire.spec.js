@@ -44,6 +44,15 @@ describe ('Questions', function () {
         QuestionnairePage.chooseCustonQuestionnaire()
     })
 
+    it ('Create a questionnaire', () => {
+        QuestionnairePage.createSmokeQuestionnaire()
+
+        cy.get('#documents-edit_questionnaire').should('exist')
+
+        cy.get('#documents-edit_questionnaire span').should('have.class', 'tick')
+    })
+
+
     it ('Can add and remove a question', () => {
         QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
         // Check length is 1
@@ -55,8 +64,8 @@ describe ('Questions', function () {
         cy.get('#table_anchor_1').find('[id^="questionText"]').should('have.length', 0)
     })
 
-    it ('Can add and remove a sub-section', () => {
-        QuestionnairePage.createSubSection()
+    it ('Can add and remove a subsection', () => {
+        QuestionnairePage.createSubsection()
         // Check length
         cy.get('#section_table tbody').eq(0).children().should('have.length', 2)
 
@@ -73,54 +82,6 @@ describe ('Questions', function () {
         QuestionnairePage.deleteSection(1)
         cy.reload()
         cy.get('[id^="page-name-link"]').should('have.length', 1)
-    })
-
-    it ('Displays warnings', () => {
-        // Error for no question in subsection
-        cy.contains('Error: Subsections 1.1 must contain at least one Question').should('exist')
-
-        // Error for no subsection in section
-        cy.get('#section_table > tbody > tr').eq(0).find('#body-remove_subsection').click()
-        cy.reload()
-
-        cy.contains('Invalid Section').should('exist')
-    })
-
-    it ('Can only have 1 price question', () => {
-        QuestionnairePage.createPriceQuestion(0, '', 'help text')
-
-        cy.reload()
-
-        QuestionnairePage.startNewQuestion(0)
-
-        cy.get('#answerType').find('#option-price').should('not.exist')
-    })
-
-    it ('Price upload requires document', () => {
-        QuestionnairePage.startNewQuestion(0)
-
-        chooseAnswerType('priceDocUpload')
-
-        QuestionnairePage.saveQuestion()
-
-        cy.contains('At least one document must be uploaded for the Price Document Upload question type').should('exist')
-
-        QuestionnairePage.setPriceDocumentUpload()
-    })
-
-    it ('Question invalid input warnings', () => {
-        QuestionnairePage.startNewQuestion(0)
-
-        QuestionnairePage.saveQuestion()
-
-        cy.contains('Question Text is a required field').should('exist')
-        cy.contains('Answer Type is a required field').should('exist')
-
-        QuestionnairePage.chooseAnswerType('multiSelect')
-
-        QuestionnairePage.saveQuestion()
-
-        cy.contains('You must enter at least two options for a valid multiple choice question').should('exist')
     })
 
     it ('Can reorder sections', () => {
@@ -154,6 +115,67 @@ describe ('Questions', function () {
         cy.get('#page_table tbody tr').eq(0).contains('Section 3')
         cy.get('#page_table tbody tr').eq(1).contains('Questions')
         cy.get('#page_table tbody tr').eq(2).contains('Section 2')
+    })
+
+
+
+    it ('Displays warnings for invalid section and subsections', () => {
+        // Error for no question in subsection
+        cy.contains('Error: Subsections 1.1 must contain at least one Question').should('exist')
+
+        // Error for no subsection in section
+        cy.get('#section_table > tbody > tr').eq(0).find('#body-remove_subsection').click()
+        cy.reload()
+
+        cy.contains('Invalid Section').should('exist')
+    })
+
+    it ('Question invalid input warnings', () => {
+        QuestionnairePage.startNewQuestion(0)
+
+        QuestionnairePage.saveQuestion()
+
+        cy.contains('Question Text is a required field').should('exist')
+        cy.contains('Answer Type is a required field').should('exist')
+
+        QuestionnairePage.chooseAnswerType('multiSelect')
+
+        QuestionnairePage.saveQuestion()
+
+        cy.contains('You must enter at least two options for a valid multiple choice question').should('exist')
+
+        QuestionnairePage.chooseAnswerType('priceDocUpload')
+
+        QuestionnairePage.saveQuestion()
+
+        cy.contains('At least one document must be uploaded for the Price Document Upload question type').should('exist')
+    })
+
+    it ('Subsection invalid input warning', () => {
+        QuestionnairePage.startNewSubsection()
+
+        QuestionnairePage.saveSubsection()
+
+        cy.contains('Subsection Name is a required field').should('exist')
+    })
+
+    it ('Section invalid input warning', () => {
+        QuestionnairePage.startNewSection()
+
+        QuestionnairePage.saveSection()
+
+        cy.contains('Section Name is a required field').should('exist')
+    })
+
+
+    it ('Can only have 1 price question', () => {
+        QuestionnairePage.createPriceQuestion(0, '', 'help text')
+
+        cy.reload()
+
+        QuestionnairePage.startNewQuestion(0)
+
+        cy.get('#answerType').find('#option-price').should('not.exist')
     })
 
     afterEach(function () {

@@ -3,7 +3,7 @@
 export function createBasicQuestionnaire() {
     createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
-    createSubSection()
+    createSubsection()
 
     createQuestion(1, 'Explain why', 'Why can you do it', 'textArea', true)
 
@@ -172,25 +172,24 @@ export function viewSection(index) {
 }
 
 export function createSection(name) {
-    cy.contains('Add Section').click()
+    startNewSection()
 
     cy.get('#pageName').type(name)
 
     cy.get('#pageSectionName').type('Sub Section 1')
 
-    cy.get('[onclick="javascript:submitPage()"]').click()
+    saveSection()
     
     cy.wait(500)
 
     cy.reload()
 }
-
-export function createSubSection() {
+export function createSubsection() {
     cy.contains('Add Subsection').click()
 
     cy.get('#modal-section_name').type('Subsection')
 
-    cy.get('[onclick="javascript:submitSection()"]').click()
+    saveSubsection()
 
     cy.wait(500)
 
@@ -200,7 +199,6 @@ export function createSubSection() {
 export function deleteSection(index) {
     cy.get('#page_table tbody tr').eq(index).find('#sidebar-remove_section').click()
 }
-
 export function deleteSubSection(index) {
     cy.get('#section_table > tbody > tr').eq(index).find('input#body-remove_subsection').click()
 }
@@ -208,9 +206,22 @@ export function deleteSubSection(index) {
 export function moveSectionUp(index) {
     cy.get('#page_table tbody tr').eq(index).find('[name="moveUp"]').click()
 }
-
 export function moveSectionDown(index) {
     cy.get('#page_table tbody tr').eq(index).find('[name="moveDown"]').click()
+}
+
+export function startNewSection() {
+    cy.contains('Add Section').click()
+}
+export function saveSection() {
+    cy.get('#modal-save_section').click()
+}
+
+export function startNewSubsection() {
+    cy.contains('Add Subsection').click()
+}
+export function saveSubsection() {
+    cy.get('#modal-save_subsection').click()
 }
 
 
@@ -223,10 +234,6 @@ export function chooseCustonQuestionnaire() {
 
     cy.url().should('include', 'editQuestionnaireForm.html')
 }
-
-
-
-
 
 
 export function deleteQuestionnaire () {

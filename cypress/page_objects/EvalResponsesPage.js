@@ -28,7 +28,7 @@ export function basicSideBySide() {
 }
 
 export function basicBuyerResponse(index) {
-    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
+    startBuyerResponse(index)
 
     cy.get('[name="scores\\[2\\]\\.evaluatorScores\\[0\\]\\.score"]').select('10')
 
@@ -38,13 +38,7 @@ export function basicBuyerResponse(index) {
 
     cy.get('[name="scores\\[0\\]\\.evaluatorScores\\[0\\]\\.score"]').select('100')
 
-    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
-
-    cy.get('[name="save"]').click()
-
-    cy.contains('Return to Responses').click()
-
-    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).should('have.text', 'Completed')
+    finishBuyerResponse()
 }
 
 export function basicConsensus(index) {
@@ -90,8 +84,8 @@ export function smokeSideBySide() {
     finishSideBySideEval()
 }
 
-export function smokeConsensus() {
-    startConsensusEval(0)
+export function smokeConsensus(index) {
+    startConsensusEval(index)
 
     cy.get('select#dropdown-rating').eq(0).select('7')
     cy.get('select#dropdown-rating').eq(1).select('9')
@@ -115,6 +109,18 @@ export function smokeConsensus() {
 
 
 // Evaluation
+
+export function startBuyerResponse(index) {
+    cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
+}
+
+export function finishBuyerResponse() {
+    cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
+
+    cy.get('[name="save"]').click()
+
+    cy.contains('Return to Responses').click()
+}
 
 export function startSideBySideEval() {
     cy.get('#buttons-side_by_side').click()
@@ -143,14 +149,18 @@ export function finishConsensusEval () {
 
 // Utility
 
+export function checkboxSupplier(index) {
+    cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(index).check()   
+}
+
 export function awardContract() {
     gotoOverviewTab()
 
-    cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(0).check()   
+    checkboxSupplier(0) 
 
     cy.get('#buttons-award_contract').click()
 
-    cy.get('[name="confirm"]').click()
+    cy.get('#buttons-send').click()
 }
 
 export function gotoOverviewTab() {
@@ -177,6 +187,11 @@ export function responseNextPage() {
     cy.get('#buttons-next_page').click()
 }
 
+export function responseSave() {
+    cy.get('#buttons-save').click()
+    cy.wait(500)
+}
+
 export function responseDownloadDocs() {
     cy.contains('Download all response docs').invoke('attr', 'href').then((href) => {
         //cy.downloadFile(Cypress.config().baseUrl + href, 'cypress/downloads', 'Docs.zip')
@@ -193,47 +208,7 @@ export function responseDownloadDocs() {
 
 
 
-// export function dpsEvalResponse(index) {
-//     cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
-
-//     cy.get('[name^="scores"][name$="score"]').eq(0).select('100')
-
-//     cy.get('#navigation-page_2').click()
-
-//     cy.get('[name^="scores"][name$="score"]').eq(0).select('-100')
-
-//     cy.get('[name="evaluatorEvalStatus\\[0\\]\\.isComplete"').check()
-
-//     cy.get('[name="save"]').click()
-
-//     cy.contains('Return to Responses').click()
-
-//     cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).should('contain', 'Completed')
-// }
-
-// export function dpsEvalSideBySide() {
-//     cy.get('#tabs-overview').click()
-
-//     cy.get('#buttons-sxs_eval').click()
-
-//     cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
-
-//     cy.get('#score').select('100')
-
-//     cy.get('#button_update').click()
-
-//     cy.get('[id^="scoreText_"]').eq(1).parent().find('span').eq(0).click()
-
-//     cy.get('#score').select('-100')
-
-//     cy.get('#button_update').click()
-
-//     //cy.wait(1000)
-
-//     cy.get('[id^="completed_"]').eq(0).check()
-
-//     cy.contains('Save & Return').click()
-// }
+// DPS
 
 export function dpsEvalConsensus(index) {
     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
@@ -253,15 +228,3 @@ export function dpsEvalConsensus(index) {
 
     cy.contains('Return to Responses').click()
 }
-
-// export function evalDPSPriceConsensus(index) {
-//     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
-
-//     cy.get('[name="scores\\[1\\]\\.score"]').select('8')
-
-//     cy.get('#completedEvaluation').check()
-
-//     cy.get('[name="save"]').click()
-
-//     cy.contains('Return to Responses').click()
-// }
