@@ -289,7 +289,7 @@ describe ('Smoke Test', function () {
 
         // Test add and remove different questionnaire parts
         QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
-        QuestionnairePage.createSubSection()
+        QuestionnairePage.createSubsection()
         QuestionnairePage.createSection('Section 2')
 
         cy.get('#page_table tbody tr').eq(1).find('#sidebar-remove_section').click()

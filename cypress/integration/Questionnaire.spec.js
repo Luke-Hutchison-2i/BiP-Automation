@@ -117,8 +117,6 @@ describe ('Questions', function () {
         cy.get('#page_table tbody tr').eq(2).contains('Section 2')
     })
 
-
-
     it ('Displays warnings for invalid section and subsections', () => {
         // Error for no question in subsection
         cy.contains('Error: Subsections 1.1 must contain at least one Question').should('exist')
