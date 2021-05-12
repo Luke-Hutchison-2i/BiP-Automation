@@ -156,7 +156,7 @@ export function setPriceDocumentUpload() {
 export function saveQuestion() {
     cy.get('#modal-save_question', { timeout: 10000 }).click()
 
-    cy.wait(500)
+    cy.get('#modal-save_question').should('not.be.visible')
 }
 
 export function deleteQuestion(index) {

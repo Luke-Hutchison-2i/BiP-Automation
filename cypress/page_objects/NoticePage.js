@@ -45,7 +45,7 @@ export function createCompetitiveNotice() {
 
     validateNotice()
 
-    publishNotice()
+    //publishNotice()
 }
 
 

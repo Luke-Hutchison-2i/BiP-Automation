@@ -4,3 +4,4 @@ cypress/screenshots
 cypress/downloads
 node_modules
 cypress.env.json
+cypress/fixtures/logins_old.json
