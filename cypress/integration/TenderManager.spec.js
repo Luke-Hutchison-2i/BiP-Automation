@@ -107,6 +107,10 @@ describe ('Tender Manager - Stage 1', function() {
 
         EvalPlanPage.createBasicEvalPlan()
 
+        TenderBoxPage.gotoCreateEvalPlan()
+
+        EvalPlanPage.chooseEvaluators()
+
         cy.url().should('include', 'viewListStatus.html')
 
         cy.get('#documents-edit_evaluation_plan span').should('have.class', 'tick')

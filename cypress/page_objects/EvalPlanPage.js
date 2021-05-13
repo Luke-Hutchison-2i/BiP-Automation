@@ -19,7 +19,10 @@ export function createBasicEvalPlan() {
 
     setMultiQuestionScore (0, 3)
 
-    // Choose evaluators
+    returnToOverview()
+}
+
+export function chooseEvaluators() {
     cy.get('[name="chooseEvaluators"][type="submit"]').click()
 
     cy.get('[id^="gurId_"]').eq(0).check()
@@ -129,7 +132,8 @@ export function setPriceWeighting(value) {
 }
 
 export function saveEvalSettings() {
-    cy.get('#button-save_evaluation_settings').click()
+    //cy.get('#button-save_evaluation_settings').click()
+    cy.contains('Save Evaluation Settings').click()
     cy.wait(500)
 }
 

@@ -28,7 +28,7 @@ describe ('Questions', function () {
 
         TenderExercisePage.gotoExistingTenderBox()
 
-        TenderBoxPage.initialBoxSetUp(boxName)
+        TenderBoxPage.initialBoxSetUp(boxName, 60)
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
@@ -61,13 +61,13 @@ describe ('Questions', function () {
 
         EvalPlanPage.saveEvalSettings()
 
-        cy.get('#table-tech_weight').should('have.value', '50.00')
+        cy.get('[name="technicalWeighting"]').should('have.value', '50.00')
 
         EvalPlanPage.setPriceWeighting(34)
 
         EvalPlanPage.saveEvalSettings()
 
-        cy.get('#table-tech_weight').should('have.value', '66.00')
+        cy.get('[name="technicalWeighting"]').should('have.value', '66.00')
     })
 
     it ('Tech question weighting', () => {
