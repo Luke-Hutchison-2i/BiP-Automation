@@ -27,7 +27,7 @@ describe ('Questions', function () {
 
         TenderExercisePage.gotoExistingTenderBox()
 
-        TenderBoxPage.initialBoxSetUp(boxName)
+        TenderBoxPage.initialBoxSetUp(boxName, 60)
     })
 
     beforeEach(function () {
@@ -131,20 +131,23 @@ describe ('Questions', function () {
     it ('Question invalid input warnings', () => {
         QuestionnairePage.startNewQuestion(0)
 
-        QuestionnairePage.saveQuestion()
+        //QuestionnairePage.saveQuestion()
+        cy.get('#modal-save_question', { timeout: 10000 }).click()
 
         cy.contains('Question Text is a required field').should('exist')
         cy.contains('Answer Type is a required field').should('exist')
 
         QuestionnairePage.chooseAnswerType('multiSelect')
 
-        QuestionnairePage.saveQuestion()
+        //QuestionnairePage.saveQuestion()
+        cy.get('#modal-save_question', { timeout: 10000 }).click()
 
         cy.contains('You must enter at least two options for a valid multiple choice question').should('exist')
 
         QuestionnairePage.chooseAnswerType('priceDocUpload')
 
-        QuestionnairePage.saveQuestion()
+        //QuestionnairePage.saveQuestion()
+        cy.get('#modal-save_question', { timeout: 10000 }).click()
 
         cy.contains('At least one document must be uploaded for the Price Document Upload question type').should('exist')
     })

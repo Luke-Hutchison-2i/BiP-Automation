@@ -1,9 +1,9 @@
 // Complete Set Up
 
-export function initialBoxSetUp(name) {
+export function initialBoxSetUp(name, delay = 0) {
     cy.get('#dropdown-select_tenderbox_type').select('ITT')
 
-    initialSQSetUp(name)
+    initialSQSetUp(name, delay)
 }
 export function MLinitialBoxSetUp(name) {
     cy.get('select[name="qType"]').select('ITT')
@@ -23,7 +23,7 @@ export function MLinitialBoxSetUp(name) {
     cy.get('#save_dates').click()
 }
 
-export function initialSQSetUp(name) {
+export function initialSQSetUp(name, delay = 0) {
     cy.get('#list-setup').find('[name="name"]').clear().type(name)
 
     const date = Cypress.dayjs().format('DD/MM/YYYY')
@@ -34,7 +34,7 @@ export function initialSQSetUp(name) {
 
     cy.get('#endDateDayWeb').type(date,{force:true})
 
-    SetOpenAndCloseTime(0)
+    SetOpenAndCloseTime(delay)
 
     cy.get('#save_dates').click()
 }
@@ -52,11 +52,11 @@ export function SetOpenAndCloseTime(delay) {
         openHour += 1
     }
 
+    // Not actually needed, if openHour resets after 24, would need to add an extra day which we aren't doing
     if (openHour > 24) {
         openHour -= 24
     }
     
-
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 

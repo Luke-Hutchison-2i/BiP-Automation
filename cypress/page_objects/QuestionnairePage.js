@@ -148,7 +148,9 @@ export function setPriceDocumentUpload() {
     cy.wait(1000)
 
     cy.get('#form-upload_files').click()
-    cy.wait(2000)
+    //cy.wait(2000)
+
+    cy.get('#uploaded-files tbody tr', {timeout: 10000}).should('have.length', 2)
 
     saveQuestion()
 }

@@ -49,7 +49,7 @@ export function createSmokeEvalPlan () {
 
     saveEvalSettings()
 
-    cy.get('#table-tech_weight').should('have.value', '50.00')
+    cy.get('[name="technicalWeighting"]').should('have.value', '50.00')
     
     returnToOverview()
 }
@@ -125,7 +125,7 @@ export function setMultiQuestionScore (index, answers) {
 // Evaluation Settings
 
 export function setPriceWeighting(value) {
-    cy.get('#table-price_weight').clear().type(value);
+    cy.get('[name="priceWeighting"]').clear().type(value);
 }
 
 export function saveEvalSettings() {
