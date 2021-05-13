@@ -59,7 +59,7 @@ describe ('Questions', function () {
         cy.get('#table_anchor_1').find('[id^="questionText"]').should('have.length', 1)
 
         QuestionnairePage.deleteQuestion(0)
-        cy.reload()
+
         // Check length is 0
         cy.get('#table_anchor_1').find('[id^="questionText"]').should('have.length', 0)
     })
@@ -70,7 +70,7 @@ describe ('Questions', function () {
         cy.get('#section_table tbody').eq(0).children().should('have.length', 2)
 
         QuestionnairePage.deleteSubSection(1)
-        cy.reload()
+
         cy.get('#section_table tbody').eq(0).children().should('have.length', 1)
     })
 
@@ -80,7 +80,7 @@ describe ('Questions', function () {
         cy.get('[id^="page-name-link"]').should('have.length', 2)
 
         QuestionnairePage.deleteSection(1)
-        cy.reload()
+
         cy.get('[id^="page-name-link"]').should('have.length', 1)
     })
 
@@ -155,7 +155,8 @@ describe ('Questions', function () {
     it ('Subsection invalid input warning', () => {
         QuestionnairePage.startNewSubsection()
 
-        QuestionnairePage.saveSubsection()
+        //QuestionnairePage.saveSubsection()
+        cy.get('#modal-save_subsection').click()
 
         cy.contains('Subsection Name is a required field').should('exist')
     })
@@ -163,7 +164,8 @@ describe ('Questions', function () {
     it ('Section invalid input warning', () => {
         QuestionnairePage.startNewSection()
 
-        QuestionnairePage.saveSection()
+        //QuestionnairePage.saveSection()
+        cy.get('#modal-save_section').click()
 
         cy.contains('Section Name is a required field').should('exist')
     })

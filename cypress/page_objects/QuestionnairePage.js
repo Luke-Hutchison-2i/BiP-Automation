@@ -162,7 +162,7 @@ export function saveQuestion() {
 }
 
 export function deleteQuestion(index) {
-    cy.get('#table_anchor_1').find('input#sidebar-remove_section').eq(index).click()
+    cy.get('#table_anchor_1').find('input#sidebar-remove_section').eq(index).click().should('not.exist')
 }
 
 
@@ -199,10 +199,10 @@ export function createSubsection() {
 }
 
 export function deleteSection(index) {
-    cy.get('#page_table tbody tr').eq(index).find('#sidebar-remove_section').click()
+    cy.get('#page_table tbody tr').eq(index).find('#sidebar-remove_section').click().should('not.exist')
 }
 export function deleteSubSection(index) {
-    cy.get('#section_table > tbody > tr').eq(index).find('input#body-remove_subsection').click()
+    cy.get('#section_table > tbody > tr').eq(index).find('input#body-remove_subsection').click().should('not.exist')
 }
 
 export function moveSectionUp(index) {
@@ -217,6 +217,7 @@ export function startNewSection() {
 }
 export function saveSection() {
     cy.get('#modal-save_section').click()
+    cy.get('#modal-save_section').should('not.be.visible')
 }
 
 export function startNewSubsection() {
@@ -224,6 +225,7 @@ export function startNewSubsection() {
 }
 export function saveSubsection() {
     cy.get('#modal-save_subsection').click()
+    cy.get('#modal-save_subsection').should('not.be.visible')
 }
 
 
