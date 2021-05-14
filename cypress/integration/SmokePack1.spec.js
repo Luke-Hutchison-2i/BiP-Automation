@@ -64,8 +64,9 @@ describe ('Smoke Test', function () {
         // Add document to price document upload
         QuestionnairePage.viewSection(1)
 
-        cy.get('#body-edit_question').click()
-        cy.wait(500)
+        // cy.get('#body-edit_question').click()
+        // cy.wait(500)
+        QuestionnairePage.editQuestion(0)
 
         QuestionnairePage.setPriceDocumentUpload()
 

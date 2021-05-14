@@ -62,8 +62,7 @@ describe ('Smoke Tests 2', function () {
         cy.get('[id^="page-name-link-"').eq(1).click()
         cy.wait(1000)
 
-        cy.get('#body-edit_question').click()
-        cy.wait(500)
+        QuestionnairePage.editQuestion(0)
 
         QuestionnairePage.setPriceDocumentUpload()
 

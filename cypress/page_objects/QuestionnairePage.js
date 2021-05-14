@@ -54,7 +54,7 @@ export function createQuestion(sub, text, help, type, mand) {
 
     chooseAnswerType(type)
 
-    cy.get('#questionText').type(text)
+    getQuestionText().type(text)
 
     cy.get('#helpText').type(help)
 
@@ -68,7 +68,7 @@ export function createQuestion(sub, text, help, type, mand) {
 export function createMultiDropQuestion(sub, text) {
     startNewQuestion(sub)
 
-    cy.get('#questionText').type(text)
+    getQuestionText().type(text)
 
     chooseAnswerType('multiChoiceDropdown')
 
@@ -87,7 +87,7 @@ export function createMultiDropQuestion(sub, text) {
 export function createMultiSelectQuestion(sub, text, help, mand) {
     startNewQuestion(sub)
 
-    cy.get('#questionText').type(text)
+    getQuestionText().type(text)
 
     cy.get('#helpText').type(help)
 
@@ -114,7 +114,7 @@ export function createPriceQuestion(sub, text, help) {
 
     chooseAnswerType('lot')
 
-    cy.get('#questionText').should('have.value', 'Total Bid Amount')
+    getQuestionText().should('have.value', 'Total Bid Amount')
 
     cy.get('#helpText').type(help)
 
@@ -126,7 +126,7 @@ export function createPriceUploadQuestion(sub) {
 
     chooseAnswerType('priceDocUpload')
 
-    cy.get('#questionText').should('have.value', 'Please upload your completed pricing document')
+    getQuestionText().should('have.value', 'Please upload your completed pricing document')
 
     setPriceDocumentUpload()
 }
@@ -137,6 +137,10 @@ export function createPriceUploadQuestion(sub) {
 export function startNewQuestion(sub) {
     cy.get('#form-section_' + sub + '-add').click()
     cy.wait(500)
+}
+
+export function getQuestionText() {
+    return cy.get('#questionText')
 }
 
 export function chooseAnswerType(type) {
@@ -163,6 +167,11 @@ export function saveQuestion() {
 
 export function deleteQuestion(index) {
     cy.get('#table_anchor_1').find('input#sidebar-remove_section').eq(index).click().should('not.exist')
+}
+
+export function editQuestion(index) {
+    cy.get('input#body-edit_question').eq(index).click()
+    cy.get('#modal-save_question').should('be.visible')
 }
 
 
