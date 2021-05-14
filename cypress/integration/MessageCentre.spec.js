@@ -47,7 +47,7 @@ describe('Message Centre Buyer', function () {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        EvalPlanPage.createBasicEvalPlan()
+        EvalPlanPage.returnToOverview()
     })
 
     beforeEach(function() {
@@ -100,6 +100,44 @@ describe('Message Centre Buyer', function () {
         MessageCentrePage.clickSend()
 
         cy.contains('Message have been successfully sent to All Suppliers').should('exist')
+    })
+
+    it ('Invalid input is caught for a direct message', () => {
+        MessageCentrePage.pickSupplier(0)
+
+        MessageCentrePage.startDirectMessage()
+
+        MessageCentrePage.clickSend()
+
+        cy.contains('Please enter an email text').should('exist')
+
+        MessageCentrePage.enterBody('Body')
+
+        MessageCentrePage.clickSend()
+    })
+
+    it ('Invalid input is caught for a topic', () => {
+        MessageCentrePage.pickSupplier(0)
+
+        MessageCentrePage.startTopic()
+
+        MessageCentrePage.clickSend()
+
+        cy.contains('Please enter an email text').should('exist')
+
+        MessageCentrePage.enterBody('Body')
+
+        MessageCentrePage.clickSend()
+    })
+
+    it.skip ('Cant send direct without selecting supplier', () => {
+        // For some reason the message isn't displaying in Cypress but works manually
+        MessageCentrePage.startDirectMessage()
+        cy.wait(1000)
+
+        cy.reload()
+
+        cy.contains('Please select at least one item before submitting an action', {timeout: 10000}).should('exist')
     })
 
     it ('Disable Message with no supplier selected', () => {
