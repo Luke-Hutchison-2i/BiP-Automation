@@ -70,6 +70,30 @@ describe ('Questions', function () {
         cy.get('[name="technicalWeighting"]').should('have.value', '66.00')
     })
 
+    it ('Invalid Tech/Price weighting', () => {
+        // Should set Price weight to 0
+        EvalPlanPage.setPriceWeighting(-1)
+        EvalPlanPage.saveEvalSettings()
+
+        EvalPlanPage.getPriceWeighting().should('have.value', '0.00')
+
+        // Should set Price weight to 100
+        EvalPlanPage.setPriceWeighting(101)
+        EvalPlanPage.saveEvalSettings()
+
+        EvalPlanPage.getPriceWeighting().should('have.value', '100.00')
+
+        EvalPlanPage.setPriceWeighting(50)
+        EvalPlanPage.saveEvalSettings()
+    
+        // Should not change Price weight
+        EvalPlanPage.setPriceWeighting('a')
+        EvalPlanPage.saveEvalSettings()
+
+        EvalPlanPage.getPriceWeighting().should('have.value', '50.00')
+    })
+
+
     it ('Tech question weighting', () => {
         EvalPlanPage.changeScoringLevel(0, 'Question')
 
@@ -94,10 +118,39 @@ describe ('Questions', function () {
 
         EvalPlanPage.saveEvalWeightings()
 
-        // Tech: 50  Overal: 25
+        // Tech: 33.33  Overal: 16.66
         cy.get('input#input-weighting').eq(0).parent().contains('tech: 33.33').should('exist')
         cy.get('input#input-weighting').eq(0).parent().contains('overall: 16.66').should('exist')
     })
+
+    it ('Invalid question weighting', () => {
+        // Currently bugged, need to wait for fix before I know how page should react
+        EvalPlanPage.changeScoringLevel(0, 'Question')
+        
+        EvalPlanPage.editWeighting(0, -100)
+
+        EvalPlanPage.saveEvalWeightings()
+
+        // Tech: 50  Overal: 50
+        //cy.get('input#input-weighting').eq(0).parent().contains('tech: 50.00').should('exist')
+        //cy.get('input#input-weighting').eq(0).parent().contains('overall: 50.00').should('exist')
+
+        EvalPlanPage.editWeighting(1, 110)
+
+        EvalPlanPage.saveEvalWeightings()
+
+        // Weighting should be set to 0
+        EvalPlanPage.editWeighting(1, 'a')
+
+        EvalPlanPage.saveEvalWeightings()
+
+        EvalPlanPage.getWeightingInput(1).should('have.value', '0.00')
+
+        // Tech: 50  Overal: 50
+        //cy.get('input#input-weighting').eq(0).parent().contains('tech: 50.00').should('exist')
+        //cy.get('input#input-weighting').eq(0).parent().contains('overall: 50.00').should('exist')
+    })
+
 
     it ('Can re-order questionnaire sections', () => {
         cy.get('.sections-active').should('contain.text', 'Questions')
@@ -121,6 +174,10 @@ describe ('Questions', function () {
         cy.get('.sections-active').should('contain.text', 'Section3')
         cy.get('#page_nav-page_2').should('contain.text', 'Questions')
         cy.get('#page_nav-page_3').should('contain.text', 'Price')
+    })
+
+    it.skip ('Can change evaluators', ()  => {
+        EvalPlanPage.chooseEvaluators()
     })
 
     afterEach(function () {

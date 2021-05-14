@@ -130,6 +130,9 @@ export function setMultiQuestionScore (index, answers) {
 export function setPriceWeighting(value) {
     cy.get('[name="priceWeighting"]').clear().type(value);
 }
+export function getPriceWeighting() {
+    return cy.get('[name="priceWeighting"]')
+}
 
 export function saveEvalSettings() {
     //cy.get('#button-save_evaluation_settings').click()
