@@ -165,11 +165,13 @@ export function awardContract() {
 
 export function gotoOverviewTab() {
     cy.get('#tabs-overview').click()
-    cy.url().should('include', '/buyers/lists/viewSupplierResponsesOverview')
+    //cy.url().should('include', '/buyers/lists/viewSupplierResponsesOverview')
+    //cy.get('#bidderDetails tbody').should('be.visible')
+    cy.get('input[type="checkbox"]').should('be.visible')
 }
 
 export function shortListSupplier(index) {
-    cy.get('#tabs-overview').click()
+    gotoOverviewTab()
 
     cy.get('#pqqResp tbody').find('input[type="checkbox"]').eq(index).check()
 

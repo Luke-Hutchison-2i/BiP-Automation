@@ -210,6 +210,7 @@ describe ('Message Centre Supplier', () => {
         DashboardPage.gotoResponsesAndInvites()
 
         cy.contains(boxName).click()
+        //cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
 
         ResponsePage.gotoMessageCentre()
     })
@@ -226,7 +227,7 @@ describe ('Message Centre Supplier', () => {
 
     })
 
-    it.only ('Can send message', () => {
+    it ('Can send message', () => {
         MessageCentrePage.supplierEnterSubject("Supplier Subject")
 
         MessageCentrePage.enterBody("Supplier Body")
@@ -259,7 +260,6 @@ describe ('Message Centre Supplier', () => {
         cy.contains('Supplier Body').should('exist')
     })
 
-    
 
     after(function () {
         cy.logout()
