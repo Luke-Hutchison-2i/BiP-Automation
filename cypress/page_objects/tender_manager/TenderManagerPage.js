@@ -9,17 +9,42 @@ export function gotoExistingTender(name) {
 }
 
 
-// Set up
+// Set up Tender Exercise
 
 export function createTenderExercise(name) {
-    cy.get('[name=tenderName]').type(name)
-    cy.get('[name=tenderDescription]').type('Tender Description')
+    getNameField().type(name)
 
-    cy.get('#noticeType').select('ContractNotice')
+    getDescField().type('Tender Description')
 
-    cy.get('#pqq_radio_true').check()
+    getNoticeField().select('ContractNotice')
 
-    cy.get('[name="tenderBoxType"]').select('ITT')
+    getSQTrueField().check()
 
-    cy.get('[name="save"]').click()
+    getTenderTypeField().select('ITT')
+
+    saveTender()
+}
+
+export function getNameField() {
+    return cy.get('#createTender-input_tender_name')
+}
+
+export function getDescField() {
+    return cy.get('[name=tenderDescription]')
+}
+
+export function getNoticeField() {
+    return cy.get('#noticeType')
+}
+
+export function getSQTrueField() {
+    return cy.get('#pqq_radio_true')
+}
+
+export function getTenderTypeField() {
+    return cy.get('[name="tenderBoxType"]')
+}
+
+export function saveTender() {
+    return cy.get('#createTender-save').click()
 }
