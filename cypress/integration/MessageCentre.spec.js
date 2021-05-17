@@ -140,13 +140,6 @@ describe('Message Centre Buyer', function () {
         cy.contains('Please select at least one item before submitting an action', {timeout: 10000}).should('exist')
     })
 
-    it ('Disable Message with no supplier selected', () => {
-        MessageCentrePage.disableMessages()
-
-        cy.reload()
-
-        cy.contains('Please select at least one item before submitting an action', {timeout: 10000}).should('exist')
-    })
 
     it ('Disable and Enable Message with supplier selected', () => {
         MessageCentrePage.pickSupplier(0)
@@ -159,6 +152,15 @@ describe('Message Centre Buyer', function () {
 
         cy.get('#pqqResp').contains('Enable Messages', {timeout: 10000}).should('not.exist')
     })
+
+    it ('Disable Message with no supplier selected', () => {
+        MessageCentrePage.disableMessages()
+
+        cy.reload()
+
+        cy.contains('Please select at least one item before submitting an action', {timeout: 10000}).should('exist')
+    })
+    
 
     after(function () {
         cy.logout()
