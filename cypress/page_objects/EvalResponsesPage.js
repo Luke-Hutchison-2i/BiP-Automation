@@ -4,19 +4,20 @@
 export function basicSideBySide() {
     startSideBySideEval()
 
-    cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
+    //cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
+    sxsStartEvalQuestion(0)
 
     cy.get('#score').select('10')
 
     cy.get('#button_update').click()
 
-    cy.get('[id^="scoreText_"]').eq(1).parent().find('span').eq(0).click()
+    sxsStartEvalQuestion(1)
 
     cy.get('#score').select('100')
 
     cy.get('#button_update').click()
 
-    cy.get('[id^="scoreText_"]').eq(2).parent().find('span').eq(0).click()
+    sxsStartEvalQuestion(2)
 
     cy.get('#score').select('-100')
 
@@ -122,6 +123,7 @@ export function finishBuyerResponse() {
     cy.contains('Return to Responses').click()
 }
 
+
 export function startSideBySideEval() {
     cy.get('#buttons-side_by_side').click()
 }
@@ -132,6 +134,11 @@ export function finishSideBySideEval() {
     cy.contains('Save & Return').click()
 
     cy.wait(500)
+}
+
+export function sxsStartEvalQuestion (index) {
+    cy.get('[id^="scoreText_"]').eq(index).parent().find('span').eq(0).click()
+    cy.contains('Question/Section Evaluation').should('be.visible')
 }
 
 export function startConsensusEval (index) {

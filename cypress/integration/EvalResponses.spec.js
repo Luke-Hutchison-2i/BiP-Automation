@@ -143,13 +143,15 @@ describe ('Questions', function () {
     it ('Complete evaluator evaluation', () => {
         EvalResponsesPage.startBuyerResponse(1)
 
-        cy.get('select#select-score').eq(0).select('4')
+        cy.get('select[name^="score"]').eq(0).select('4')
 
-        cy.get('select#select-score').eq(1).select('4')
+        cy.get('select[name^="score"]').eq(1).select('4')
 
         EvalResponsesPage.responseNextPage()
 
-        cy.get('select#select-score').should('not.exist')
+        // Don't know where I got this ID from, seems to not exist on site
+        //cy.get('select#select-score').should('not.exist')
+        cy.get('select[name^="score"]').should('not.exist')
 
         EvalResponsesPage.finishBuyerResponse()
 
@@ -163,15 +165,14 @@ describe ('Questions', function () {
 
         EvalResponsesPage.startSideBySideEval()
 
-        cy.get('a#evaluateQuestion').eq(0).click()
-        cy.wait(500)
+        // Don't know where I got this ID from, seems to not exist on site
+        EvalResponsesPage.sxsStartEvalQuestion(0)
     
         cy.get('#score').select('10')
     
         cy.get('#button_update').click()
 
-        cy.get('a#evaluateQuestion').eq(1).click()
-        cy.wait(500)
+        EvalResponsesPage.sxsStartEvalQuestion(1)
     
         cy.get('#score').select('5')
     
@@ -221,6 +222,8 @@ describe ('Questions', function () {
         cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Completed')
     })
 
+    // Need to rethink, previous tests change the scoring which makes inconsistant
+    // Could put first but would rather it be more robust
     it.skip ('Overview table scores are correct', () => {
         // Do consensus eval for 2nd supplier here then check table
         EvalResponsesPage.smokeConsensus(1)
@@ -294,13 +297,14 @@ describe ('Questions', function () {
 
         cy.get('#buttons-award_contract').click()
 
-        cy.contains('I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.').should('exist')
-    
+        //cy.contains('I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.').should('exist')
+        cy.get('#winnerMessageBox').should('have.text', 'I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.')
+
         cy.get('#buttons-send').click()
     })
 
     after(function () {
-        //cy.logout()
+        cy.logout()
     })
 
 })
