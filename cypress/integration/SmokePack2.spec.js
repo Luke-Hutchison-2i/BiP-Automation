@@ -58,9 +58,9 @@ describe ('Smoke Tests 2', function () {
         cy.get('[id^="page-name-link-"').should('have.length', 2)
 
         // Add document to price document upload
-        //QuestionnairePage.viewSection(2)
-        cy.get('[id^="page-name-link-"').eq(1).click()
-        cy.wait(1000)
+        QuestionnairePage.viewSection(1)
+        // cy.get('[id^="page-name-link-"').eq(1).click()
+        // cy.wait(1000)
 
         QuestionnairePage.editQuestion(0)
 

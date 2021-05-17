@@ -89,9 +89,7 @@ describe ('Questions', function () {
 
         QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
 
-        //QuestionnairePage.editQuestion(0)
-        cy.get('#body-edit_question').click()
-        cy.wait(500)
+        QuestionnairePage.editQuestion(0)
 
         QuestionnairePage.getQuestionText().should('have.value', 'Can you do this?').clear().type('Editted question')
 
