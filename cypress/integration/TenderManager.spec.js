@@ -48,7 +48,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         cy.url().should('include', 'delta/buyers/tenders/viewTenderStatus')
 
-        cy.contains('Tender Exercise ' + tenderName + ' has been created')
+        cy.contains('Tender Exercise ' + tenderName + ' has been created').should('exist')
     })
 
     if (Cypress.env('live') === false) {
