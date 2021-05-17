@@ -103,24 +103,26 @@ describe ('Questions', function () {
         EvalPlanPage.saveEvalWeightings()
 
         // Tech: 50  Overal: 50
-        cy.get('input#input-weighting').eq(0).parent().contains('tech: 50.00').should('exist')
-        cy.get('input#input-weighting').eq(0).parent().contains('overall: 50.00').should('exist')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'tech: 50.00')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'overall:  50.00')
+
+        // Change Price weighting
 
         EvalPlanPage.setPriceWeighting(50)
 
         EvalPlanPage.saveEvalSettings()
 
         // Tech: 50  Overal: 25
-        cy.get('input#input-weighting').eq(0).parent().contains('tech: 50.00').should('exist')
-        cy.get('input#input-weighting').eq(0).parent().contains('overall: 25.00').should('exist')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'tech: 50.00')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'overall:  25.00')
 
         EvalPlanPage.editWeighting(0, 50)
 
         EvalPlanPage.saveEvalWeightings()
 
         // Tech: 33.33  Overal: 16.66
-        cy.get('input#input-weighting').eq(0).parent().contains('tech: 33.33').should('exist')
-        cy.get('input#input-weighting').eq(0).parent().contains('overall: 16.66').should('exist')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'tech: 33.33')
+        cy.get('input#input-weighting').eq(0).parent().should('contain.text', 'overall:  16.66')
     })
 
     it ('Invalid question weighting', () => {
