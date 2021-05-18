@@ -163,9 +163,10 @@ export function saveEvalWeightings() {
 
 // Utility
 
-export function gotoSection(int) {
-    cy.get('#page_nav-page_' + int).click()
-    cy.wait(1000)
+export function gotoSection(index) {
+    cy.get('#page_nav-page_' + index).click()
+    
+    cy.url().should('contain', 'pageId=' + (index - 1), {timeout: 10000})
 }
 
 

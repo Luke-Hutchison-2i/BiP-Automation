@@ -153,6 +153,11 @@ describe ('Questions', function () {
         //cy.get('input#input-weighting').eq(0).parent().contains('overall: 50.00').should('exist')
     })
 
+    it ('Can view sections', () => {
+        EvalPlanPage.gotoSection(2)
+        EvalPlanPage.gotoSection(1)
+        EvalPlanPage.gotoSection(2)
+    })
 
     it ('Can re-order questionnaire sections', () => {
         cy.get('.sections-active').should('contain.text', 'Questions')
