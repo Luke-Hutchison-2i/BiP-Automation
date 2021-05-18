@@ -66,15 +66,17 @@ export function basicConsensus(index) {
 export function smokeSideBySide() {
     startSideBySideEval()
 
-    cy.get('a#evaluateQuestion').eq(0).click()
-    cy.wait(500)
+    // cy.get('a#evaluateQuestion').eq(0).click()
+    // cy.wait(500)
+    sxsStartEvalQuestion(0)
 
     cy.get('#score').select('10')
 
     cy.get('#button_update').click()
 
-    cy.get('a#evaluateQuestion').eq(1).click()
-    cy.wait(500)
+    // cy.get('a#evaluateQuestion').eq(1).click()
+    // cy.wait(500)
+    sxsStartEvalQuestion(1)
 
     cy.get('#score').select('5')
 
@@ -123,6 +125,10 @@ export function finishBuyerResponse() {
     cy.contains('Return to Responses').click()
 }
 
+export function getQuestion(index) {
+    return cy.get('select[name^="score"]').eq(index)
+}
+
 
 export function startSideBySideEval() {
     cy.get('#buttons-side_by_side').click()
@@ -140,6 +146,7 @@ export function sxsStartEvalQuestion (index) {
     cy.get('[id^="scoreText_"]').eq(index).parent().find('span').eq(0).click()
     cy.contains('Question/Section Evaluation').should('be.visible')
 }
+
 
 export function startConsensusEval (index) {
     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
