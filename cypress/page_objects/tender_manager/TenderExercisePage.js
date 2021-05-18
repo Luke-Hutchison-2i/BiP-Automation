@@ -13,8 +13,9 @@ export function gotoCreateTenderBox() {
 }
 
 
-export function gotoExistingNotice() {
-    cy.get('.notice-info').eq(0).find('a').eq(0).click()
+export function getExistingNotice(index) {
+    //cy.get('.notice-info').eq(0).find('a').eq(0).click()
+    return cy.get('[id^="notices-edit_notice_"]').eq(index)
 }
 
 export function gotoExistingSQ() {

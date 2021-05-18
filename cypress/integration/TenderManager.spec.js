@@ -57,7 +57,7 @@ describe ('Tender Manager - Stage 1', function() {
 
             TenderManagerPage.gotoExistingTender(tenderName)
 
-            TenderExercisePage.gotoExistingNotice()
+            TenderExercisePage.getExistingNotice(0).click()
 
             NoticePage.createContractNotice()
         })

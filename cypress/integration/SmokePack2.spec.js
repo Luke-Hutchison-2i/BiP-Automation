@@ -177,7 +177,7 @@ describe ('Smoke Tests 2', function () {
     
             TenderManagerPage.createTenderExercise(tenderName)
 
-            TenderExercisePage.gotoExistingNotice()
+            TenderExercisePage.getExistingNotice(0).click()
 
             NoticePage.createContractNotice()
         })
