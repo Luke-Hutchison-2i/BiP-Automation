@@ -170,7 +170,8 @@ export function deleteQuestion(index) {
 }
 
 export function editQuestion(index) {
-    cy.get('input#body-edit_question').eq(index).click()
+    cy.get('#table_anchor_1 [title="Edit Form"]').eq(index).click()
+    
     cy.get('#modal-save_question').should('be.visible')
 }
 
@@ -181,7 +182,8 @@ export function viewSection(index) {
     cy.get('[id^="page-name-link-"').eq(index).click()
     //cy.wait(1000)
 
-    cy.get('#page_table tbody tr', {timeout: 10000}).eq(index).should('have.class', 'page-active')
+    //cy.get('#page_table tbody tr', {timeout: 10000}).eq(index).should('have.class', 'page-active')
+    cy.url().should('contain', 'pageId=' + index, {timeout: 10000})
 }
 
 export function createSection(name) {

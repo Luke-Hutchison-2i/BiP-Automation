@@ -74,10 +74,12 @@ describe ('Questions', function () {
         cy.get('#section_table tbody').eq(0).children().should('have.length', 1)
     })
 
-    it ('Can add and remove a section', () => {
+    it ('Can add, view and remove a section', () => {
         QuestionnairePage.createSection('Section 2')
         // Check length
         cy.get('[id^="page-name-link"]').should('have.length', 2)
+
+        QuestionnairePage.viewSection(1)
 
         QuestionnairePage.deleteSection(1)
 
@@ -88,6 +90,8 @@ describe ('Questions', function () {
         //Cypress is being weird, works when done manually
 
         QuestionnairePage.createQuestion(0, 'Can you do this?', 'Yes you can', 'yesNo', true)
+
+        cy.reload()
 
         QuestionnairePage.editQuestion(0)
 
