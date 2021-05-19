@@ -404,6 +404,12 @@ describe ('Tender Manager - Stage 3', function () {
 
         TenderBoxPage.gotoEvaluateResponses()
 
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.checkboxSupplier(0) 
+
+        EvalResponsesPage.startAwardContract()
+
         EvalResponsesPage.awardContract()
 
         cy.contains('TenderBox: ' + boxName + ' has been awarded to: BiP Solutions').should('exist')

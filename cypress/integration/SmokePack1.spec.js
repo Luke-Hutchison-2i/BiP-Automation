@@ -221,6 +221,12 @@ describe ('Smoke Test', function () {
             })
         })
 
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.checkboxSupplier(0) 
+
+        EvalResponsesPage.startAwardContract()
+
         EvalResponsesPage.awardContract()
 
         cy.contains('TenderBox: ' + boxName + ' has been awarded to: ').should('exist')
@@ -240,7 +246,7 @@ describe ('Smoke Test', function () {
         cy.get('[id^="buttons-enter_message_"]').click()
 
         cy.contains(messageSubject).should('exist') // Subject
-        cy.contains(messageSubject).should('exist') // Body
+        cy.contains(messageBody).should('exist') // Body
 
         cy.get('[id^="messages-download_document_"]').invoke('attr', 'href').then((href) => {
             cy.request({

@@ -30,7 +30,7 @@ describe ('Questions', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
@@ -51,6 +51,7 @@ describe ('Questions', function () {
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail('auto-testing-supplier-1@bipsolutions.com')
+        //AddSuppliersPage.addByEmail('auto.supplier.t002@bipsolutions.com')
 
         cy.logout()
         cy.clearCookies()
@@ -91,6 +92,7 @@ describe ('Questions', function () {
 
         cy.contains('Log in').click()
 
+        //cy.get('#username').type('auto.supplier.t002@bipsolutions.com')
         cy.get('#username').type('auto-testing-supplier-1@bipsolutions.com')
         cy.get('#password').type('Password123')
 
@@ -135,7 +137,7 @@ describe ('Questions', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
     })
@@ -143,15 +145,13 @@ describe ('Questions', function () {
     it ('Complete evaluator evaluation', () => {
         EvalResponsesPage.startBuyerResponse(1)
 
-        cy.get('select[name^="score"]').eq(0).select('4')
-
-        cy.get('select[name^="score"]').eq(1).select('4')
+        EvalResponsesPage.getQuestion(0).select('4')
+        EvalResponsesPage.getQuestion(1).select('4')
 
         EvalResponsesPage.responseNextPage()
 
-        // Don't know where I got this ID from, seems to not exist on site
-        //cy.get('select#select-score').should('not.exist')
         cy.get('select[name^="score"]').should('not.exist')
+        //EvalResponsesPage.getQuestion(0).should('not.exist') For some reason Cypress doesn't like this, it fails trying to find it
 
         EvalResponsesPage.finishBuyerResponse()
 
@@ -165,20 +165,19 @@ describe ('Questions', function () {
 
         EvalResponsesPage.startSideBySideEval()
 
-        // Don't know where I got this ID from, seems to not exist on site
         EvalResponsesPage.sxsStartEvalQuestion(0)
     
-        cy.get('#score').select('10')
+        EvalResponsesPage.sxsGetQuestionScore().select('10')
     
-        cy.get('#button_update').click()
+        EvalResponsesPage.sxsSaveQuestionScore()
 
         EvalResponsesPage.sxsStartEvalQuestion(1)
     
-        cy.get('#score').select('5')
+        EvalResponsesPage.sxsGetQuestionScore().select('5')
     
-        cy.get('#button_update').click()
+        EvalResponsesPage.sxsSaveQuestionScore()
     
-        cy.get('[id^="completed"]').should('be.enabled')
+        EvalResponsesPage.sxsGetCompleteBox().should('be.enabled')
     
         EvalResponsesPage.finishSideBySideEval()
 
@@ -190,32 +189,31 @@ describe ('Questions', function () {
 
         EvalResponsesPage.startConsensusEval(0)
 
-        cy.get('#completedEvaluation').should('be.disabled')
+        //cy.get('#completedEvaluation').should('be.disabled')
 
-        cy.get('select#dropdown-rating').eq(0).select('10')
-        cy.get('select#dropdown-rating').eq(1).select('10')
+        EvalResponsesPage.consensusGetQuestion(0).select('10')
+        EvalResponsesPage.consensusGetQuestion(1).select('10')
 
         EvalResponsesPage.responseSave()
         
-        cy.get('#completedEvaluation').should('be.disabled')
+        //cy.get('#completedEvaluation').should('be.disabled')
 
         EvalResponsesPage.responseNextPage()
 
-        cy.get('#completedEvaluation').should('be.disabled')
+        //cy.get('#completedEvaluation').should('be.disabled')
 
         // Eval Price Upload
-        cy.get('#editSubmitPrice').click()
+        EvalResponsesPage.consensusStartPrice()
 
-        cy.get('#priceScore').type('50')
+        EvalResponsesPage.consensusGetPriceScore().clear().type('50')
 
-        cy.wait(500)
+        EvalResponsesPage.consensusGetPriceComment().click()
 
-        cy.get('#priceScoreWeighting').should('have.value', '25')
+        EvalResponsesPage.consensusGetWeightedPriceScore().should('have.value', '25.00')
 
-        cy.get('#save-button').click()
-        cy.wait(500)
+        EvalResponsesPage.savePriceScore()
 
-        cy.get('#completedEvaluation').should('be.enabled')
+        EvalResponsesPage.consensusGetCompleteBox().should('be.enabled')
 
         EvalResponsesPage.finishConsensusEval()
 
@@ -295,12 +293,12 @@ describe ('Questions', function () {
 
         EvalResponsesPage.checkboxSupplier(0)
 
-        cy.get('#buttons-award_contract').click()
+        EvalResponsesPage.startAwardContract()
 
         //cy.contains('I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.').should('exist')
         cy.get('#winnerMessageBox').should('have.text', 'I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.')
 
-        cy.get('#buttons-send').click()
+        EvalResponsesPage.awardContract()
     })
 
     after(function () {
