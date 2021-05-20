@@ -40,6 +40,12 @@ describe ('Smoke Test', function () {
         cy.url().should('include', 'delta/buyers/tenders/viewTenderStatus')
 
         cy.contains('Tender Exercise ' + tenderName + ' has been created').should('exist')
+
+        // Check Notice, SQ, and Tenderbox were created
+        TenderExercisePage.getExistingNotice(0).should('exist')
+
+        TenderExercisePage.getExistingTenderBox(0).should('contain.text', tenderName)
+
     })
 
     it ('Validates Tender Exercise Name field', () => {

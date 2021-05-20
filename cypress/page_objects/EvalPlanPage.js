@@ -35,6 +35,12 @@ export function chooseEvaluators() {
 }
 
 export function createSmokeEvalPlan () {
+    setPriceWeighting(50)
+
+    saveEvalSettings()
+
+    cy.get('[name="technicalWeighting"]').should('have.value', '50.00')
+    
     changeScoringLevel(0, 'Question')
 
     editWeighting(0, 100)
@@ -48,11 +54,13 @@ export function createSmokeEvalPlan () {
 
     setYesNoScore(1)
 
-    setPriceWeighting(50)
+    // if (Cypress.env('dev') === true) {
+    //     gotoSection(2)
 
-    saveEvalSettings()
+    //     editWeighting(0, 100)
 
-    cy.get('[name="technicalWeighting"]').should('have.value', '50.00')
+    //     saveEvalWeightings()
+    // }
     
     returnToOverview()
 }

@@ -47,7 +47,7 @@ describe ('Smoke Tests 2', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
@@ -127,7 +127,7 @@ describe ('Smoke Tests 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         cy.contains('View Responses').should('exist')
         cy.get('#documents-edit_evaluation_plan span').should('have.class', 'cross')
@@ -177,7 +177,7 @@ describe ('Smoke Tests 2', function () {
     
             TenderManagerPage.createTenderExercise(tenderName)
 
-            TenderExercisePage.gotoExistingNotice()
+            TenderExercisePage.getExistingNotice(0).click()
 
             NoticePage.createContractNotice()
         })

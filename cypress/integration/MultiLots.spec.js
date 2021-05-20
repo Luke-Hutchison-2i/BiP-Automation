@@ -26,7 +26,7 @@ describe('Multi-Lots Questionnaire', function() {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.MLinitialBoxSetUp(boxName)
 
@@ -42,7 +42,7 @@ describe('Multi-Lots Questionnaire', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
@@ -206,7 +206,7 @@ describe ('Multi-Lots Eval Plan', function() {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
@@ -226,7 +226,7 @@ describe ('Multi-Lots Eval Plan', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoCreateEvalPlan()
     })

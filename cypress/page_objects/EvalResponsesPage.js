@@ -4,24 +4,23 @@
 export function basicSideBySide() {
     startSideBySideEval()
 
-    //cy.get('[id^="scoreText_"]').eq(0).parent().find('span').eq(0).click()
     sxsStartEvalQuestion(0)
 
-    cy.get('#score').select('10')
+    sxsGetQuestionScore().select('10')
 
-    cy.get('#button_update').click()
+    sxsSaveQuestionScore()
 
     sxsStartEvalQuestion(1)
 
-    cy.get('#score').select('100')
+    sxsGetQuestionScore().select('100')
 
-    cy.get('#button_update').click()
+    sxsSaveQuestionScore()
 
     sxsStartEvalQuestion(2)
 
-    cy.get('#score').select('-100')
+    sxsGetQuestionScore().select('-100')
 
-    cy.get('#button_update').click()
+    sxsSaveQuestionScore()
 
     cy.wait(1000)
 
@@ -66,21 +65,19 @@ export function basicConsensus(index) {
 export function smokeSideBySide() {
     startSideBySideEval()
 
-    cy.get('a#evaluateQuestion').eq(0).click()
-    cy.wait(500)
+    sxsStartEvalQuestion(0)
 
-    cy.get('#score').select('10')
+    sxsGetQuestionScore().select('10')
 
-    cy.get('#button_update').click()
+    sxsSaveQuestionScore()
 
-    cy.get('a#evaluateQuestion').eq(1).click()
-    cy.wait(500)
+    sxsStartEvalQuestion(1)
 
-    cy.get('#score').select('5')
+    sxsGetQuestionScore().select('5')
 
-    cy.get('#button_update').click()
+    sxsSaveQuestionScore()
 
-    cy.get('[id^="completed"]').should('be.enabled')
+    sxsGetCompleteBox().should('be.enabled')
 
     finishSideBySideEval()
 }
@@ -88,28 +85,28 @@ export function smokeSideBySide() {
 export function smokeConsensus(index) {
     startConsensusEval(index)
 
-    cy.get('select#dropdown-rating').eq(0).select('7')
-    cy.get('select#dropdown-rating').eq(1).select('9')
+    consensusGetQuestion(0).select('7')
+    consensusGetQuestion(1).select('9')
 
-    cy.get('#buttons-next_page').click()
+    responseNextPage()
 
     // Eval Price Upload
-    cy.get('#editSubmitPrice').click()
+    consensusStartPrice()
 
-    cy.get('#priceScore').type('50')
+    consensusGetPriceScore().clear().type('50')
 
-    cy.wait(500)
+    consensusGetPriceComment().click() // Lose focus on price score so page updates
 
-    cy.get('#priceScoreWeighting').should('have.value', '25')
+    consensusGetWeightedPriceScore().should('have.value', '25.00')
 
-    cy.get('#save-button').click()
-    cy.wait(500)
+    savePriceScore()
 
     finishConsensusEval()
 }
 
 
-// Evaluation
+// // Evaluation
+// Buyer Eval
 
 export function startBuyerResponse(index) {
     cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(index).click()
@@ -123,13 +120,19 @@ export function finishBuyerResponse() {
     cy.contains('Return to Responses').click()
 }
 
+export function getQuestion(index) {
+    return cy.get('select[name^="score"]').eq(index)
+}
+
+
+// Side by Side Eval
 
 export function startSideBySideEval() {
     cy.get('#buttons-side_by_side').click()
 }
 
 export function finishSideBySideEval() {
-    cy.get('[id^="completed_"]').eq(0).check()
+    sxsGetCompleteBox().eq(0).check()
 
     cy.contains('Save & Return').click()
 
@@ -140,17 +143,56 @@ export function sxsStartEvalQuestion (index) {
     cy.get('[id^="scoreText_"]').eq(index).parent().find('span').eq(0).click()
     cy.contains('Question/Section Evaluation').should('be.visible')
 }
+export function sxsGetQuestionScore() {
+    return cy.get('#score')
+}
+export function sxsSaveQuestionScore() {
+    cy.get('#button_update').click()
+}
+export function sxsGetCompleteBox() {
+    return cy.get('[id^="completed"]')
+}
+
+
+// Consensus Eval
 
 export function startConsensusEval (index) {
     cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
 }
 
 export function finishConsensusEval () {
-    cy.get('#completedEvaluation').check()
+    consensusGetCompleteBox().check()
 
     cy.get('[name="save"]').click()
 
     cy.contains('Return to Responses').click()
+}
+
+export function consensusGetQuestion(index) {
+    return cy.get('select#dropdown-rating').eq(index)
+}
+
+export function consensusGetCompleteBox() {
+    return cy.get('#completedEvaluation')
+}
+
+// Consensus price questions
+
+export function consensusStartPrice() {
+    cy.get('[id^="editSubmitPrice"]').click()
+}
+export function consensusGetPriceScore() {
+    return cy.get('[name="priceScore"]')
+}
+export function consensusGetWeightedPriceScore() {
+    return cy.get('[name="priceScoreWeighting"]')
+}
+export function consensusGetPriceComment() {
+    return cy.get('[id^="priceScoreComment"]')
+}
+export function savePriceScore() {
+    cy.get('#save-button').click()
+    cy.get('[name="priceScore"]').should('not.be.visible')
 }
 
 
@@ -160,13 +202,10 @@ export function checkboxSupplier(index) {
     cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(index).check()   
 }
 
-export function awardContract() {
-    gotoOverviewTab()
-
-    checkboxSupplier(0) 
-
+export function startAwardContract() {
     cy.get('#buttons-award_contract').click()
-
+}
+export function awardContract() {
     cy.get('#buttons-send').click()
 }
 
@@ -214,6 +253,11 @@ export function responseDownloadDocs() {
         })
     })
 }
+
+
+
+
+
 
 
 

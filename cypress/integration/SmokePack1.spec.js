@@ -51,11 +51,14 @@ describe ('Smoke Test', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
+
+        
+        // Temp removed while importing gets fixed on Dev
 
         QuestionnairePage.importExistingQuestionnaire('Smoke')
 
@@ -69,6 +72,15 @@ describe ('Smoke Test', function () {
         QuestionnairePage.setPriceDocumentUpload()
 
         QuestionnairePage.returnToOverview()
+        
+
+        // Remove when importing is fixed on Dev
+
+        //QuestionnairePage.chooseCustonQuestionnaire()
+
+        //QuestionnairePage.createSmokeQuestionnaire()
+
+        //
 
         TenderBoxPage.gotoCreateEvalPlan()
 
@@ -144,7 +156,7 @@ describe ('Smoke Test', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 
@@ -209,6 +221,12 @@ describe ('Smoke Test', function () {
             })
         })
 
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.checkboxSupplier(0) 
+
+        EvalResponsesPage.startAwardContract()
+
         EvalResponsesPage.awardContract()
 
         cy.contains('TenderBox: ' + boxName + ' has been awarded to: ').should('exist')
@@ -219,7 +237,7 @@ describe ('Smoke Test', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoMessageCentre()
 
@@ -228,7 +246,7 @@ describe ('Smoke Test', function () {
         cy.get('[id^="buttons-enter_message_"]').click()
 
         cy.contains(messageSubject).should('exist') // Subject
-        cy.contains(messageSubject).should('exist') // Body
+        cy.contains(messageBody).should('exist') // Body
 
         cy.get('[id^="messages-download_document_"]').invoke('attr', 'href').then((href) => {
             cy.request({
@@ -249,7 +267,7 @@ describe ('Smoke Test', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 

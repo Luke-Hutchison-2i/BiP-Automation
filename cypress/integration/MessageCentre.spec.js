@@ -15,6 +15,9 @@ import * as Functions from "../support/functions";
 const tenderName = "messageCentreTest"
 const boxName = "messageCentreBox"
 
+const tenderNameSup = "messageCentreTestSup"
+const boxNameSup = "messageCentreBoxSup"
+
 Functions.GetServer()
 
 describe('Message Centre Buyer', function () {
@@ -31,7 +34,7 @@ describe('Message Centre Buyer', function () {
 
         TenderManagerPage.createTenderExercise(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
 
@@ -57,7 +60,7 @@ describe('Message Centre Buyer', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoMessageCentre()
     })
@@ -179,11 +182,11 @@ describe ('Message Centre Supplier', () => {
 
         TenderManagerPage.gotoCreateTenderExercise()
 
-        TenderManagerPage.createTenderExercise(tenderName)
+        TenderManagerPage.createTenderExercise(tenderNameSup)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
-        TenderBoxPage.initialBoxSetUp(boxName)
+        TenderBoxPage.initialBoxSetUp(boxNameSup)
 
         TenderBoxPage.gotoAddSuppliers()
 
@@ -249,7 +252,7 @@ describe ('Message Centre Supplier', () => {
 
         DashboardPage.gotoResponsesAndInvites()
 
-        cy.contains(boxName).click()
+        cy.contains(boxNameSup).click()
         //cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
 
         ResponsePage.gotoMessageCentre()
@@ -286,9 +289,9 @@ describe ('Message Centre Supplier', () => {
 
         DashboardPage.gotoTenderManager()
 
-        TenderManagerPage.gotoExistingTender(tenderName)
+        TenderManagerPage.gotoExistingTender(tenderNameSup)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoMessageCentre()
 

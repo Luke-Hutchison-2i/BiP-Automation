@@ -1,16 +1,22 @@
 export function GetServer () {
-    var live
+    var live = false;
+    var dev = false;
 
     const url = Cypress.config().baseUrl;
     if (url.includes('https://www.delta-esourcing.com')) {
         live = true;
         console.log('On live, dont run certain tests');
+    } else if (url.includes('dev')) {
+        dev = true;
+        console.log('On dev');
     } else {
         live = false;
+        dev = false
         console.log('Not on live, run every test');
     }
 
     Cypress.env('live', live)
+    Cypress.env('dev', dev)
 }
 
 export function GetWaitTime(timeMin, timeHour) {

@@ -57,7 +57,7 @@ describe ('Tender Manager - Stage 1', function() {
 
             TenderManagerPage.gotoExistingTender(tenderName)
 
-            TenderExercisePage.gotoExistingNotice()
+            TenderExercisePage.getExistingNotice(0).click()
 
             NoticePage.createContractNotice()
         })
@@ -260,7 +260,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.initialBoxSetUp(boxName)
     })
@@ -270,7 +270,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
@@ -288,7 +288,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoCreateEvalPlan()
 
@@ -307,7 +307,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoAddSuppliers()
 
@@ -384,7 +384,7 @@ describe ('Tender Manager - Stage 3', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 
@@ -400,9 +400,15 @@ describe ('Tender Manager - Stage 3', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingTenderBox()
+        TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
+
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.checkboxSupplier(0) 
+
+        EvalResponsesPage.startAwardContract()
 
         EvalResponsesPage.awardContract()
 
