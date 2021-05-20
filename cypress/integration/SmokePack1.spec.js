@@ -57,8 +57,8 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
-        /*
-        Temp removed while importing gets fixed
+        
+        // Temp removed while importing gets fixed on Dev
 
         QuestionnairePage.importExistingQuestionnaire('Smoke')
 
@@ -72,13 +72,13 @@ describe ('Smoke Test', function () {
         QuestionnairePage.setPriceDocumentUpload()
 
         QuestionnairePage.returnToOverview()
-        */
+        
 
-        // Remove when importing is fixed
+        // Remove when importing is fixed on Dev
 
-        QuestionnairePage.chooseCustonQuestionnaire()
+        //QuestionnairePage.chooseCustonQuestionnaire()
 
-        QuestionnairePage.createSmokeQuestionnaire()
+        //QuestionnairePage.createSmokeQuestionnaire()
 
         //
 
