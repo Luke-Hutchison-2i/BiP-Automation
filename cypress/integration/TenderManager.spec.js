@@ -68,7 +68,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.initialSQSetUp(sqName)
 
@@ -80,7 +80,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
@@ -101,7 +101,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoCreateEvalPlan()
 
@@ -121,7 +121,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoAddSuppliers()
 
@@ -137,7 +137,7 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoMessageCentre()
 
@@ -230,7 +230,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 
@@ -246,7 +246,7 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 
