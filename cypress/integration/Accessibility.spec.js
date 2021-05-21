@@ -121,7 +121,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ()
 
         TenderBoxPage.initialSQSetUp(sqName)
 
@@ -135,7 +135,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
@@ -151,7 +151,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoExistingQuestionnaire()
 
@@ -169,7 +169,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoAddSuppliers()
 
@@ -187,7 +187,7 @@ describe('Accessibility - TenderManager 1', function() {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoMessageCentre()
 
@@ -264,7 +264,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 
@@ -280,7 +280,7 @@ describe ('Accessibility - Tender Manager 2', function () {
 
         TenderManagerPage.gotoExistingTender(tenderName)
 
-        TenderExercisePage.gotoExistingSQ()
+        TenderExercisePage.getExistingSQ(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
 

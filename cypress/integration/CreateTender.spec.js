@@ -5,7 +5,7 @@ import * as Functions from "../support/functions"
 
 const tenderName = "createTest"
 
-describe ('Smoke Test', function () {
+describe ('Create Tender', function () {
     before (function () {
         cy.visit('')
 
@@ -44,6 +44,8 @@ describe ('Smoke Test', function () {
         // Check Notice, SQ, and Tenderbox were created
         TenderExercisePage.getExistingNotice(0).should('exist')
 
+        TenderExercisePage.getExistingSQ(0).should('contain.text', tenderName)
+        
         TenderExercisePage.getExistingTenderBox(0).should('contain.text', tenderName)
 
     })
@@ -57,5 +59,4 @@ describe ('Smoke Test', function () {
     after (function () {
         cy.logout()
     })
-
 })
