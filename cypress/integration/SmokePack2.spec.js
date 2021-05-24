@@ -155,6 +155,7 @@ describe ('Smoke Tests 2', function () {
         EvalResponsesPage.responseDownloadDocs()
     })
 
+    // Checks for On-Live not needed anymore as neither will publish automatically
     //if (Cypress.env('live') === false) {
         it ('Publish Competitive Contract Notice', function () {
             DashboardPage.gotoTenderManager()
