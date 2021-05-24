@@ -221,7 +221,7 @@ describe ('Smoke Test', function () {
             })
         })
 
-        EvalResponsesPage.gotoOverviewTab()
+        //EvalResponsesPage.gotoOverviewTab()
 
         EvalResponsesPage.checkboxSupplier(0) 
 
