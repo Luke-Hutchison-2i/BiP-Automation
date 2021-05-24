@@ -1,11 +1,11 @@
 // Complete Notice
 
 export function createContractNotice() {
-    fillPage1()
+    fillPage1() // Good apart from NUTS code
 
-    fillPage2()
+    fillPage2() // Good apart from CPV code
 
-    fillPage3()
+    fillPage3() // Good apart form NUTS code
 
     fillPage4()
 
@@ -131,7 +131,7 @@ function fillPage2() {
 
         cy.get('#contract\\.contractTitle').type('Test Notice')
 
-        cy.get('#Works').click()
+        cy.get('#Supplies').click()
     
         cy.get('#contract\\.shortDescOfContract').type('A short description')
     
@@ -288,10 +288,12 @@ function fillPage6() {
 
     cy.get('#complementaryInformation\\.isRecurrentProcurementNo').click()
 
+    // Information about electronic workflows
     cy.get('#complementaryInformation\\.eOrdering').check()
     cy.get('#complementaryInformation\\.eInvoicing').check()
     cy.get('#complementaryInformation\\.ePayment').check()
 
+    // Procedure for reviews
     cy.get('#-1\\.OFFICIALNAME').clear().type('BIP Solutions')
 
     cy.get('#complementaryInformation\\.bodyAppealProcedures\\.town').clear().type('Glasgow')
@@ -299,14 +301,17 @@ function fillPage6() {
     cy.get("#complementaryInformation\\.bodyAppealProcedures\\.responseDataAccessor\\.refVals\\[\\'ADDRESS\\'\\]\\.addressResponse\\.country").select('UK')
 
     cy.get('[name="complementaryInformation\\.bodyAppealProcedures\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
-    cy.get('[name="complementaryInformation\\.bodyMediationProcedures\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
-    cy.get('[name="complementaryInformation\\.serviceLodgingAppeals\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
+    //cy.get('[name="complementaryInformation\\.bodyMediationProcedures\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
+    //cy.get('[name="complementaryInformation\\.serviceLodgingAppeals\\.responseDataAccessor\\.refVals\\[TELEPHONE\\]\\.responseText"]').clear().type('+44 123456789')
 
     cy.get('#-1\\.EMAIL').clear().type('liam.meagher@bipsolutions.com')
 
     //cy.get('#-1\\.CONTRACTAUTHURL').clear().type('https://www.bipsolutions.com')
 
     cy.get('#complementaryInformation\\.preciseInfoLodgAppeals').type('Deadline for review procedure')
+
+
+    // Contracts finder
 
     cy.get('[name="contractsFinder.isVCO"]').eq(0).click()
 
