@@ -224,7 +224,7 @@ export function shortListSupplier(index) {
     cy.get('[name="shortList"]').click()
 }
 export function dpsApproveSupplier(index) {
-    cy.get('#tabs-overview').click()
+    gotoOverviewTab()
 
     cy.get('#pqqResp tbody').find('input[type="checkbox"]').eq(index).check()
 

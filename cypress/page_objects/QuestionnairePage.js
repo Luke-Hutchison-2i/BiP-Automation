@@ -136,7 +136,8 @@ export function createPriceUploadQuestion(sub) {
 
 export function startNewQuestion(sub) {
     cy.get('#form-section_' + sub + '-add').click()
-    cy.wait(500)
+
+    cy.get('#questionText').should('be.visible')
 }
 
 export function getQuestionText() {
@@ -172,7 +173,7 @@ export function deleteQuestion(index) {
 export function editQuestion(index) {
     cy.get('#table_anchor_1 [title="Edit Form"]').eq(index).click()
     
-    cy.get('#modal-save_question').should('be.visible')
+    cy.get('#questionText').should('be.visible')
 }
 
 
