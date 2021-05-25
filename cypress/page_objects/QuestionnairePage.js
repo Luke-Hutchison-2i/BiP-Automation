@@ -138,6 +138,8 @@ export function startNewQuestion(sub) {
     cy.get('#form-section_' + sub + '-add').click()
 
     cy.get('#questionText').should('be.visible')
+    //cy.get('#industryCode').should('have.attr', 'style', 'display: block')
+    cy.wait(500)
 }
 
 export function getQuestionText() {
@@ -174,6 +176,8 @@ export function editQuestion(index) {
     cy.get('#table_anchor_1 [title="Edit Form"]').eq(index).click()
     
     cy.get('#questionText').should('be.visible')
+    //cy.get('#industryCode').should('have.attr', 'style', 'display: block')
+    cy.wait(500)
 }
 
 
