@@ -54,13 +54,13 @@ export function createSmokeEvalPlan () {
 
     setYesNoScore(1)
 
-    // if (Cypress.env('dev') === true) {
-    //     gotoSection(2)
+    if (Cypress.env('dev') === true) {
+        gotoSection(2)
 
-    //     editWeighting(0, 100)
+        editWeighting(0, 100)
 
-    //     saveEvalWeightings()
-    // }
+        saveEvalWeightings()
+    }
     
     returnToOverview()
 }
