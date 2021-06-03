@@ -22,8 +22,6 @@ export function basicSideBySide() {
 
     sxsSaveQuestionScore()
 
-    cy.wait(1000)
-
     finishSideBySideEval()
 }
 

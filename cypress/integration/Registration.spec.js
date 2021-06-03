@@ -1,5 +1,3 @@
-// import * as DashboardPage from "../page_objects/DashboardPage";
-
 describe ('Registration', () => {
     beforeEach(function() {
         cy.visit('')

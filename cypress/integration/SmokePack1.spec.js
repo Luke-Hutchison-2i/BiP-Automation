@@ -173,6 +173,7 @@ describe ('Smoke Test', function () {
         cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(0).should('contain.text', 'Completed')
         // Check overview page looks correct as well
 
+        
         // Download files
         EvalResponsesPage.gotoOverviewTab()
 

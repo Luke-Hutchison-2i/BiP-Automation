@@ -16,7 +16,7 @@ const boxName = "evalResponsesTest"
 
 Functions.GetServer()
 
-describe ('Questions', function () {
+describe ('Evaluate Responses', function () {
     before(function () {
         cy.visit('')
 
