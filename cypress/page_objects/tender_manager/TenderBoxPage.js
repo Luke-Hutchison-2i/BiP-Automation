@@ -1,7 +1,7 @@
 // Complete Set Up
 
 export function initialBoxSetUp(name, delay = 0) {
-    cy.get('#dropdown-select_tenderbox_type').select('ITT')
+    getTypeField().select('ITT')
 
     initialSQSetUp(name, delay)
 }
@@ -24,22 +24,35 @@ export function MLinitialBoxSetUp(name) {
 }
 
 export function initialSQSetUp(name, delay = 0) {
-    cy.get('#list-setup').find('[name="name"]').clear().type(name)
+    getNameField().clear().type(name)
 
-    const date = Cypress.dayjs().format('DD/MM/YYYY')
-
-    cy.get('#startDateDayWeb').type(date)
-
-    cy.wait(500)
-
-    cy.get('#endDateDayWeb').type(date,{force:true})
+    setOpenAndCloseDate()
 
     SetOpenAndCloseTime(delay)
 
-    cy.get('#save_dates').click()
+    saveBox()
 }
 
+export function setOpenAndCloseDate(openDelay = 0, closeDelay = 0) {
+    //let date = Cypress.dayjs().format('DD/MM/YYYY')
+    //date.add(delay, 'day')
+    let date = Cypress.dayjs()
+    
+    let openDate = date.add(openDelay, 'day')
+    openDate = openDate.format('DD/MM/YYYY')
 
+    let closeDate = date.add(closeDelay, 'day')
+    closeDate = closeDate.format('DD/MM/YYYY')
+
+    getOpenDateField().type(openDate)
+
+    cy.wait(500)
+
+    getCloseDateField().type(closeDate,{force:true})
+
+    exports.openDate = openDate;
+    exports.closeDate = closeDate;
+}
 export function SetOpenAndCloseTime(delay) {
     let hour = parseInt(Cypress.dayjs().utc().format('H')) + 1 // Temporary: The Cypress servers were stuck on UTC time, so had to add an hour to match BST
     let min = parseInt(Cypress.dayjs().format('m'))
@@ -78,6 +91,28 @@ export function SetOpenAndCloseTime(delay) {
 
     exports.closeMin = closeMin;
     exports.closeHour = closeHour;
+}
+
+// Set up
+
+export function getNameField() {
+    return cy.get('#input-list_name')
+}
+
+export function getTypeField() {
+    return cy.get('#dropdown-select_tenderbox_type')
+}
+
+export function getOpenDateField() {
+    return cy.get('#startDateDayWeb')
+}
+
+export function getCloseDateField() {
+    return cy.get('#endDateDayWeb')
+}
+
+export function saveBox() {
+    cy.get('#save_dates').click()
 }
 
 

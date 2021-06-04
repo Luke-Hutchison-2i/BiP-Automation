@@ -22,7 +22,7 @@ describe ('Create Tender', function () {
         TenderManagerPage.gotoCreateTenderExercise()
     })
 
-    it ('Can create an empty tender', () => {
+    it ('Can create an empty tender with a name', () => {
         TenderManagerPage.getNameField().type(tenderName)
 
         TenderManagerPage.saveTender()
