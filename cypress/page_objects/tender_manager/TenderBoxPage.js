@@ -1,9 +1,9 @@
 // Complete Set Up
 
-export function initialBoxSetUp(name, delay = 0) {
+export function initialBoxSetUp(name, openDelay = 0, closeDelay = 0) {
     getTypeField().select('ITT')
 
-    initialSQSetUp(name, delay)
+    initialSQSetUp(name, openDelay, closeDelay)
 }
 export function MLinitialBoxSetUp(name) {
     cy.get('select[name="qType"]').select('ITT')
@@ -18,24 +18,22 @@ export function MLinitialBoxSetUp(name) {
 
     cy.get('#endDateDayWeb').type(date,{force:true})
 
-    SetOpenAndCloseTime(60)
+    SetOpenAndCloseTime(60, 0)
 
     cy.get('#save_dates').click()
 }
 
-export function initialSQSetUp(name, delay = 0) {
+export function initialSQSetUp(name, openDelay = 0, closeDelay = 0) {
     getNameField().clear().type(name)
 
     setOpenAndCloseDate()
 
-    SetOpenAndCloseTime(delay)
+    SetOpenAndCloseTime(openDelay, closeDelay)
 
     saveBox()
 }
 
 export function setOpenAndCloseDate(openDelay = 0, closeDelay = 0) {
-    //let date = Cypress.dayjs().format('DD/MM/YYYY')
-    //date.add(delay, 'day')
     let date = Cypress.dayjs()
     
     let openDate = date.add(openDelay, 'day')
@@ -53,11 +51,11 @@ export function setOpenAndCloseDate(openDelay = 0, closeDelay = 0) {
     exports.openDate = openDate;
     exports.closeDate = closeDate;
 }
-export function SetOpenAndCloseTime(delay) {
+export function SetOpenAndCloseTime(openDelay = 0, closeDelay = 0) {
     let hour = parseInt(Cypress.dayjs().utc().format('H')) + 1 // Temporary: The Cypress servers were stuck on UTC time, so had to add an hour to match BST
     let min = parseInt(Cypress.dayjs().format('m'))
 
-    let openMin = (Math.ceil((min+2)/5)*5) + delay
+    let openMin = (Math.ceil((min+2)/5)*5) + openDelay
     let openHour = hour
 
     while (openMin >= 60) {
@@ -73,7 +71,7 @@ export function SetOpenAndCloseTime(delay) {
     cy.get('#metadata\\.openingHour').select(openHour.toString())
     cy.get('#metadata\\.openingMin').select(openMin.toString())
 
-    let closeMin = openMin + 5
+    let closeMin = openMin + 5 + closeDelay
     let closeHour = openHour
 
     if (closeMin >= 60) {
@@ -88,6 +86,9 @@ export function SetOpenAndCloseTime(delay) {
     cy.get('#metadata\\.closingMin').select(closeMin.toString())
 
     cy.wait(2000)
+
+    exports.openMin = openMin;
+    exports.openHour = openHour;
 
     exports.closeMin = closeMin;
     exports.closeHour = closeHour;
