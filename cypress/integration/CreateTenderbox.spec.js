@@ -52,7 +52,7 @@ describe ('Create Tenderbox', function () {
     })
 
     it ('Validates open and closing times', () => {
-        TenderBoxPage.setOpenAndCloseDate(-1)
+        TenderBoxPage.setOpenAndCloseDate(-1, 0)
 
         TenderBoxPage.saveBox()
 

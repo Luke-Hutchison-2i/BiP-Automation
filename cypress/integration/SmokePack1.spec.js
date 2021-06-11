@@ -242,9 +242,9 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoMessageCentre()
 
-        cy.get('[id^="buttons-enter_message_"]').should('have.length', 1)
+        cy.get('[id^="buttons-enter_message_"]').should('have.length', 2)
 
-        cy.get('[id^="buttons-enter_message_"]').click()
+        cy.get('[id^="buttons-enter_message_"]').eq(1).click()
 
         cy.contains(messageSubject).should('exist') // Subject
         cy.contains(messageBody).should('exist') // Body
