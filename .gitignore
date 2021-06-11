@@ -5,3 +5,4 @@ cypress/downloads
 cypress.env.json
 cypress/fixtures/logins_old.json
 node_modules
+cypress/fixtures/logins_local.json
