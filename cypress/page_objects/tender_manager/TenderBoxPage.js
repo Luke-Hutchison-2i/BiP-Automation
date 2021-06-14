@@ -155,6 +155,16 @@ export function gotoEvaluateResponses() {
     })
 }
 
+
+// Access Code
+export function getAccessCode() {
+    cy.contains('Access Code').find('strong').then(el => {
+        const text = el.text()
+
+        exports.accessCode = text;
+    })
+}
+
 // For DPS Questionnaire
 export function gotoViewSelectList() {
     cy.get('#responses-view_supplier_list').click()
