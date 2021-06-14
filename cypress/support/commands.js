@@ -56,6 +56,12 @@ Cypress.Commands.add("login", function(type) {
 
     cy.contains('Login').click()
 })
+Cypress.Commands.add("loginExtra", function(email, password) {
+    cy.get('#username').type(email)
+    cy.get('#password').type(password)
+
+    cy.contains('Login').click()
+})
 
 Cypress.Commands.add("logout", () => {
     cy.get('#header-logout').click({force: true})
