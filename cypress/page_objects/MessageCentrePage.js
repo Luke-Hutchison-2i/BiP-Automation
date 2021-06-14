@@ -36,6 +36,12 @@ export function disableMessages() {
     cy.wait(500)
 }
 
+export function getBuyerMessage (subject) {
+    return cy.contains(subject).parent().find('[id^="buttons-enter_message"]')
+}
+export function getSupplierMessage (subject) {
+    return cy.contains(subject).parent().parent().find('[id^="buttons-enter_message"]')
+}
 
 // Utility 
 

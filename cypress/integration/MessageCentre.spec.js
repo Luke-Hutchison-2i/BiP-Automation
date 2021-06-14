@@ -13,10 +13,10 @@ import * as Functions from "../support/functions";
 
 
 const tenderName = "messageCentreTest"
-const boxName = "messageCentreBox"
+const boxName = "messageCentreBox" + Math.floor(Math.random() * 100)
 
 const tenderNameSup = "messageCentreTestSup"
-const boxNameSup = "messageCentreBoxSup"
+const boxNameSup = "messageCentreBoxSup" + Math.floor(Math.random() * 100)
 
 Functions.GetServer()
 
@@ -186,7 +186,7 @@ describe ('Message Centre Supplier', () => {
 
         TenderExercisePage.getExistingTenderBox(0).click()
 
-        TenderBoxPage.initialBoxSetUp(boxNameSup)
+        TenderBoxPage.initialBoxSetUp(boxNameSup, 0, 5)
 
         TenderBoxPage.gotoAddSuppliers()
 
@@ -219,7 +219,7 @@ describe ('Message Centre Supplier', () => {
         cy.logout()
 
         cy.then(() => {   
-            let waitTime = Functions.GetWaitTime(TenderBoxPage.closeMin, TenderBoxPage.closeHour) - 150000 // Start supplier response with 2.5 mins until closing
+            let waitTime = Functions.GetWaitTime(TenderBoxPage.openMin, TenderBoxPage.openHour) + 150000 // Start supplier response with 2.5 mins until closing
             
             if (waitTime > 0) {
                 cy.wait(waitTime)
@@ -234,15 +234,9 @@ describe ('Message Centre Supplier', () => {
 
         DashboardPage.gotoResponsesAndInvites()
 
-        ResponseManagerPage.viewInvite(boxName)
+        ResponseManagerPage.viewInvite(boxNameSup)
 
         ResponsePage.acceptInvite()
-
-        // ResponsePage.continueStage2()
-
-        // ResponsePage.completeBasicResponse()
-
-        // ResponsePage.submitResponse()
     })
 
     beforeEach(function() {
@@ -253,15 +247,12 @@ describe ('Message Centre Supplier', () => {
         DashboardPage.gotoResponsesAndInvites()
 
         cy.contains(boxNameSup).click()
-        //cy.contains(boxName).parent().find('[name="oneClickRespond"]').click()
 
         ResponsePage.gotoMessageCentre()
     })
 
     it ('Can receive message', () => {
-        cy.contains('Test Subject').should('exist')
-
-        cy.contains('Test Subject').parent().parent().find('[id^="buttons-enter_message"]').click()
+        MessageCentrePage.getSupplierMessage('Test Subject').should('exist').click()
 
         cy.contains('Test Subject').should('exist')
         cy.contains('Test Body').should('exist')
@@ -270,7 +261,7 @@ describe ('Message Centre Supplier', () => {
 
     })
 
-    it ('Can send message', () => {
+    it ('Supplier can send message and buyer receives', () => {
         MessageCentrePage.supplierEnterSubject("Supplier Subject")
 
         MessageCentrePage.enterBody("Supplier Body")
@@ -295,9 +286,11 @@ describe ('Message Centre Supplier', () => {
 
         TenderBoxPage.gotoMessageCentre()
 
-        cy.contains('Supplier Subject').should('exist')
+        // cy.contains('Supplier Subject').should('exist')
         
-        cy.contains('Supplier Subject').parent().find('[id^="buttons-enter_message"]').click()
+        // cy.contains('Supplier Subject').parent().find('[id^="buttons-enter_message"]').click()
+
+        MessageCentrePage.getBuyerMessage('Supplier Subject').should('exist').click()
 
         cy.contains('Supplier Subject').should('exist')
         cy.contains('Supplier Body').should('exist')
