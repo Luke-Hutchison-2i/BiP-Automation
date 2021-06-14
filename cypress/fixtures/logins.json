@@ -11,7 +11,7 @@
             "livePassword": "Password123"
         },
         "supplier2": {
-            "email": "auto.supplier.t001@bipsolutions.com",
+            "email": "auto-testing-supplier-1@bipsolutions.com",
             "password": "Password123",
             "livePassword": "Password123"
         }
@@ -23,7 +23,7 @@
             "livePassword": "Password123"
         },
         "supplier": {
-            "email": "test.supplier.t002@bipsolutions.com",
+            "email": "auto.supplier.t002@bipsolutions.com",
             "password": "Password123",
             "livePassword": "Password123"
         }
