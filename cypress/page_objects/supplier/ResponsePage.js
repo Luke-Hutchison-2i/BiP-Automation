@@ -44,6 +44,10 @@ export function continueStage2() {
     cy.contains('Continue to Stage Two').click()
 }
 
+export function saveAnswers() {
+    // Progresses to next questionnaire section in Stage 2, then continues to Stage 3
+    cy.get('#responseForm').find('#confirmSubmit[name="save"]').click()
+}
 export function saveAndContinue() {
     // Progresses to next questionnaire section in Stage 2, then continues to Stage 3
     cy.get('#responseForm').find('#confirmSubmit[name="submitResponse"]').click()
@@ -52,6 +56,15 @@ export function saveAndContinue() {
 export function submitResponse() {
     cy.get('[name="confirmSubmit"]').click()
     cy.contains('Response Successfully Submitted').should('exist')
+}
+export function withdrawResponse() {
+    cy.get('[name="confirmWithdraw"]').click()
+
+    cy.contains('Response Successfully Withdrawn').should('exist')
+}
+
+export function getProceedStage3() {
+    return cy.get('#buttons-stage_3')
 }
 
 
