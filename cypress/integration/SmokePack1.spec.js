@@ -57,8 +57,6 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoCreateNewQuestionnaire()
 
-        
-        // Temp removed while importing gets fixed on Dev
 
         QuestionnairePage.importExistingQuestionnaire('Smoke')
 
@@ -72,15 +70,6 @@ describe ('Smoke Test', function () {
         QuestionnairePage.setPriceDocumentUpload()
 
         QuestionnairePage.returnToOverview()
-        
-
-        // Remove when importing is fixed on Dev
-
-        //QuestionnairePage.chooseCustonQuestionnaire()
-
-        //QuestionnairePage.createSmokeQuestionnaire()
-
-        //
 
         TenderBoxPage.gotoCreateEvalPlan()
 
@@ -221,8 +210,6 @@ describe ('Smoke Test', function () {
                 cy.writeFile('cypress/downloads/docs.zip', body, 'binary')
             })
         })
-
-        //EvalResponsesPage.gotoOverviewTab()
 
         EvalResponsesPage.checkboxSupplier(0) 
 

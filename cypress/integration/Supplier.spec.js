@@ -167,16 +167,6 @@ describe ('Response', function () {
                 cy.wait(waitTime)
             }
         })
-
-        // cy.visit('')
-        // cy.contains('Log in').click()
-        // cy.login('supplier')
-    })
-
-    beforeEach(function () {
-        // Cypress.Cookies.preserveOnce('JSESSIONID')
-
-        // cy.visit('/delta/suppliers/select/addToList.html')
     })
 
     it ('Can accept and submit a response', () => {

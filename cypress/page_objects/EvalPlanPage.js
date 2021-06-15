@@ -141,6 +141,9 @@ export function setPriceWeighting(value) {
 export function getPriceWeighting() {
     return cy.get('[name="priceWeighting"]')
 }
+export function getTechWeighting() {
+    return cy.get('[name="technicalWeighting"]')
+}
 
 export function saveEvalSettings() {
     //cy.get('#button-save_evaluation_settings').click()

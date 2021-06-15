@@ -149,22 +149,19 @@ describe ('Questions', function () {
     it ('Question invalid input warnings', () => {
         QuestionnairePage.startNewQuestion(0)
 
-        //QuestionnairePage.saveQuestion()
-        cy.get('#modal-save_question', { timeout: 10000 }).click()
+        cy.get('#modal-save_question', { timeout: 10000 }).click() // Can't use Questionnaire.saveQuestion() because that checks if Modal disappears
 
         cy.contains('Question Text is a required field').should('exist')
         cy.contains('Answer Type is a required field').should('exist')
 
         QuestionnairePage.chooseAnswerType('multiSelect')
 
-        //QuestionnairePage.saveQuestion()
         cy.get('#modal-save_question', { timeout: 10000 }).click()
 
         cy.contains('You must enter at least two options for a valid multiple choice question').should('exist')
 
         QuestionnairePage.chooseAnswerType('priceDocUpload')
 
-        //QuestionnairePage.saveQuestion()
         cy.get('#modal-save_question', { timeout: 10000 }).click()
 
         cy.contains('At least one document must be uploaded for the Price Document Upload question type').should('exist')
@@ -173,7 +170,6 @@ describe ('Questions', function () {
     it ('Subsection invalid input warning', () => {
         QuestionnairePage.startNewSubsection()
 
-        //QuestionnairePage.saveSubsection()
         cy.get('#modal-save_subsection').click()
 
         cy.contains('Subsection Name is a required field').should('exist')
@@ -182,7 +178,6 @@ describe ('Questions', function () {
     it ('Section invalid input warning', () => {
         QuestionnairePage.startNewSection()
 
-        //QuestionnairePage.saveSection()
         cy.get('#modal-save_section').click()
 
         cy.contains('Section Name is a required field').should('exist')

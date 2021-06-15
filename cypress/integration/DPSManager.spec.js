@@ -208,7 +208,6 @@ describe ('DPS Manager - Stage 2', function () {
 
         cy.contains('1 out of 1 Suppliers have been approved and added to testQuestionnaireName. Please note - Only pending users can be Approved, Declined and Removed users cannot be approved and added to a DPS Supplier List.').should('exist')
    
-        //cy.get('#pqqResp').should('be.visible').contains('Approved').should('exist')
         cy.get('#tabs-2').contains('Approved').should('exist')
 
     })

@@ -149,30 +149,6 @@ describe('Quick Call - Stages 5-7', function() {
         cy.contains('Quick Call: testQuickCallName has been awarded to BiP Solutions').should('exist')
     })
 
-    // it.skip ('Complete Stage 6', () => {
-    //     QuickCallManagerPage.gotoExistingQuickCall()
-
-    //     QuickCallStagesPage.gotoStage(6)
-
-    //     QuickCallStagesPage.completeStage6()
-
-    //     QuickCallStagesPage.saveAndContinue()
-    // })
-
-    // it.skip ('Complete Stage 7', () => {
-    //     QuickCallManagerPage.gotoExistingQuickCall()
-
-    //     QuickCallStagesPage.gotoStage(7)
-
-    //     QuickCallStagesPage.completeStage7()
-
-    //     QuickCallStagesPage.saveAndContinue()
-    // })
-
-    // afterEach(function () {
-    //     cy.logout()
-    // })
-
     after (function () {
         cy.logout()
 

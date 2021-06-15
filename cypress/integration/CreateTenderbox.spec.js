@@ -34,6 +34,8 @@ describe ('Create Tenderbox', function () {
     it ('Can create Tenderbox', () => {
         TenderBoxPage.initialBoxSetUp(boxName, 0)
 
+        // Check Tenderexercise has the correct details
+
         cy.get('#nav-view_list_status').should('contain.text', boxName)
 
         cy.contains('Invitation to Tender').should('exist')

@@ -16,8 +16,6 @@ export function createContractNotice() {
     fillPage7()
 
     validateNotice()
-
-    //publishNotice()
 }
 
 export function createCompetitiveNotice() {
@@ -44,8 +42,6 @@ export function createCompetitiveNotice() {
     saveNotice()
 
     validateNotice()
-
-    //publishNotice()
 }
 
 
@@ -492,7 +488,7 @@ function validateNotice () {
     cy.get('[name="validate"]').eq(0).click()
 }
 
-function publishNotice () {
+export function publishNotice () {
     cy.contains('Publish').click()
 
     cy.contains('Notice has been successfully submitted.').should('exist')

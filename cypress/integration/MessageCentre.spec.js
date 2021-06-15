@@ -136,7 +136,6 @@ describe('Message Centre Buyer', function () {
     it.skip ('Cant send direct without selecting supplier', () => {
         // For some reason the message isn't displaying in Cypress but works manually
         MessageCentrePage.startDirectMessage()
-        cy.wait(1000)
 
         cy.reload()
 
@@ -274,6 +273,7 @@ describe ('Message Centre Supplier', () => {
 
         // Check if buyer has received message
         cy.logout()
+        cy.clearCookies()
         cy.visit('')
         cy.contains('Log in').click()
         cy.login('buyer')
@@ -285,10 +285,6 @@ describe ('Message Centre Supplier', () => {
         TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoMessageCentre()
-
-        // cy.contains('Supplier Subject').should('exist')
-        
-        // cy.contains('Supplier Subject').parent().find('[id^="buttons-enter_message"]').click()
 
         MessageCentrePage.getBuyerMessage('Supplier Subject').should('exist').click()
 

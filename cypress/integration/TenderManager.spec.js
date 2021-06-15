@@ -52,7 +52,7 @@ describe ('Tender Manager - Stage 1', function() {
     })
 
     if (Cypress.env('live') === false) {
-        it.skip ('Set up an existing notice', () => {
+        it ('Set up an existing notice', () => {
             DashboardPage.gotoTenderManager()
 
             TenderManagerPage.gotoExistingTender(tenderName)
@@ -292,9 +292,6 @@ describe ('Tender Manager - Stage 2', function () {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
-        //cy.wait(2000)
-
-        //EvalPlanPage.createPriceEvalPlan()
         EvalPlanPage.createSmokeEvalPlan()
 
         cy.url().should('include', 'viewListStatus.html')
@@ -345,7 +342,6 @@ describe ('Supplier for TenderBox', function () {
 
         ResponsePage.continueStage2()
 
-        //ResponsePage.completePriceResponse()
         ResponsePage.completeSmokeResponse()
 
         ResponsePage.submitResponse()
@@ -387,8 +383,6 @@ describe ('Tender Manager - Stage 3', function () {
         TenderExercisePage.getExistingTenderBox(0).click()
 
         TenderBoxPage.gotoEvaluateResponses()
-
-        //cy.get('#pqqResp tbody').find('[id^=responses-evaluate_]').eq(0).should('contain.text', 'Completed')
 
         EvalResponsesPage.smokeConsensus(0)
 

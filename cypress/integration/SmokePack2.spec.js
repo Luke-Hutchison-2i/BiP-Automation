@@ -59,8 +59,6 @@ describe ('Smoke Tests 2', function () {
 
         // Add document to price document upload
         QuestionnairePage.viewSection(1)
-        // cy.get('[id^="page-name-link-"').eq(1).click()
-        // cy.wait(1000)
 
         QuestionnairePage.editQuestion(0)
 
@@ -155,34 +153,38 @@ describe ('Smoke Tests 2', function () {
         EvalResponsesPage.responseDownloadDocs()
     })
 
-    // Checks for On-Live not needed anymore as neither will publish automatically
-    //if (Cypress.env('live') === false) {
-        it ('Publish Competitive Contract Notice', function () {
-            DashboardPage.gotoTenderManager()
+    // Only publish notices if not on the Live site
+    it ('Publish Competitive Contract Notice', function () {
+        DashboardPage.gotoTenderManager()
 
-            TenderManagerPage.gotoCreateTenderExercise()
-    
-            TenderManagerPage.createTenderExercise(tenderName)
+        TenderManagerPage.gotoCreateTenderExercise()
 
-            TenderExercisePage.gotoCreateNotice()
+        TenderManagerPage.createTenderExercise(tenderName)
 
-            NoticePage.createCompetitiveNotice()
-        })
-    //}
+        TenderExercisePage.gotoCreateNotice()
 
-    //if (Cypress.env('live') === false) {
-        it ('Publish OJEU Notice', function () {
-            DashboardPage.gotoTenderManager()
+        NoticePage.createCompetitiveNotice()
 
-            TenderManagerPage.gotoCreateTenderExercise()
-    
-            TenderManagerPage.createTenderExercise(tenderName)
+        if (Cypress.env('live') === false) {  
+            NoticePage.publishNotice()
+        }
+    })
 
-            TenderExercisePage.getExistingNotice(0).click()
+    it ('Publish OJEU Notice', function () {
+        DashboardPage.gotoTenderManager()
 
-            NoticePage.createContractNotice()
-        })
-    //}
+        TenderManagerPage.gotoCreateTenderExercise()
+
+        TenderManagerPage.createTenderExercise(tenderName)
+
+        TenderExercisePage.getExistingNotice(0).click()
+
+        NoticePage.createContractNotice()
+
+        if (Cypress.env('live') === false) {  
+            //NoticePage.publishNotice() // NUTS and CPV codes can't be filled in on Cypress
+        }
+    })
 
     afterEach (function () {
         cy.logout()

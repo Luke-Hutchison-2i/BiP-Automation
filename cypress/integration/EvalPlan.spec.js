@@ -61,13 +61,13 @@ describe ('Questions', function () {
 
         EvalPlanPage.saveEvalSettings()
 
-        cy.get('[name="technicalWeighting"]').should('have.value', '50.00')
+        EvalPlanPage.getTechWeighting().should('have.value', '50.00')
 
         EvalPlanPage.setPriceWeighting(34)
 
         EvalPlanPage.saveEvalSettings()
 
-        cy.get('[name="technicalWeighting"]').should('have.value', '66.00')
+        EvalPlanPage.getTechWeighting().should('have.value', '66.00')
     })
 
     it ('Invalid Tech/Price weighting', () => {
@@ -188,6 +188,7 @@ describe ('Questions', function () {
     })
 
     afterEach(function () {
+        // Cypress seems bugged and if the tests fail then clicks in AfterEach don't work
         cy.visit('/delta/buyers/tenders/listTenders.html')
 
         cy.contains(tenderName).click({force: true})

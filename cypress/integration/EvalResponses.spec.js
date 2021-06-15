@@ -51,7 +51,6 @@ describe ('Evaluate Responses', function () {
         TenderBoxPage.gotoAddSuppliers()
 
         AddSuppliersPage.addByEmail('auto-testing-supplier-1@bipsolutions.com')
-        //AddSuppliersPage.addByEmail('auto.supplier.t002@bipsolutions.com')
 
         cy.logout()
         cy.clearCookies()
@@ -92,11 +91,7 @@ describe ('Evaluate Responses', function () {
 
         cy.contains('Log in').click()
 
-        //cy.get('#username').type('auto.supplier.t002@bipsolutions.com')
-        cy.get('#username').type('auto-testing-supplier-1@bipsolutions.com')
-        cy.get('#password').type('Password123')
-
-        cy.contains('Login').click()
+        cy.loginExtra('auto-testing-supplier-1@bipsolutions.com', 'Password123')
 
         DashboardPage.gotoResponsesAndInvites()
 
@@ -151,7 +146,7 @@ describe ('Evaluate Responses', function () {
         EvalResponsesPage.responseNextPage()
 
         cy.get('select[name^="score"]').should('not.exist')
-        //EvalResponsesPage.getQuestion(0).should('not.exist') For some reason Cypress doesn't like this, it fails trying to find it
+        //EvalResponsesPage.getQuestion(0).should('not.exist') // For some reason Cypress doesn't like this, it fails trying to find it
 
         EvalResponsesPage.finishBuyerResponse()
 
@@ -189,18 +184,18 @@ describe ('Evaluate Responses', function () {
 
         EvalResponsesPage.startConsensusEval(0)
 
-        //cy.get('#completedEvaluation').should('be.disabled')
+        cy.get('#completedEvaluation').should('be.disabled')
 
         EvalResponsesPage.consensusGetQuestion(0).select('10')
         EvalResponsesPage.consensusGetQuestion(1).select('10')
 
         EvalResponsesPage.responseSave()
         
-        //cy.get('#completedEvaluation').should('be.disabled')
+        cy.get('#completedEvaluation').should('be.disabled')
 
         EvalResponsesPage.responseNextPage()
 
-        //cy.get('#completedEvaluation').should('be.disabled')
+        cy.get('#completedEvaluation').should('be.disabled')
 
         // Eval Price Upload
         EvalResponsesPage.consensusStartPrice()
@@ -295,7 +290,6 @@ describe ('Evaluate Responses', function () {
 
         EvalResponsesPage.startAwardContract()
 
-        //cy.contains('I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.').should('exist')
         cy.get('#winnerMessageBox').should('have.text', 'I am pleased to confirm that your tender submission has been successful. Please find attached a copy of the Letter of Acceptance for your information. We will post the original Letter of Acceptance to you and if you are  happy to proceed, please review and sign the Letter of Acceptance and  return this signed copy to us, as soon as possible. Should you wish to ask any questions with regards to this list, please do so using the Email Buyer option available within the Tenderbox list.')
 
         EvalResponsesPage.awardContract()
