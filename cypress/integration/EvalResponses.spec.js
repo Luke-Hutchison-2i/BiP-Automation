@@ -50,7 +50,8 @@ describe ('Evaluate Responses', function () {
 
         TenderBoxPage.gotoAddSuppliers()
 
-        AddSuppliersPage.addByEmail('auto-testing-supplier-1@bipsolutions.com')
+        //AddSuppliersPage.addByEmail('auto-testing-supplier-1@bipsolutions.com')
+        AddSuppliersPage.addByEmail('test.supplier.t001@bipsolutions.com')
 
         cy.logout()
         cy.clearCookies()
@@ -91,7 +92,8 @@ describe ('Evaluate Responses', function () {
 
         cy.contains('Log in').click()
 
-        cy.loginExtra('auto-testing-supplier-1@bipsolutions.com', 'Password123')
+        //cy.loginExtra('auto-testing-supplier-1@bipsolutions.com', 'Password123')
+        cy.loginExtra('test.supplier.t001@bipsolutions.com', 'Password123')
 
         DashboardPage.gotoResponsesAndInvites()
 
