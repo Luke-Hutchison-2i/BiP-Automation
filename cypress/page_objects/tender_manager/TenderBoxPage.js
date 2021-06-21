@@ -169,3 +169,9 @@ export function getAccessCode() {
 export function gotoViewSelectList() {
     cy.get('#responses-view_supplier_list').click()
 }
+
+
+// Util
+export function getTenderLink() {
+    return cy.get('#nav-view_tender_status')
+}

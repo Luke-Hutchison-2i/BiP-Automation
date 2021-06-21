@@ -18,9 +18,21 @@ export function getExistingNotice(index) {
 }
 
 export function getExistingSQ(index) {
-    return cy.get('[id^="list"]').eq(0).find('[id^="tender-view_tender_"]').eq(index)
+    return cy.get('.stages').eq(1).find('[id^="tender-view_tender_"]').eq(index)
 }
 
 export function getExistingTenderBox(index) {
-    return cy.get('[id^="list"]').eq(1).find('[id^="tender-view_tender_"]').eq(index)
+    return cy.get('.stages').eq(2).find('[id^="tender-view_tender_"]').eq(index)
+}
+
+export function deleteSQ(index) {
+    return cy.get('.stages').eq(1).find('[id^="buttons-delete_list"]').eq(index).click()
+}
+
+export function deleteTenderbox(index) {
+    return cy.get('.stages').eq(2).find('[id^="buttons-delete_list"]').eq(index).click()
+}
+
+export function viewNoticeActivityLog(index) {
+    return cy.get('[id^="notices-activity_"]').eq(index).click()
 }
