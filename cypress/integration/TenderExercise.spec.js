@@ -35,7 +35,7 @@ describe ('Tender Exercise', function () {
         TenderExercisePage.getExistingTenderBox(0).should('include.text', tenderName)
     })
 
-    it.only ('Can delete SQ and Tenderbox', () => {
+    it ('Can delete SQ and Tenderbox', () => {
         TenderExercisePage.gotoCreateSQ()
         TenderBoxPage.initialSQSetUp('Delete SQ')
 
