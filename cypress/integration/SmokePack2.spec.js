@@ -142,7 +142,7 @@ describe ('Smoke Tests 2', function () {
             //cy.downloadFile(Cypress.config().baseUrl + href, 'cypress/downloads', 'DocUploadFile.docx')
             cy.request({
                 method: 'GET',
-                url: Cypress.config().baseUrl + href,
+                url: Cypress.config().baseUrl + '/delta/buyers/select/' + href,
                 encoding: 'binary'
             }).then((res) => {
                 //expect(res.headers).to.have.property('content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=UTF-8')
@@ -166,7 +166,7 @@ describe ('Smoke Tests 2', function () {
         NoticePage.createCompetitiveNotice()
 
         if (Cypress.env('live') === false) {  
-            NoticePage.publishNotice()
+            //NoticePage.publishNotice()
         }
     })
 
