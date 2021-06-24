@@ -22,18 +22,6 @@ export function createBasicEvalPlan() {
     returnToOverview()
 }
 
-export function chooseEvaluators() {
-    cy.get('[name="chooseEvaluators"][type="submit"]').click()
-
-    cy.get('[id^="gurId_"]').eq(0).check()
-
-    cy.get('[name="saveEvaluators"]').click()
-
-    cy.get('[name="returnEdit"]').click()
-
-    returnToOverview()
-}
-
 export function createSmokeEvalPlan () {
     setPriceWeighting(50)
 
@@ -65,6 +53,24 @@ export function createSmokeEvalPlan () {
     returnToOverview()
 }
 
+
+// Evaluators
+
+export function gotoChooseEvaluators() {
+    cy.get('[name="chooseEvaluators"][type="submit"]').click()
+}
+
+export function chooseEvaluators() {
+    gotoChooseEvaluators()
+
+    cy.get('[id^="gurId_"]').should('have.length.at.least', 2).check()
+
+    cy.get('[name="saveEvaluators"]').click()
+
+    cy.get('[name="returnEdit"]').click()
+
+    returnToOverview()
+}
 
 // Question Scores
 

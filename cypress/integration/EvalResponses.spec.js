@@ -285,7 +285,7 @@ describe ('Evaluate Responses', function () {
     })
 
 
-    it ('Award tender', () => {
+    it.skip ('Award tender', () => {
         EvalResponsesPage.gotoOverviewTab()
 
         EvalResponsesPage.checkboxSupplier(0)

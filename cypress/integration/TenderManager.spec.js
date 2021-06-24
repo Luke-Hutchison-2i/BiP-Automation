@@ -16,7 +16,7 @@ import * as ResponsePage from "../page_objects/supplier/ResponsePage"
 import * as Functions from "../support/functions"
 
 
-const tenderName = "testTenderName"
+const tenderName = "testTenderManager"
 const sqName = "testSQName"
 const boxName = "testBoxName"
 
