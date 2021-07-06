@@ -133,6 +133,7 @@ describe('Message Centre Buyer', function () {
         MessageCentrePage.clickSend()
     })
 
+    // Can't get test to work
     it.skip ('Cant send direct without selecting supplier', () => {
         // For some reason the message isn't displaying in Cypress but works manually
         MessageCentrePage.startDirectMessage()

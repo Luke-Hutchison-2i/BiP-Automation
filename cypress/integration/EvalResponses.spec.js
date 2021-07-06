@@ -51,7 +51,7 @@ describe ('Evaluate Responses', function () {
         TenderBoxPage.gotoAddSuppliers()
 
         //AddSuppliersPage.addByEmail('auto-testing-supplier-1@bipsolutions.com')
-        AddSuppliersPage.addByEmail('test.supplier.t001@bipsolutions.com')
+        AddSuppliersPage.addByEmail('test.supplier.t002@bipsolutions.com')
 
         cy.logout()
         cy.clearCookies()
@@ -93,7 +93,7 @@ describe ('Evaluate Responses', function () {
         cy.contains('Log in').click()
 
         //cy.loginExtra('auto-testing-supplier-1@bipsolutions.com', 'Password123')
-        cy.loginExtra('test.supplier.t001@bipsolutions.com', 'Password123')
+        cy.loginExtra('test.supplier.t002@bipsolutions.com', 'Password123')
 
         DashboardPage.gotoResponsesAndInvites()
 
@@ -284,8 +284,52 @@ describe ('Evaluate Responses', function () {
         })
     })
 
+    it ('Other evaluators can evaluate', () => {
+        // Add other evaluators
+        EvalResponsesPage.returnToOverview()
 
-    it.skip ('Award tender', () => {
+        TenderBoxPage.gotoCreateEvalPlan()
+
+        EvalPlanPage.gotoChooseEvaluators()
+
+        EvalPlanPage.chooseEvaluators()
+
+        cy.logout()
+
+        cy.clearCookies()
+
+        // Login to the other evaluator
+
+        cy.visit('')
+
+        cy.contains('Log in').click()
+        
+        //cy.loginExtra('test.buyer.t003@bipsolutions.com', 'Password123')
+        cy.login('buyer')
+
+        DashboardPage.gotoTenderManager()
+
+        TenderManagerPage.gotoExistingTender(tenderName)
+
+        TenderExercisePage.getExistingTenderBox(0).click()
+
+        TenderBoxPage.gotoEvaluateResponses()
+
+        // Check there are multiple evaluators
+        //EvalResponsesPage.getConsensusText()
+        //cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').should('have.length.at.least', 2)
+        cy.get('#pqqResp thead').find('th').should('have.length.at.least', 5)
+
+        // Check can evaluate
+
+        // Check can't award
+        EvalResponsesPage.gotoOverviewTab()
+
+        EvalResponsesPage.getAwardContractBtn().should('be.enabled')
+    })
+
+
+    it ('Award tender', () => {
         EvalResponsesPage.gotoOverviewTab()
 
         EvalResponsesPage.checkboxSupplier(0)

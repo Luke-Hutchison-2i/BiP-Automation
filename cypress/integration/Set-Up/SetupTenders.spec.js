@@ -81,6 +81,7 @@ describe ('Smoke Test', function () {
         QuestionnairePage.createQuestion(0, "No", "Help", "yesNo", true)
 
         QuestionnairePage.createPriceUploadQuestion(0)
+        //QuestionnairePage.createPriceQuestion(0, "Total Price", "Help")
 
         if (Cypress.env('dev') === true) {
             QuestionnairePage.createPriceQuestion(0, "Price", "Help")
@@ -111,7 +112,7 @@ describe ('Smoke Test', function () {
     })
 
     // For Dev and multi-lots
-    it ('2 Lots', () => {
+    it.skip ('2 Lots', () => {
         TenderExercisePage.gotoCreateTenderBox()
 
         TenderBoxPage.initialBoxSetUp("Lots", 0, 5)

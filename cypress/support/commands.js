@@ -40,6 +40,14 @@ Cypress.Commands.add("login", function(type) {
             } else {
                 password = logins[id].buyer.password
             }
+        } else if (type === "buyer2") {
+            email = logins[id].buyer2.email
+
+            if (Cypress.env('live') == true) {
+                password = logins[id].buyer2.livePassword
+            } else {
+                password = logins[id].buyer2.password
+            }
         } else if (type === "supplier") {
             email = logins[id].supplier.email
 

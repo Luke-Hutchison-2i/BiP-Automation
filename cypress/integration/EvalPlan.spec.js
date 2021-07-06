@@ -183,7 +183,9 @@ describe ('Questions', function () {
         cy.get('#page_nav-page_3').should('contain.text', 'Price')
     })
 
-    it.skip ('Can change evaluators', ()  => {
+    it ('Can change evaluators', ()  => {
+        EvalPlanPage.gotoChooseEvaluators()
+
         EvalPlanPage.chooseEvaluators()
     })
 

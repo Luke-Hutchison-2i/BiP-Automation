@@ -73,6 +73,10 @@ describe ('Smoke Test', function () {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
+        EvalPlanPage.gotoChooseEvaluators()
+
+        EvalPlanPage.chooseEvaluators()
+
         EvalPlanPage.createSmokeEvalPlan()
 
         TenderBoxPage.gotoAddSuppliers()

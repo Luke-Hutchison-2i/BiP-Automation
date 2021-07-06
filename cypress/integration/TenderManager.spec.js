@@ -109,7 +109,10 @@ describe ('Tender Manager - Stage 1', function() {
 
         TenderBoxPage.gotoCreateEvalPlan()
 
+        EvalPlanPage.gotoChooseEvaluators()
         EvalPlanPage.chooseEvaluators()
+
+        EvalPlanPage.returnToOverview()
 
         cy.url().should('include', 'viewListStatus.html')
 

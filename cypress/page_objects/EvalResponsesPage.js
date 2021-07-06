@@ -154,8 +154,13 @@ export function sxsGetCompleteBox() {
 
 // Consensus Eval
 
+export function getConsensusText (index) {
+    // Gets the 'Not Started' / 'Completed' text that links to consensus eval
+    return cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index)
+}
+
 export function startConsensusEval (index) {
-    cy.get('#pqqResp tbody').find('[id^=responses-consensus_]').eq(index).click()
+    getConsensusText(index).click()
 }
 
 export function finishConsensusEval () {
@@ -196,10 +201,17 @@ export function savePriceScore() {
 
 // Utility
 
+export function returnToOverview() {
+    cy.get('#buttons-return').click()
+}
+
 export function checkboxSupplier(index) {
     cy.get('#bidderDetails tbody').find('input[type="checkbox"]').eq(index).check()   
 }
 
+export function getAwardContractBtn() {
+    return cy.get('#buttons-award_contract')
+}
 export function startAwardContract() {
     cy.get('#buttons-award_contract').click()
 }
@@ -209,9 +221,8 @@ export function awardContract() {
 
 export function gotoOverviewTab() {
     cy.get('#tabs-overview').click()
-    //cy.url().should('include', '/buyers/lists/viewSupplierResponsesOverview')
-    //cy.get('#bidderDetails tbody').should('be.visible')
-    cy.get('input[type="checkbox"]').should('be.visible')
+    
+    cy.get('input[type="checkbox"]').should('be.visible') // Waiting for page to load
 }
 
 export function shortListSupplier(index) {

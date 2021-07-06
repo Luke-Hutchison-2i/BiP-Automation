@@ -58,18 +58,16 @@ export function createSmokeEvalPlan () {
 
 export function gotoChooseEvaluators() {
     cy.get('[name="chooseEvaluators"][type="submit"]').click()
+
+    cy.get('[id^="gurId_"]').should('have.length.at.least', 2)
 }
 
 export function chooseEvaluators() {
-    gotoChooseEvaluators()
-
-    cy.get('[id^="gurId_"]').should('have.length.at.least', 2).check()
+    cy.get('[id^="gurId_"]').check()
 
     cy.get('[name="saveEvaluators"]').click()
 
     cy.get('[name="returnEdit"]').click()
-
-    returnToOverview()
 }
 
 // Question Scores
